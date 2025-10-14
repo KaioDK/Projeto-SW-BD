@@ -9,6 +9,7 @@ INSERT INTO usuario (nome, email, senha, CPF) VALUES
 -- 2) Endereços dos usuários (assumindo id_cliente auto_increment começando em 1)
 INSERT INTO endereco (id_cliente, rua, numero, bairro, cidade, estado) VALUES
 (1, 'Rua das Flores', '123', 'Jardim Primavera', 'São Paulo', 'SP'),
+(1, 'Rua das Palmeiras', '250', 'Jardim América', 'São Paulo', 'SP'),  -- endereço extra para João
 (2, 'Av. Brasil', '456', 'Centro', 'Rio de Janeiro', 'RJ'),
 (3, 'Rua das Acácias', '321', 'Vila Verde', 'Curitiba', 'PR'),
 (4, 'Av. Paulista', '1500', 'Bela Vista', 'São Paulo', 'SP'),
