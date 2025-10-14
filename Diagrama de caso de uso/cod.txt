@@ -1,0 +1,30 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor Cliente as Customer
+actor Vendedor as Seller
+actor Administrador as Admin
+
+rectangle "Sistema de Vendas Online" {
+  
+  Customer --> (Registrar / Logar)
+  Customer --> (Visualizar Produtos)
+  Customer --> (Adicionar ao Carrinho)
+  Customer --> (Finalizar Pedido)
+  Customer --> (Consultar Status do Pedido)
+  Customer --> (Gerenciar Endereços)
+  Customer --> (Realizar Pagamento)
+  
+  Seller --> (Logar)
+  Seller --> (Cadastrar Produto)
+  Seller --> (Atualizar Estoque e Preço)
+  Seller --> (Consultar Pedidos Recebidos)
+  
+  Admin --> (Gerenciar Usuários)
+  Admin --> (Gerenciar Vendedores)
+  Admin --> (Consultar Todos os Pedidos)
+  Admin --> (Gerenciar Sistema)
+}
+
+@enduml
