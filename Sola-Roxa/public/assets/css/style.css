@@ -1,0 +1,25 @@
+/* small styling for scroll snap scrollbar */
+      .scrollbar-hide::-webkit-scrollbar {display: none}
+      .glass-blur {backdrop-filter: blur(6px)}
+      
+      /* Gradients and glows */
+      .gradient-border {
+        position: relative;
+        border: 1px solid transparent;
+        background-clip: padding-box;
+      }
+      .gradient-border::after {
+        content: '';
+        position: absolute;
+        top: -1px; right: -1px; bottom: -1px; left: -1px;
+        background: linear-gradient(130deg, rgba(139,92,246,0.3), rgba(255,255,255,0.1));
+        border-radius: inherit;
+        z-index: -1;
+      }
+      .hero-gradient {
+        background: linear-gradient(160deg, rgba(139,92,246,0.05) 0%, rgba(30,30,30,0.1) 100%);
+      }
+
+      html{
+      scroll-behavior: smooth;
+      }

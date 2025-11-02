@@ -1,0 +1,164 @@
+lucide.createIcons();
+
+// Steps handling
+const steps = Array.from(document.querySelectorAll(".step"));
+const panels = Array.from(document.querySelectorAll(".panel"));
+let current = 1;
+const total = panels.length;
+function showStep(n) {
+  current = n;
+  document.getElementById("current-step").textContent = n;
+  panels.forEach((p) =>
+    p.dataset.panel == n
+      ? p.classList.remove("hidden")
+      : p.classList.add("hidden")
+  );
+  steps.forEach((s) => {
+    s.classList.toggle("step-active", Number(s.dataset.step) === n);
+  });
+  document.getElementById("progress-bar").style.width = (n / total) * 100 + "%";
+}
+steps.forEach((s) =>
+  s.addEventListener("click", () => showStep(Number(s.dataset.step)))
+);
+document
+  .getElementById("next-btn")
+  .addEventListener("click", () => showStep(Math.min(total, current + 1)));
+document
+  .getElementById("prev-btn")
+  .addEventListener("click", () => showStep(Math.max(1, current - 1)));
+
+// Description character count
+const desc = document.getElementById("description");
+const descCount = document.getElementById("desc-count");
+if (desc) {
+  desc.addEventListener(
+    "input",
+    () => (descCount.textContent = desc.value.length)
+  );
+}
+
+// Tags input
+const tagsInput = document.getElementById("tags-input");
+const tagsArea = document.getElementById("tags");
+let tags = [];
+tagsInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && tagsInput.value.trim()) {
+    e.preventDefault();
+    addTag(tagsInput.value.trim());
+    tagsInput.value = "";
+  }
+  if (e.key === "Backspace" && !tagsInput.value) {
+    tags.pop();
+    renderTags();
+  }
+});
+function addTag(t) {
+  if (tags.length >= 12) return;
+  tags.push(t);
+  renderTags();
+}
+function removeTag(i) {
+  tags.splice(i, 1);
+  renderTags();
+}
+function renderTags() {
+  tagsArea.innerHTML = "";
+  tags.forEach((t, i) => {
+    const chip = document.createElement("div");
+    chip.className =
+      "px-3 py-1 bg-gray-100 rounded-full text-sm flex items-center gap-2";
+    chip.innerHTML = `<span>${t}</span><button data-i="${i}" class="text-xs">×</button>`;
+    tagsArea.appendChild(chip);
+    chip.querySelector("button").addEventListener("click", () => removeTag(i));
+  });
+}
+
+// Image upload (drag/drop + thumbnails)
+const drop = document.getElementById("drop-zone");
+const fileInput = document.getElementById("file-input");
+const thumbs = document.getElementById("thumbs");
+let files = [];
+drop.addEventListener("click", () => fileInput.click());
+fileInput.addEventListener("change", (e) => handleFiles(e.target.files));
+drop.addEventListener("dragover", (e) => {
+  e.preventDefault();
+  drop.classList.add("bg-white/60");
+});
+drop.addEventListener("dragleave", () => drop.classList.remove("bg-white/60"));
+drop.addEventListener("drop", (e) => {
+  e.preventDefault();
+  drop.classList.remove("bg-white/60");
+  handleFiles(e.dataTransfer.files);
+});
+
+function handleFiles(list) {
+  const arr = Array.from(list).slice(0, 6 - files.length);
+  arr.forEach((file) => {
+    if (!file.type.startsWith("image/")) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      files.push({ name: file.name, src: ev.target.result });
+      renderThumbs();
+    };
+    reader.readAsDataURL(file);
+  });
+}
+function renderThumbs() {
+  thumbs.innerHTML = "";
+  files.forEach((f, i) => {
+    const el = document.createElement("div");
+    el.className = "relative group";
+    el.innerHTML = `<img src="${f.src}" class="w-full h-32 object-cover rounded-md"><button class='absolute top-2 right-2 bg-white/80 rounded-full p-1 text-sm'>×</button>`;
+    thumbs.appendChild(el);
+    el.querySelector("button").addEventListener("click", () => {
+      files.splice(i, 1);
+      renderThumbs();
+    });
+  });
+}
+
+// Preview
+document.getElementById("preview-btn").addEventListener("click", () => {
+  const area = document.getElementById("review-area");
+  area.innerHTML = `
+          <h4 class="font-semibold">${
+            document.getElementById("title").value || "—"
+          }</h4>
+          <div class='text-sm text-gray-600'>${
+            document.getElementById("brand").value || ""
+          } • ${document.getElementById("category").value || ""}</div>
+          <p class='mt-3 text-gray-700'>${
+            document.getElementById("description").value ||
+            "<i>Sem descrição</i>"
+          }</p>
+          <div class='mt-3 flex gap-2'>${tags
+            .map(
+              (t) =>
+                `<span class='px-2 py-1 bg-gray-100 rounded-full text-sm'>${t}</span>`
+            )
+            .join("")}</div>
+        `;
+  showStep(4);
+});
+
+// Publish
+document.getElementById("publish-btn").addEventListener("click", () => {
+  // Basic validation
+  const title = document.getElementById("title").value.trim();
+  const price = document.getElementById("price").value;
+  if (!title || !price) {
+    alert("Por favor preencha título e preço antes de publicar.");
+    showStep(2);
+    return;
+  }
+  document.getElementById("success-modal").classList.remove("hidden");
+  document.getElementById("success-modal").classList.add("flex");
+});
+document.getElementById("close-success").addEventListener("click", () => {
+  document.getElementById("success-modal").classList.add("hidden");
+  document.getElementById("success-modal").classList.remove("flex");
+});
+
+// Initial state
+showStep(1);
