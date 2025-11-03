@@ -1,1 +1,1 @@
-https://kaiodk.github.io/Projeto-SW-BD/Sola-Roxa/
+https://kaiodk.github.io/Projeto-SW-BD/Sola-Roxa/public
