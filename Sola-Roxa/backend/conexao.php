@@ -1,6 +1,6 @@
 <?php
     $host = 'localhost';
-    $dbname = 'sistema';
+    $dbname = 'sola_roxa';
     $user = 'root';
     $pass = '';
     try {
