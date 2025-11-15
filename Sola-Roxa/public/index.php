@@ -497,7 +497,7 @@
           </p>
           <div class="mt-8 flex flex-wrap gap-4">
             <a
-              href="public/auth.php"
+              href="auth.php"
               class="group px-6 py-3 bg-white text-black rounded-md font-semibold hover:bg-purple-50 transition-all duration-300 flex items-center gap-2"
             >
               Comece Agora
