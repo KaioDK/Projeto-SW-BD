@@ -1,3 +1,8 @@
+<?php
+require_once __DIR__ . '/../backend/auth.php';
+// Only logged users may access the cart
+requireUser();
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
@@ -98,15 +103,15 @@
             >
           </li>
           <li>
-            <a class="hover:text-roxa transition" href="#masculino"
+            <a class="hover:text-roxa transition" href="index.php#masculino"
               >Masculino</a
             >
           </li>
           <li>
-            <a class="hover:text-roxa transition" href="#feminino">Feminino</a>
+            <a class="hover:text-roxa transition" href="index.php/#feminino">Feminino</a>
           </li>
           <li>
-            <a class="hover:text-roxa transition" href="#colecoes"
+            <a class="hover:text-roxa transition" href="index.php/#colecoes"
               >Colecionáveis</a
             >
           </li>
