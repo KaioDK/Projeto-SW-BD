@@ -1,3 +1,8 @@
+<?php
+require_once __DIR__ . '/../backend/auth.php';
+// Only sellers may access this page
+requireSeller();
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>

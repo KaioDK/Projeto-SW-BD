@@ -60,18 +60,95 @@ window.addEventListener("load", () => {
   });
 });
 
-// Simple form handlers (no real auth) — prevent submit reload
-[loginForm, registerForm].forEach((f) =>
-  f.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const btn = f.querySelector('button[type="submit"]');
-    gsap.to(btn, { scale: 0.98, duration: 0.08, yoyo: true, repeat: 1 });
-    alert("Usuario logado.");
-  })
-);
+// Real auth handlers
+loginForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const email = loginForm.querySelector('input[type="email"]').value;
+  const password = loginForm.querySelector('input[type="password"]').value;
+  const btn = loginForm.querySelector('button[type="submit"]');
+  
+  btn.disabled = true;
+  btn.textContent = "Entrando...";
+  
+  try {
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('password', password);
+    
+    const response = await fetch('api/login_usuario.php', {
+      method: 'POST',
+      body: formData
+    });
+    
+    const data = await response.json();
+    
+    if (response.ok && data.success) {
+      gsap.to(btn, { scale: 0.98, duration: 0.08, yoyo: true, repeat: 1 });
+      alert("Login realizado com sucesso!");
+      window.location.href = 'index.php';
+    } else {
+      alert(data.error || "Erro no login");
+    }
+  } catch (error) {
+    alert("Erro ao conectar: " + error.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Entrar";
+  }
+});
+
+registerForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const name = registerForm.querySelector('input[type="text"]').value;
+  const email = registerForm.querySelector('input[type="email"]').value;
+  const password = registerForm.querySelectorAll('input[type="password"]')[0].value;
+  const confirmPassword = registerForm.querySelectorAll('input[type="password"]')[1].value;
+  const btn = registerForm.querySelector('button[type="submit"]');
+  
+  if (password !== confirmPassword) {
+    alert("As senhas não coincidem!");
+    return;
+  }
+  
+  btn.disabled = true;
+  btn.textContent = "Cadastrando...";
+  
+  try {
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('email', email);
+    formData.append('password', password);
+    
+    const response = await fetch('api/register_usuario.php', {
+      method: 'POST',
+      body: formData
+    });
+    
+    let data;
+    try {
+      data = await response.json();
+    } catch (e) {
+      // fallback to text if server returned non-json or empty
+      const txt = await response.text();
+      data = { error: txt || 'Invalid server response' };
+    }
+
+    if (response.ok && data.success) {
+      alert("Cadastro realizado! Faça login agora.");
+      showLogin();
+    } else {
+      alert(data.error || "Erro no cadastro");
+    }
+  } catch (error) {
+    alert("Erro ao conectar: " + error.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Cadastrar";
+  }
+});
 
 // Sticky header transparency on scroll
-const header = qs("#site-header");
+const header = document.querySelector("#site-header");
 window.addEventListener("scroll", () => {
   const y = window.scrollY;
   if (y > 40) {

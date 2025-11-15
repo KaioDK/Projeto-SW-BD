@@ -1,3 +1,8 @@
+<?php
+require_once __DIR__ . '/../backend/auth.php';
+// Only logged users may access the cart
+requireUser();
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
