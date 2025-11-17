@@ -523,7 +523,7 @@ requireSeller();
           Seu anúncio já está visível no marketplace.
         </p>
         <div class="mt-6 flex justify-center gap-3">
-          <a href="product.html" class="px-4 py-2 rounded-md border"
+          <a href="product.php" class="px-4 py-2 rounded-md border"
             >Ver anúncio</a
           >
           <button

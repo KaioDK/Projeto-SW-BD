@@ -278,7 +278,7 @@
               <div class="mt-4 flex items-center justify-between">
                 <a
                   class="inline-flex items-center gap-2 text-white hover:text-purple-300 font-medium transition-colors"
-                  href="product.html"
+                  href="product.php"
                 >
                   Ver Mais
                   <svg
@@ -532,7 +532,7 @@
               Cadastre seu par e alcance colecionadores e streetheads.
             </p>
             <div class="mt-4 grid grid-cols-1 gap-3">
-              <a href="seller-onboarding.html">
+              <a href="seller-onboarding.php">
                 <button
                   class="px-4 py-2 bg-white/10 hover:bg-white/15 text-white rounded-md transition-colors"
                 >

@@ -453,8 +453,8 @@
         if(cc){ cc.textContent = Number(cc.textContent || 0) + Number(qtyInput.value); }
       });
 
-      // Buy now: scroll to checkout (here open cart.html)
-      document.getElementById('buy-now').addEventListener('click', ()=> location.href = 'cart.html');
+      // Buy now: scroll to checkout (here open cart.php)
+      document.getElementById('buy-now').addEventListener('click', ()=> location.href = 'cart.php');
 
       // Tabs
       document.querySelectorAll('.tab-btn').forEach(btn=> btn.addEventListener('click', ()=>{
