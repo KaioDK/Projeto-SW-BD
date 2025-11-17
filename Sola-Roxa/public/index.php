@@ -278,7 +278,7 @@
               <div class="mt-4 flex items-center justify-between">
                 <a
                   class="inline-flex items-center gap-2 text-white hover:text-purple-300 font-medium transition-colors"
-                  href="product.html"
+                  href="product.php"
                 >
                   Ver Mais
                   <svg

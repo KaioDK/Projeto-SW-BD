@@ -626,7 +626,7 @@
           class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
         >
           <!-- Product Card Example -->
-          <a href="product.html">
+          <a href="product.php">
             <div
               class="card-hover fade-in bg-white rounded-2xl overflow-hidden border border-gray p-5 flex flex-col items-center relative"
               data-category="Super-Star"
@@ -665,7 +665,7 @@
             <div class="text-black text-sm mb-1">Streetwear classic</div>
             <div class="text-roxa font-bold text-xl mb-1">R$ 1.299</div>
           </div>
-          <a href="product.html">
+          <a href="product.php">
             <div
               class="card-hover fade-in bg-white rounded-2xl overflow-hidden border border-gray p-5 flex flex-col items-center relative"
             >
@@ -708,7 +708,7 @@
         class="max-w-7xl mx-auto px-6 sm:px-8 py-8 flex flex-col md:flex-row items-center justify-between gap-6"
       >
         <a
-          href="index.html"
+          href="index.php"
           style="font-family: Poppins; letter-spacing: 0.1em"
           class="text-lg font-extrabold tracking-widest uppercase"
           >SOLA <span class="text-roxa">ROXA</span></a
