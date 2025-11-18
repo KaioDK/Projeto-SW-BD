@@ -1,7 +1,11 @@
 <?php
 require_once __DIR__ . '/../backend/auth.php';
-// Only sellers may access this page
-requireSeller();
+// Allow any logged-in user (comprador ou vendedor) to access
+// If not logged in at all, redirect to auth.php
+if (!isLoggedUser() && !isLoggedSeller()) {
+    header('Location: auth.php');
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

@@ -30,8 +30,24 @@ try {
     }
 
     $hash = password_hash($password, PASSWORD_DEFAULT);
-    // The `vendedor` table requires CPF (not null). Accept CPF from request or use empty string.
+    // The `vendedor` table requires CPF (not null). 
+    // If not provided, generate a unique one (format: random 11 digits)
     $cpf = trim($_POST['cpf'] ?? '');
+    if (empty($cpf)) {
+        // Generate unique CPF: random 11-digit number
+        $cpf = str_pad(rand(10000000000, 99999999999), 11, '0', STR_PAD_LEFT);
+        // Ensure uniqueness
+        $attempts = 0;
+        while ($attempts < 10) {
+            $checkStmt = $pdo->prepare('SELECT id_vendedor FROM vendedor WHERE CPF = ?');
+            $checkStmt->execute([$cpf]);
+            if (!$checkStmt->fetch()) {
+                break;
+            }
+            $cpf = str_pad(rand(10000000000, 99999999999), 11, '0', STR_PAD_LEFT);
+            $attempts++;
+        }
+    }
     $insert = $pdo->prepare('INSERT INTO vendedor (nome, email, senha, CPF) VALUES (?, ?, ?, ?)');
     $insert->execute([$name, $email, $hash, $cpf]);
 
