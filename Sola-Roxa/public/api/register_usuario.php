@@ -29,8 +29,24 @@ try {
     }
 
     $hash = password_hash($password, PASSWORD_DEFAULT);
-    // The `usuario` table requires CPF (not null in schema). Use provided CPF if sent, otherwise empty string.
+    // The `usuario` table requires CPF (not null in schema). 
+    // If not provided, generate a unique one (format: random 11 digits)
     $cpf = trim($_POST['cpf'] ?? '');
+    if (empty($cpf)) {
+        // Generate unique CPF: random 11-digit number
+        $cpf = str_pad(rand(10000000000, 99999999999), 11, '0', STR_PAD_LEFT);
+        // Ensure uniqueness by checking if it exists
+        $attempts = 0;
+        while ($attempts < 10) {
+            $checkStmt = $pdo->prepare('SELECT id_cliente FROM usuario WHERE CPF = ?');
+            $checkStmt->execute([$cpf]);
+            if (!$checkStmt->fetch()) {
+                break; // CPF is unique
+            }
+            $cpf = str_pad(rand(10000000000, 99999999999), 11, '0', STR_PAD_LEFT);
+            $attempts++;
+        }
+    }
     $insert = $pdo->prepare('INSERT INTO usuario (nome, email, senha, CPF) VALUES (?, ?, ?, ?)');
     $insert->execute([$name, $email, $hash, $cpf]);
 
