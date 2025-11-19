@@ -152,8 +152,36 @@ document.getElementById("publish-btn").addEventListener("click", () => {
     showStep(2);
     return;
   }
-  document.getElementById("success-modal").classList.remove("hidden");
-  document.getElementById("success-modal").classList.add("flex");
+  // create product via API
+  const formData = new FormData();
+  formData.append('title', document.getElementById('title').value.trim());
+  formData.append('description', document.getElementById('description').value.trim());
+  formData.append('price', document.getElementById('price').value.trim());
+  // default stock to 1 (seller can update later)
+  formData.append('stock', 1);
+  formData.append('estado', document.getElementById('condition').value || 'Novo');
+  if (fileInput.files && fileInput.files[0]) {
+    formData.append('image', fileInput.files[0]);
+  }
+  // optionally include seller onboarding data
+  const sellerName = document.getElementById('seller-name').value.trim();
+  const sellerDoc = document.getElementById('seller-doc').value.trim();
+  if (sellerName) formData.append('seller_name', sellerName);
+  if (sellerDoc) formData.append('seller_doc', sellerDoc);
+
+  fetch('api/create_product.php', { method: 'POST', body: formData })
+    .then((r) => r.json())
+    .then((data) => {
+      if (data && data.success) {
+        document.getElementById('success-modal').classList.remove('hidden');
+        document.getElementById('success-modal').classList.add('flex');
+      } else {
+        alert(data.error || 'Erro ao cadastrar produto');
+      }
+    })
+    .catch((err) => {
+      alert('Erro ao conectar: ' + err.message);
+    });
 });
 document.getElementById("close-success").addEventListener("click", () => {
   document.getElementById("success-modal").classList.add("hidden");
