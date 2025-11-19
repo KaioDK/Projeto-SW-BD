@@ -40,6 +40,10 @@
       .fav-heart.active { transform: scale(1.15); filter: drop-shadow(0 6px 18px rgba(139,92,246,0.18)); }
     </style>
   </head>
+  <?php
+    // Pega o ID do produto da URL
+    $product_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+  ?>
   <body class="font-pop text-white">
 
     <!-- Header -->
@@ -159,8 +163,8 @@
       <div class="max-w-7xl mx-auto px-6 sm:px-8">
 
         <!-- Product hero -->
-        <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          <!-- Left: images -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start" id="product-hero">
+          <!-- Conteúdo será preenchido via JS -->
           <div class="lg:col-span-7">
             <div class="rounded-xl overflow-hidden card p-6">
               <div class="relative">
@@ -420,62 +424,119 @@
       lucide.createIcons();
       document.getElementById('year').textContent = new Date().getFullYear();
 
-      // Thumbnail click -> change main image
-      document.querySelectorAll('.thumb').forEach(btn=>{
-        btn.addEventListener('click', ()=>{
-          const src = btn.dataset.src;
-          const main = document.getElementById('main-image');
-          gsap.to(main, {opacity:0, duration:0.25, onComplete: ()=>{ main.src = src; gsap.to(main, {opacity:1, duration:0.3}); }});
+      // Função para renderizar o produto
+      function renderProduct(product) {
+        // Renderiza o HTML do produto
+        const hero = document.getElementById('product-hero');
+        hero.innerHTML = `
+          <div class="lg:col-span-7">
+            <div class="rounded-xl overflow-hidden card p-6">
+              <div class="relative">
+                <img id="main-image" src="${product.imagem_url || 'https://cdn.runrepeat.com/storage/gallery/product_primary/39891/nike-ja-1-21212250-720.jpg'}" alt="${product.nome}" class="w-full h-[540px] object-cover rounded-lg cursor-zoom-in" loading="lazy">
+                <button id="fav-btn" class="absolute top-4 right-4 p-3 rounded-full bg-white/6 fav-heart" aria-label="Favoritar">
+                  <i data-lucide="heart" class="text-roxa"></i>
+                </button>
+              </div>
+              <div class="mt-4 flex gap-3 overflow-x-auto">
+                ${(product.galeria || []).map(img => `
+                  <button class="thumb w-24 h-16 rounded-md overflow-hidden" data-src="${img}">
+                    <img src="${img}" class="w-full h-full object-cover" loading="lazy">
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+          <div class="lg:col-span-5">
+            <div class="card rounded-xl p-6">
+              <h1 class="text-3xl font-bold">${product.nome}</h1>
+              <p class="mt-3 text-white/70">${product.descricao}</p>
+              <div class="mt-6 flex items-baseline gap-4">
+                <div class="text-2xl font-bold text-roxa">R$ ${product.preco}</div>
+                <div class="text-sm text-white/60">Envio gratuito para todo o Brasil</div>
+              </div>
+              <div class="mt-6">
+                <div class="text-sm text-white/70 mb-2">Tamanho</div>
+                <div class="flex flex-wrap gap-2">
+                  ${(product.tamanhos || ['38','39','40','41','42']).map(t => `<button class="size-btn px-4 py-2 rounded-md border border-white/10">${t}</button>`).join('')}
+                </div>
+              </div>
+              <div class="mt-6 flex items-center gap-3">
+                <div class="flex items-center border border-white/10 rounded-md overflow-hidden">
+                  <button id="qty-decrease" class="px-3 py-2">-</button>
+                  <input id="qty" type="number" min="1" value="1" class="w-16 text-center bg-transparent p-2 outline-none" />
+                  <button id="qty-increase" class="px-3 py-2">+</button>
+                </div>
+                <button id="add-cart" class="ml-auto px-6 py-3 rounded-md btn-glow bg-roxa text-black font-semibold">Adicionar ao Carrinho</button>
+              </div>
+              <div class="mt-3">
+                <button id="buy-now" class="w-full mt-3 px-6 py-3 rounded-md border border-cyan text-cyan hover:bg-cyan/10 transition">Comprar Agora</button>
+              </div>
+            </div>
+            <div class="mt-6 text-sm text-white/60">Compartilhe • <button class="text-white/80">Reportar</button></div>
+          </div>
+        `;
+        lucide.createIcons();
+        // Adiciona listeners igual antes
+        document.querySelectorAll('.thumb').forEach(btn=>{
+          btn.addEventListener('click', ()=>{
+            const src = btn.dataset.src;
+            const main = document.getElementById('main-image');
+            gsap.to(main, {opacity:0, duration:0.25, onComplete: ()=>{ main.src = src; gsap.to(main, {opacity:1, duration:0.3}); }});
+          });
         });
-      });
+        const favBtn = document.getElementById('fav-btn');
+        favBtn.addEventListener('click', ()=>{ favBtn.classList.toggle('active'); });
+        document.querySelectorAll('.size-btn').forEach(b=> b.addEventListener('click', ()=>{
+          document.querySelectorAll('.size-btn').forEach(x=> x.classList.remove('active'));
+          b.classList.add('active');
+        }));
+        const qtyInput = document.getElementById('qty');
+        document.getElementById('qty-increase').addEventListener('click', ()=> qtyInput.value = Number(qtyInput.value) + 1);
+        document.getElementById('qty-decrease').addEventListener('click', ()=> { if(Number(qtyInput.value)>1) qtyInput.value = Number(qtyInput.value) - 1 });
+        document.getElementById('add-cart').addEventListener('click', ()=>{
+          const btn = document.getElementById('add-cart');
+          gsap.fromTo(btn, {scale:1}, {scale:0.98, duration:0.08, yoyo:true, repeat:1});
+          const cc = document.getElementById('cart-count');
+          if(cc){ cc.textContent = Number(cc.textContent || 0) + Number(qtyInput.value); }
+        });
+        document.getElementById('buy-now').addEventListener('click', ()=> location.href = 'cart.php');
+        window.addEventListener('load', ()=>{
+          gsap.from('.card, #main-image, .card h1', {y:8, opacity:0, stagger:0.05, duration:0.6});
+        });
+        // Zoom modal
+        document.getElementById('main-image').addEventListener('click', ()=>{
+          const src = document.getElementById('main-image').src;
+          document.getElementById('zoom-img').src = src;
+          const modal = document.getElementById('zoom-modal'); modal.classList.remove('hidden'); modal.classList.add('flex');
+          gsap.fromTo('#zoom-img', {scale:0.98, opacity:0}, {scale:1, opacity:1, duration:0.35});
+        });
+        document.getElementById('zoom-close').addEventListener('click', ()=>{ const modal = document.getElementById('zoom-modal'); gsap.to('#zoom-img',{scale:0.98, opacity:0, duration:0.15, onComplete: ()=>{ modal.classList.add('hidden'); modal.classList.remove('flex'); }}); });
+      }
 
-      // Favorite
-      const favBtn = document.getElementById('fav-btn');
-      favBtn.addEventListener('click', ()=>{ favBtn.classList.toggle('active'); });
+      // Busca produto pelo ID
+      async function fetchProduct(id) {
+        try {
+          const res = await fetch(`api/get_product.php?id=${id}`);
+          const data = await res.json();
+          if(data.success && data.product) {
+            // Ajusta galeria se vier como string separada
+            if(typeof data.product.galeria === 'string') {
+              data.product.galeria = data.product.galeria.split(',').map(x=>x.trim());
+            }
+            renderProduct(data.product);
+          } else {
+            document.getElementById('product-hero').innerHTML = '<div class="col-span-12 text-center py-12 text-xl">Produto não encontrado.</div>';
+          }
+        } catch(e) {
+          document.getElementById('product-hero').innerHTML = '<div class="col-span-12 text-center py-12 text-xl">Erro ao carregar produto.</div>';
+        }
+      }
 
-      // Size selection
-      document.querySelectorAll('.size-btn').forEach(b=> b.addEventListener('click', ()=>{
-        document.querySelectorAll('.size-btn').forEach(x=> x.classList.remove('active'));
-        b.classList.add('active');
-      }));
-
-      // Quantity
-      const qtyInput = document.getElementById('qty');
-      document.getElementById('qty-increase').addEventListener('click', ()=> qtyInput.value = Number(qtyInput.value) + 1);
-      document.getElementById('qty-decrease').addEventListener('click', ()=> { if(Number(qtyInput.value)>1) qtyInput.value = Number(qtyInput.value) - 1 });
-
-      // Add to cart (simple animation + update cart count if exists)
-      document.getElementById('add-cart').addEventListener('click', ()=>{
-        const btn = document.getElementById('add-cart');
-        gsap.fromTo(btn, {scale:1}, {scale:0.98, duration:0.08, yoyo:true, repeat:1});
-        // bump cart count if element exists
-        const cc = document.getElementById('cart-count');
-        if(cc){ cc.textContent = Number(cc.textContent || 0) + Number(qtyInput.value); }
-      });
-
-      // Buy now: scroll to checkout (here open cart.php)
-      document.getElementById('buy-now').addEventListener('click', ()=> location.href = 'cart.php');
-
-      // Tabs
-      document.querySelectorAll('.tab-btn').forEach(btn=> btn.addEventListener('click', ()=>{
-        document.querySelectorAll('.tab-btn').forEach(b=> b.classList.remove('active','text-white')); btn.classList.add('active','text-white');
-        const tab = btn.dataset.tab;
-        document.querySelectorAll('.tab-content').forEach(c=> c.classList.add('hidden'));
-        document.getElementById('tab-'+tab).classList.remove('hidden');
-      }));
-
-      // Image zoom modal
-      document.getElementById('main-image').addEventListener('click', ()=>{
-        const src = document.getElementById('main-image').src;
-        document.getElementById('zoom-img').src = src;
-        const modal = document.getElementById('zoom-modal'); modal.classList.remove('hidden'); modal.classList.add('flex');
-        gsap.fromTo('#zoom-img', {scale:0.98, opacity:0}, {scale:1, opacity:1, duration:0.35});
-      });
-      document.getElementById('zoom-close').addEventListener('click', ()=>{ const modal = document.getElementById('zoom-modal'); gsap.to('#zoom-img',{scale:0.98, opacity:0, duration:0.15, onComplete: ()=>{ modal.classList.add('hidden'); modal.classList.remove('flex'); }}); });
-
-      // Small entrance animation
-      window.addEventListener('load', ()=>{
-        gsap.from('.card, #main-image, .card h1', {y:8, opacity:0, stagger:0.05, duration:0.6});
+      // Executa ao carregar
+      window.addEventListener('DOMContentLoaded', ()=>{
+        const id = <?php echo json_encode($product_id); ?>;
+        if(id > 0) fetchProduct(id);
+        else document.getElementById('product-hero').innerHTML = '<div class="col-span-12 text-center py-12 text-xl">Produto não encontrado.</div>';
       });
     </script>
   </body>
