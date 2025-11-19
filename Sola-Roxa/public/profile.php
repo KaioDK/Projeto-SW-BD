@@ -187,7 +187,7 @@ function firstName($full)
                             <input name="senha" type="password" placeholder="••••••••" class="w-full mt-2 p-3 border rounded bg-transparent border-white/10 text-white placeholder-white/40" />
                             <a href="#" class="text-sm text-roxa mt-2 inline-block">Alterar senha</a>
                         </div>
-                        <div>
+                        <div class="mb-7">
                             <label class="text-sm text-white/70">Código de área</label>
                             <select name="ddd" class="w-full mt-2 p-3 border rounded bg-transparent border-white/10 text-white">
                                 <option>+55 (BR)</option>
@@ -198,7 +198,7 @@ function firstName($full)
                                 <option>+34 (ES)</option>
                             </select>
                         </div>
-                        <div>
+                        <div class="mb-7">
                             <label class="text-sm text-white/70">Telefone</label>
                             <input name="telefone" type="tel" value="" class="w-full mt-2 p-3 border rounded bg-transparent border-white/10 text-white placeholder-white/40" />
                         </div>
