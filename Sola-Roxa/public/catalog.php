@@ -257,11 +257,83 @@
         </div>
       </div>
 
-      <!-- Catalog Grid (rendered dynamically) -->
-      <div id="catalog-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-        <!-- cards will be rendered here by JS -->
-      </div>
-    </section>
+        <!-- Catalog Grid -->
+        <div
+          id="catalog-grid"
+          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
+        >
+          <!-- Product Card Example -->
+          <a href="product.php">
+            <div
+              class="card-hover fade-in bg-white rounded-2xl overflow-hidden border border-gray p-5 flex flex-col items-center relative"
+              data-category="Super-Star"
+              data-colors="black,white"
+              data-sizes="40,41,42,43"
+              data-condition="new"
+              data-date="20251026"
+              data-sales="245"
+            >
+              <div
+                class="absolute top-4 left-4 bg-roxa text-black text-xs font-bold px-3 py-1 rounded-full"
+              >
+                NEW IN
+              </div>
+              <img
+                src="https://cdn.runrepeat.com/storage/gallery/product_content/39891/nike-ja-1-review-20528489-720.jpg"
+                alt="Nike Phantom Void"
+                class="w-full h-56 object-cover rounded-xl mb-4 bg-gray"
+                loading="lazy"
+              />
+              <h3 class="font-bold text-lg mb-1 text-black">Nike Ja 1</h3>
+              <div class="text-black text-sm mb-1">Minimal urban runner</div>
+              <div class="text-roxa font-bold text-xl mb-1">R$ 1.799</div>
+            </div>
+          </a>
+          <div
+            class="card-hover fade-in bg-white rounded-2xl overflow-hidden border border-gray p-5 flex flex-col items-center relative"
+          >
+            <img
+              src="https://cdn.runrepeat.com/storage/gallery/product_content/35434/adidas-sl-72-review-21894164-720.jpg"
+              alt="Adidas Shadow Run"
+              class="w-full h-56 object-cover rounded-xl mb-4 bg-gray"
+              loading="lazy"
+            />
+            <h3 class="font-bold text-lg mb-1 text-black">Adidas SL 72</h3>
+            <div class="text-black text-sm mb-1">Streetwear classic</div>
+            <div class="text-roxa font-bold text-xl mb-1">R$ 1.299</div>
+          </div>
+          <a href="product.php">
+            <div
+              class="card-hover fade-in bg-white rounded-2xl overflow-hidden border border-gray p-5 flex flex-col items-center relative"
+            >
+              <img
+                src="https://cdn.runrepeat.com/storage/gallery/product_content/40440/jordan-luka-3-outdoor-001-21807246-720.jpg"
+                alt="Jordan Eclipse"
+                class="w-full h-56 object-cover rounded-xl mb-4 bg-gray"
+                loading="lazy"
+              />
+              <h3 class="font-bold text-lg mb-1 text-black">Jordan Luka 3</h3>
+              <div class="text-black text-sm mb-1">Limited drop</div>
+              <div class="text-roxa font-bold text-xl mb-1">R$ 2.099</div>
+            </div>
+          </a>
+          <div
+            class="card-hover fade-in bg-white rounded-2xl overflow-hidden border border-gray p-5 flex flex-col items-center relative"
+          >
+            <img
+              src="https://cdn.runrepeat.com/storage/gallery/product_content/39930/puma-magnify-nitro-2-5-21147897-720.jpg"
+              alt="Yeezy Nova Pulse"
+              class="w-full h-56 object-cover rounded-xl mb-4 bg-gray"
+              loading="lazy"
+            />
+            <h3 class="font-bold text-lg mb-1 text-black">
+              PUMA Magnify Nitro 2
+            </h3>
+            <div class="text-black text-sm mb-1">Urban luxury</div>
+            <div class="text-roxa font-bold text-xl mb-1">R$ 2.499</div>
+          </div>
+        </div>
+      </section>
 
     <!-- Optional Filter Sidebar (not implemented, placeholder) -->
     <!-- ... -->
@@ -288,131 +360,16 @@
   <script>
     lucide.createIcons();
 
-    // Fade-in animation for product cards
-    window.addEventListener("DOMContentLoaded", () => {
-      setTimeout(() => {
-        document.querySelectorAll(".fade-in").forEach((el, i) => {
-          setTimeout(() => {
-            el.classList.add("visible");
-          }, 120 * i);
-        });
-      }, 200);
-    });
-  </script>
-  <script>
-    // Expose current session info to JS
-    const CURRENT_SELLER_ID = <?php echo isLoggedSeller() ? (int) $_SESSION['vendedor']['id'] : 'null'; ?>;
-    const CURRENT_USER_ID = <?php echo isLoggedUser() ? (int) $_SESSION['user']['id'] : 'null'; ?>;
-
-    function formatPrice(v) {
-      // assume string like "999.90"
-      if (v === null || v === undefined) return 'R$ —';
-      return 'R$ ' + parseFloat(v).toFixed(2).replace('.', ',');
-    }
-
-    // Render products into grid
-    async function loadProducts() {
-      try {
-        const res = await fetch('api/get_products.php');
-        const data = await res.json();
-        if (!data || !data.products) return;
-        const grid = document.getElementById('catalog-grid');
-        grid.innerHTML = '';
-        data.products.forEach((p) => {
-          const card = document.createElement('div');
-          card.className = 'card-hover fade-in bg-white rounded-2xl overflow-hidden border border-gray p-5 flex flex-col items-center relative cursor-pointer';
-
-          const imgSrc = p.imagem_url ? p.imagem_url : 'assets/img/placeholder.png';
-          const image = `<img src="${imgSrc}" alt="${p.nome}" class="w-full h-56 object-cover rounded-xl mb-4 bg-gray" loading="lazy">`;
-          const title = `<h3 class="font-bold text-lg mb-1 text-black">${p.nome}</h3>`;
-          const desc = `<div class="text-black text-sm mb-1">${(p.descricao || '').substring(0, 60)}</div>`;
-          const price = `<div class="text-roxa font-bold text-xl mb-1">${formatPrice(p.valor)}</div>`;
-
-          // quick actions (edit/delete) visible only to seller owner
-          let actions = '';
-          if (CURRENT_SELLER_ID && p.id_vendedor && Number(CURRENT_SELLER_ID) === Number(p.id_vendedor)) {
-            actions = `
-                <div class="absolute top-3 right-3 flex gap-2 quick-actions">
-                  <button data-id="${p.id_produto}" class="edit-btn px-3 py-1 rounded bg-white text-sm">Editar</button>
-                  <button data-id="${p.id_produto}" class="delete-btn px-3 py-1 rounded bg-red-500 text-white text-sm">Excluir</button>
-                </div>
-              `;
-          }
-
-          card.innerHTML = actions + image + title + desc + price;
-
-          // click to open product page
-          card.addEventListener('click', (e) => {
-            // avoid clicking through when pressing action buttons
-            if (e.target.closest('.edit-btn') || e.target.closest('.delete-btn')) return;
-            window.location.href = 'product.php?id=' + p.id_produto;
-          });
-
-          grid.appendChild(card);
-        });
-
-        // attach handlers for edit/delete
-        document.querySelectorAll('.edit-btn').forEach((btn) => {
-          btn.addEventListener('click', async (e) => {
-            e.stopPropagation();
-            const id = btn.getAttribute('data-id');
-            const newTitle = prompt('Novo título (deixe em branco para manter):');
-            const newPrice = prompt('Novo preço (ex: 199.90) (deixe em branco para manter):');
-            const fd = new FormData();
-            fd.append('id', id);
-            if (newTitle) fd.append('title', newTitle);
-            if (newPrice) fd.append('price', newPrice);
-            try {
-              const r = await fetch('api/update_product.php', { method: 'POST', body: fd });
-              const j = await r.json();
-              if (j && j.success) {
-                alert('Produto atualizado.');
-                loadProducts();
-              } else {
-                alert(j.error || 'Erro ao atualizar');
-              }
-            } catch (err) {
-              alert('Erro de conexão: ' + err.message);
-            }
-          });
-        });
-
-        document.querySelectorAll('.delete-btn').forEach((btn) => {
-          btn.addEventListener('click', async (e) => {
-            e.stopPropagation();
-            const id = btn.getAttribute('data-id');
-            if (!confirm('Tem certeza que deseja excluir este produto?')) return;
-            const fd = new FormData();
-            fd.append('id', id);
-            try {
-              const r = await fetch('api/delete_product.php', { method: 'POST', body: fd });
-              const j = await r.json();
-              if (j && j.success) {
-                alert('Produto excluído.');
-                loadProducts();
-              } else {
-                alert(j.error || 'Erro ao deletar');
-              }
-            } catch (err) {
-              alert('Erro de conexão: ' + err.message);
-            }
-          });
-        });
-
-        // re-run fade-in for new elements
+      // Fade-in animation for product cards
+      window.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
-          document.querySelectorAll('.fade-in').forEach((el, i) => {
-            setTimeout(() => el.classList.add('visible'), 80 * i);
+          document.querySelectorAll(".fade-in").forEach((el, i) => {
+            setTimeout(() => {
+              el.classList.add("visible");
+            }, 120 * i);
           });
-        }, 50);
-      } catch (err) {
-        console.error('Failed loading products', err);
-      }
-    }
-
-    // load on page ready
-    window.addEventListener('DOMContentLoaded', () => loadProducts());
-  </script>
-</body>
-
+        }, 200);
+      });
+    </script>
+  </body>
 </html>
