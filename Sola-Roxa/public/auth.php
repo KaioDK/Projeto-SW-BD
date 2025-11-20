@@ -138,7 +138,7 @@
             </svg>
           </button>
           <!-- user -->
-          <a href="auth.php">
+          <a href="profile.php">
             <button
               aria-label="conta"
               class="p-2 rounded-md hover:bg-white/5 transition cursor-pointer"

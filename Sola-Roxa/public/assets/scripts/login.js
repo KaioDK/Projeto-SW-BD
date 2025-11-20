@@ -5,14 +5,14 @@ const toLogin = document.getElementById("to-login");
 const title = document.getElementById("form-title");
 
 function showRegister() {
-  // animate out login
+  // Animação: esconde o formulário de login
   gsap.to(loginForm, {
     duration: 0.4,
     opacity: 0,
     y: -20,
     pointerEvents: "none",
   });
-  // animate in register
+  // Animação: exibe o formulário de registro
   gsap.to(registerForm, {
     duration: 0.5,
     opacity: 1,
@@ -49,7 +49,7 @@ toLogin.addEventListener("click", (e) => {
   showLogin();
 });
 
-// small entrance animation
+// Animação de entrada suave dos elementos do formulário
 window.addEventListener("load", () => {
   gsap.from(".glass", { duration: 0.8, opacity: 0, y: 20 });
   gsap.from("#login-form > *", {
@@ -128,7 +128,7 @@ registerForm.addEventListener("submit", async (e) => {
     try {
       data = await response.json();
     } catch (e) {
-      // fallback to text if server returned non-json or empty
+      // Em fallback: se o servidor não retornou JSON, tenta ler o texto bruto
       const txt = await response.text();
       data = { error: txt || 'Invalid server response' };
     }

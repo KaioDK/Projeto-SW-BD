@@ -28,7 +28,8 @@ if (!$v || !password_verify($password, $v['senha'])) {
     exit;
 }
 
-// set session for vendedor
+// Define sessão do vendedor autenticado
+// - Efeito: popula `$_SESSION['vendedor']` utilizado por rotas de vendedor
     $_SESSION['vendedor'] = [
         'id' => $v['id_vendedor'],
         'nome' => $v['nome'],

@@ -1,6 +1,9 @@
 lucide.createIcons();
 
-// Steps handling
+// Controle dos passos do onboarding (wizard)
+// - Cada painel tem `data-panel` correspondendo ao número do passo
+// - `showStep(n)` exibe o painel `n`, atualiza a barra de progresso e o indicador
+// - Variáveis: `current` (passo atual), `total` (número total de painéis)
 const steps = Array.from(document.querySelectorAll(".step"));
 const panels = Array.from(document.querySelectorAll(".panel"));
 let current = 1;
@@ -28,7 +31,7 @@ document
   .getElementById("prev-btn")
   .addEventListener("click", () => showStep(Math.max(1, current - 1)));
 
-// Description character count
+// Contador de caracteres da descrição
 const desc = document.getElementById("description");
 const descCount = document.getElementById("desc-count");
 if (desc) {
@@ -38,7 +41,7 @@ if (desc) {
   );
 }
 
-// Tags input
+// Campo de tags (chips)
 const tagsInput = document.getElementById("tags-input");
 const tagsArea = document.getElementById("tags");
 let tags = [];
@@ -74,7 +77,7 @@ function renderTags() {
   });
 }
 
-// Image upload (drag/drop + thumbnails)
+// Upload de imagens (drag & drop + miniaturas)
 const drop = document.getElementById("drop-zone");
 const fileInput = document.getElementById("file-input");
 const thumbs = document.getElementById("thumbs");
@@ -118,7 +121,8 @@ function renderThumbs() {
   });
 }
 
-// Preview
+// Botão de pré-visualização: monta um resumo com título, marca, categoria,
+// descrição e tags. Avança para o passo de revisão (4).
 document.getElementById("preview-btn").addEventListener("click", () => {
   const area = document.getElementById("review-area");
   area.innerHTML = `
@@ -142,18 +146,76 @@ document.getElementById("preview-btn").addEventListener("click", () => {
   showStep(4);
 });
 
-// Publish
+// Publicar: valida campos básicos, monta um FormData e chama `api/create_product.php`.
+// - Envia: nome (title), descricao (description), valor (price), estoque (stock), estado, imagem_url (opcional), tamanho (opcional)
+// - Se o usuário preencher dados de seller-onboarding, esses campos são enviados
+//   para que o backend possa criar/reutilizar um registro de vendedor.
 document.getElementById("publish-btn").addEventListener("click", () => {
   // Basic validation
   const title = document.getElementById("title").value.trim();
   const price = document.getElementById("price").value;
+  
+  console.log('DEBUG: title =', title);
+  console.log('DEBUG: price =', price);
+  
   if (!title || !price) {
     alert("Por favor preencha título e preço antes de publicar.");
     showStep(2);
     return;
   }
-  document.getElementById("success-modal").classList.remove("hidden");
-  document.getElementById("success-modal").classList.add("flex");
+  
+  // create product via API
+  const formData = new FormData();
+  formData.append('nome', title);
+  formData.append('descricao', document.getElementById('description').value.trim());
+  formData.append('valor', price.trim());
+  
+  // Log FormData
+  console.log('FormData entries:');
+  for (let [key, value] of formData.entries()) {
+    console.log(`  ${key}: ${value}`);
+  }
+  
+  // include size/tamanho
+  const sizeVal = document.getElementById('size') ? document.getElementById('size').value.trim() : '';
+  if (sizeVal) formData.append('tamanho', sizeVal);
+  // default stock to 1 (seller can update later)
+  formData.append('estoque', 1);
+  formData.append('estado', document.getElementById('condition').value || 'Novo');
+  if (fileInput.files && fileInput.files[0]) {
+    formData.append('image', fileInput.files[0]);
+  }
+  // optionally include seller onboarding data
+  const sellerName = document.getElementById('seller-name').value.trim();
+  const sellerDoc = document.getElementById('seller-doc').value.trim();
+  if (sellerName) formData.append('seller_name', sellerName);
+  if (sellerDoc) formData.append('seller_doc', sellerDoc);
+
+  fetch('api/create_product.php', { method: 'POST', body: formData })
+    .then(async (r) => {
+      const text = await r.text();
+      console.log('Response status:', r.status);
+      console.log('Response text:', text);
+      try {
+        const data = text ? JSON.parse(text) : null;
+        if (data && data.success) {
+          document.getElementById('success-modal').classList.remove('hidden');
+          document.getElementById('success-modal').classList.add('flex');
+        } else {
+          // Se o servidor retornou JSON com `error`, exibe a mensagem;
+          // caso contrário, mostra o texto bruto recebido para ajudar a depurar.
+          alert((data && data.error) ? (data.error + (data.details ? '\n' + data.details : '')) : ('Erro ao cadastrar produto. Resposta do servidor:\n' + text));
+        }
+      } catch (e) {
+        // Resposta não-JSON: mostra texto bruto (útil em dev quando a API
+        // retorna HTML/erro inesperado em vez de JSON). Em produção, a API
+        // deve sempre retornar JSON previsível.
+        alert('Erro ao cadastrar produto. Resposta do servidor não é JSON:\n' + text);
+      }
+    })
+    .catch((err) => {
+      alert('Erro ao conectar: ' + err.message);
+    });
 });
 document.getElementById("close-success").addEventListener("click", () => {
   document.getElementById("success-modal").classList.add("hidden");

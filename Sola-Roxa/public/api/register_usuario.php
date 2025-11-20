@@ -19,7 +19,7 @@ try {
         exit;
     }
 
-    // check existing (schema uses id_cliente)
+    // Verifica se o email já está registrado (a tabela usa `id_cliente` como PK)
     $stmt = $pdo->prepare('SELECT id_cliente FROM usuario WHERE email = ? LIMIT 1');
     $stmt->execute([$email]);
     if ($stmt->fetch()) {
@@ -29,13 +29,15 @@ try {
     }
 
     $hash = password_hash($password, PASSWORD_DEFAULT);
-    // The `usuario` table requires CPF (not null in schema). 
-    // If not provided, generate a unique one (format: random 11 digits)
+    // A tabela `usuario` exige o CPF (campo NOT NULL no esquema).
+    // Se o CPF não for fornecido, geramos um CPF único temporário
+    // no formato de 11 dígitos aleatórios para não violar a restrição.
     $cpf = trim($_POST['cpf'] ?? '');
     if (empty($cpf)) {
-        // Generate unique CPF: random 11-digit number
+        // Gera um CPF único: número aleatório de 11 dígitos
         $cpf = str_pad(rand(10000000000, 99999999999), 11, '0', STR_PAD_LEFT);
-        // Ensure uniqueness by checking if it exists
+            // Verifica a unicidade consultando a tabela; se já existir,
+            // gera outro valor e tenta novamente até um limite de tentativas.
         $attempts = 0;
         while ($attempts < 10) {
             $checkStmt = $pdo->prepare('SELECT id_cliente FROM usuario WHERE CPF = ?');
@@ -52,12 +54,13 @@ try {
 
     echo json_encode(['success' => true, 'id_cliente' => $pdo->lastInsertId()]);
 } catch (Throwable $e) {
-    // Ensure we always return JSON (avoid breaking client-side JSON.parse)
+    // Garante que sempre retornamos JSON (evita quebrar JSON.parse no cliente)
     if (!headers_sent()) {
         http_response_code(500);
         header('Content-Type: application/json; charset=utf-8');
     }
-    // Log to file or monitoring service in production
+    // Registra o erro no log do servidor ou em um serviço de monitoramento
+    // em ambiente de produção para investigação posterior.
     error_log('Register error: ' . $e->getMessage());
     echo json_encode(['error' => 'Server error']);
     exit;

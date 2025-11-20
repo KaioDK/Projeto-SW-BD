@@ -28,7 +28,8 @@ if (!$u || !password_verify($password, $u['senha'])) {
     exit;
 }
 
-// set session for user (map id_cliente -> id)
+// Define sessão do usuário autenticado (mapeia id_cliente -> id)
+// - Efeito: altera `$_SESSION['user']` usado pelas páginas públicas
 $_SESSION['user'] = [
     'id' => $u['id_cliente'],
     'nome' => $u['nome'],

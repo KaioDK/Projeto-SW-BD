@@ -94,6 +94,7 @@ CREATE TABLE `produto` (
   `id_vendedor` int(11) NOT NULL,
   `nome` varchar(255) NOT NULL,
   `descricao` text DEFAULT NULL,
+  `tamanho` varchar(50) DEFAULT NULL,
   `imagem_url` varchar(255) DEFAULT NULL,
   `valor` decimal(10,2) NOT NULL,
   `estoque` int(11) NOT NULL DEFAULT 0,
@@ -105,8 +106,8 @@ CREATE TABLE `produto` (
 -- Despejando dados para a tabela `produto`
 --
 
-INSERT INTO `produto` (`id_produto`, `id_vendedor`, `nome`, `descricao`, `imagem_url`, `valor`, `estoque`, `data_cadastro`, `estado`) VALUES
-(3, 1, 'Nike Dunk Low', 'Tênis clássico de colecionador', 'https://exemplo.com/imagens/dunklow.jpg', 999.90, 5, '2025-10-20 21:12:41', 'Novo');
+INSERT INTO `produto` (`id_produto`, `id_vendedor`, `nome`, `descricao`, `tamanho`, `imagem_url`, `valor`, `estoque`, `data_cadastro`, `estado`) VALUES
+(3, 1, 'Nike Dunk Low', 'Tênis clássico de colecionador', NULL, 'https://exemplo.com/imagens/dunklow.jpg', 999.90, 5, '2025-10-20 21:12:41', 'Novo');
 
 -- --------------------------------------------------------
 
