@@ -3,8 +3,30 @@ require_once __DIR__ . '/../../backend/db.php';
 require_once __DIR__ . '/../../backend/auth.php';
 header('Content-Type: application/json; charset=utf-8');
 
-// Debugging: log invocation, POST and FILES to Apache/PHP error log
-error_log('create_product invoked. METHOD=' . ($_SERVER['REQUEST_METHOD'] ?? '')); 
+// Handlers de exceção / shutdown
+// - Durante o desenvolvimento, garantimos que qualquer exceção fatal ou erro
+//   seja devolvido como JSON para que o frontend (que faz JSON.parse) não
+//   quebre. Em produção, considere suprimir detalhes sensíveis.
+set_exception_handler(function($e){
+    http_response_code(500);
+    $msg = $e instanceof Throwable ? $e->getMessage() : (string)$e;
+    echo json_encode(['error' => 'Server exception', 'details' => $msg]);
+    exit;
+});
+register_shutdown_function(function(){
+    $err = error_get_last();
+    if ($err && in_array($err['type'], [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR])) {
+        http_response_code(500);
+        $text = isset($err['message']) ? $err['message'] : 'Fatal error';
+        echo json_encode(['error' => 'Fatal error', 'details' => $text]);
+        exit;
+    }
+});
+
+// Logs de depuração: registra método, POST e metadados de FILES. Útil para
+// diagnosticar problemas de upload e payloads inválidos durante o desenvolvimento.
+// Atenção: evite logar dados sensíveis em produção.
+error_log('create_product invoked. METHOD=' . ($_SERVER['REQUEST_METHOD'] ?? ''));
 try {
     error_log('create_product POST: ' . json_encode($_POST));
     $files_info = [];
@@ -22,21 +44,34 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-// Must be seller — allow logged users to convert to seller if they supply seller info
+// Autorização: Apenas vendedores podem criar produtos. Se um usuário comum
+// (cliente) estiver autenticado e submeter os campos de seller-onboarding,
+// o fluxo tentará criar (ou reutilizar) um registro de `vendedor` e atualizar
+// `$_SESSION['vendedor']` para permitir a criação do produto em sequência.
 if (!isLoggedSeller()) {
-    // if user is logged and submitted seller onboarding info, create vendor
+    // Se o usuário está logado e submeteu dados de vendedor, criar (ou reutilizar) o vendedor
     if (isLoggedUser() && !empty($_POST['seller_name']) && !empty($_POST['seller_doc'])) {
         $name = trim($_POST['seller_name']);
         $cpf = trim($_POST['seller_doc']);
         $email = $_SESSION['user']['email'];
-        // create vendor record
-        $pwd = bin2hex(random_bytes(8));
-        $hash = password_hash($pwd, PASSWORD_DEFAULT);
-        $insertVend = $pdo->prepare('INSERT INTO vendedor (nome, email, senha, CPF) VALUES (?, ?, ?, ?)');
-        $insertVend->execute([$name, $email, $hash, $cpf]);
-        $id_vendedor = $pdo->lastInsertId();
-        // set session vendedor
-        $_SESSION['vendedor'] = ['id' => $id_vendedor, 'nome' => $name, 'email' => $email];
+        // se já existir um vendedor com o mesmo email ou CPF, reutilizar em vez de inserir duplicado
+        $checkVend = $pdo->prepare('SELECT id_vendedor, nome, email FROM vendedor WHERE email = ? OR CPF = ? LIMIT 1');
+        $checkVend->execute([$email, $cpf]);
+        $existing = $checkVend->fetch();
+        if ($existing) {
+            $id_vendedor = $existing['id_vendedor'];
+            // Reutiliza registro existente e atualiza sessão para manter estado
+            $_SESSION['vendedor'] = ['id' => $id_vendedor, 'nome' => $existing['nome'] ?? $name, 'email' => $existing['email'] ?? $email];
+        } else {
+            // Cria novo registro de vendedor (senha gerada aleatoriamente)
+            $pwd = bin2hex(random_bytes(8));
+            $hash = password_hash($pwd, PASSWORD_DEFAULT);
+            $insertVend = $pdo->prepare('INSERT INTO vendedor (nome, email, senha, CPF) VALUES (?, ?, ?, ?)');
+            $insertVend->execute([$name, $email, $hash, $cpf]);
+            $id_vendedor = $pdo->lastInsertId();
+            // definir sessão do vendedor recém-criado
+            $_SESSION['vendedor'] = ['id' => $id_vendedor, 'nome' => $name, 'email' => $email];
+        }
     } else {
         http_response_code(403);
         echo json_encode(['error' => 'Only sellers can create products']);
@@ -46,11 +81,12 @@ if (!isLoggedSeller()) {
     $id_vendedor = $_SESSION['vendedor']['id'];
 }
 
-// validate required fields
+// Validação dos campos obrigatórios do produto
 $nome = trim($_POST['title'] ?? $_POST['nome'] ?? '');
 $valor = trim($_POST['price'] ?? $_POST['valor'] ?? '');
 $estoque = intval($_POST['stock'] ?? $_POST['estoque'] ?? 0);
 $descricao = trim($_POST['description'] ?? $_POST['descricao'] ?? '');
+$tamanho = trim($_POST['size'] ?? $_POST['tamanho'] ?? '');
 $estado = $_POST['estado'] ?? 'Novo';
 
 if (!$nome || $valor === '') {
@@ -60,11 +96,15 @@ if (!$nome || $valor === '') {
 }
 
 try {
-    // image handling (optional, single image)
+    // Tratamento da imagem de produto (opcional, imagem única)
     $imagem_url = null;
     if (!empty($_FILES['image']['name'])) {
         $file = $_FILES['image'];
-        // basic checks
+        // Verificações básicas de segurança e formato:
+        // - tipos permitidos: jpg, png, webp
+        // - checar `error` do upload
+        // Observação: para produção, também limite tamanho máximo e valide
+        // nomes de arquivo para evitar problemas com caracteres inválidos.
         $allowed = ['image/jpeg','image/png','image/webp'];
         if (!in_array($file['type'], $allowed)) {
             http_response_code(400);
@@ -78,7 +118,7 @@ try {
         }
         $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
         $filename = uniqid('prod_', true) . '.' . $ext;
-        // use UPLOAD_DIR
+        // Usa a constante UPLOAD_DIR (definida em backend/config.php)
         if (!defined('UPLOAD_DIR')) {
             require_once __DIR__ . '/../../backend/config.php';
         }
@@ -91,20 +131,25 @@ try {
             echo json_encode(['error' => 'Failed to save image']);
             exit;
         }
-        // store relative path for frontend
+        // Armazena caminho relativo (`assets/uploads/...`) para uso pelo frontend
         $imagem_url = 'assets/uploads/' . $filename;
     }
 
-    $stmt = $pdo->prepare('INSERT INTO produto (id_vendedor, nome, descricao, imagem_url, valor, estoque, estado) VALUES (?, ?, ?, ?, ?, ?, ?)');
-    $stmt->execute([$id_vendedor, $nome, $descricao, $imagem_url, $valor, $estoque, $estado]);
+    // Realiza a inserção do produto no banco. Campos aceitos:
+    // - id_vendedor: FK para vendedor
+    // - nome, descricao, tamanho, imagem_url, valor, estoque, estado
+    $stmt = $pdo->prepare('INSERT INTO produto (id_vendedor, nome, descricao, tamanho, imagem_url, valor, estoque, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+    $stmt->execute([$id_vendedor, $nome, $descricao, $tamanho ?: null, $imagem_url, $valor, $estoque, $estado]);
 
     $id = $pdo->lastInsertId();
     echo json_encode(['success' => true, 'id_produto' => $id]);
 } catch (Throwable $e) {
     http_response_code(500);
-    // Log full error and return message details to help local debugging
+    // Registra erro completo no log para diagnóstico local. Retornamos detalhes
+    // no JSON apenas para facilitar a depuração em ambiente de desenvolvimento.
+    // Em produção, remova `details` ou supra-os para não vazar informações.
     $msg = $e->getMessage();
-    error_log('create_product error: ' . $msg . '\nTrace: ' . $e->getTraceAsString());
+    error_log('create_product error: ' . $msg . "\nTrace: " . $e->getTraceAsString());
     echo json_encode(['error' => 'Server error', 'details' => $msg]);
     exit;
 }

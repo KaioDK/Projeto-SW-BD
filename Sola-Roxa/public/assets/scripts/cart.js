@@ -1,10 +1,10 @@
-// initialize icons
+// Inicializa ícones e informações estáticas da página
 lucide.createIcons();
 
-// insert year
+// Insere o ano atual no rodapé
 document.getElementById("year").textContent = new Date().getFullYear();
 
-// cart data (seeded from DOM values)
+// Dados do carrinho (exemplo / seed). Em produção estes virão do servidor.
 const items = [
   {
     id: 1,

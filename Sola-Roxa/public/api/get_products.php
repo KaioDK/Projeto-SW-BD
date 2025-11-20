@@ -2,6 +2,9 @@
 require_once __DIR__ . '/../../backend/db.php';
 header('Content-Type: application/json; charset=utf-8');
 
+// Retorna lista de produtos (opcionalmente filtrada por vendedor)
+// Saída JSON: { success: true, products: [...] }
+
 try {
     $sql = 'SELECT p.id_produto, p.id_vendedor, p.nome, p.descricao, p.imagem_url, p.valor, p.estoque, p.data_cadastro, p.estado, v.nome AS vendedor_nome FROM produto p LEFT JOIN vendedor v ON p.id_vendedor = v.id_vendedor';
     $params = [];

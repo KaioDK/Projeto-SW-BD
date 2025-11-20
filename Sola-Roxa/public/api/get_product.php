@@ -2,6 +2,9 @@
 require_once __DIR__ . '/../../backend/db.php';
 header('Content-Type: application/json; charset=utf-8');
 
+// Retorna os dados de um produto por `id` via GET
+// Saída JSON: { success: true, product: { ... } } ou erro (400/404/500)
+
 $id = intval($_GET['id'] ?? 0);
 if (!$id) {
     http_response_code(400);

@@ -16,7 +16,8 @@ if (!$id) {
     exit;
 }
 
-// Only seller can update
+// Autorização: somente vendedores autenticados podem atualizar produtos.
+// O endpoint também valida que o produto pertence ao vendedor logado.
 if (!isLoggedSeller()) {
     http_response_code(403);
     echo json_encode(['error' => 'Only sellers can update products']);
@@ -26,7 +27,7 @@ if (!isLoggedSeller()) {
 $id_vendedor = $_SESSION['vendedor']['id'];
 
 try {
-    // verify ownership
+    // Verifica propriedade do produto (pertence ao vendedor logado?)
     $check = $pdo->prepare('SELECT id_vendedor FROM produto WHERE id_produto = ? LIMIT 1');
     $check->execute([$id]);
     $p = $check->fetch();
@@ -40,13 +41,14 @@ try {
     $params = [];
     if (isset($_POST['title'])) { $fields[] = 'nome = ?'; $params[] = $_POST['title']; }
     if (isset($_POST['descricao'])) { $fields[] = 'descricao = ?'; $params[] = $_POST['descricao']; }
+    if (isset($_POST['size']) || isset($_POST['tamanho'])) { $fields[] = 'tamanho = ?'; $params[] = $_POST['size'] ?? $_POST['tamanho']; }
     if (isset($_POST['price'])) { $fields[] = 'valor = ?'; $params[] = $_POST['price']; }
     if (isset($_POST['stock'])) { $fields[] = 'estoque = ?'; $params[] = intval($_POST['stock']); }
     if (isset($_POST['estado'])) { $fields[] = 'estado = ?'; $params[] = $_POST['estado']; }
 
-    // image
+    // Tratamento de imagem (opcional): reutiliza a lógica de upload do create_product
+    // Observação: não há validação de tipo/tamanho aqui; considerar validar em produção.
     if (!empty($_FILES['image']['name'])) {
-        // reuse create product code for upload
         $file = $_FILES['image'];
         $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
         $filename = uniqid('prod_', true) . '.' . $ext;

@@ -10,6 +10,13 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@400;600&display=swap"
     rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Great+Vibes&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap" rel="stylesheet">
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -119,7 +126,7 @@
           </svg>
         </button>
         <!-- user -->
-        <a href="auth.php">
+        <a href="profile.php">
           <button aria-label="conta" class="p-2 rounded-md hover:bg-white/5 transition cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
               stroke="currentColor" class="size-6">
@@ -288,7 +295,7 @@
   <script>
     lucide.createIcons();
 
-    // Fade-in animation for product cards
+    // Animação de entrada (fade-in) para os cards de produto
     window.addEventListener("DOMContentLoaded", () => {
       setTimeout(() => {
         document.querySelectorAll(".fade-in").forEach((el, i) => {
@@ -300,12 +307,13 @@
     });
   </script>
   <script>
-    // Expose current session info to JS
+    // Expõe informações de sessão atuais para o JS (usado para ações rápidas)
     const CURRENT_SELLER_ID = <?php echo isLoggedSeller() ? (int) $_SESSION['vendedor']['id'] : 'null'; ?>;
     const CURRENT_USER_ID = <?php echo isLoggedUser() ? (int) $_SESSION['user']['id'] : 'null'; ?>;
 
     function formatPrice(v) {
-      // assume string like "999.90"
+      // Formata preço recebido como string/numero para formato brasileiro
+      // (ex: "999.90" -> "R$ 999,90"). Retorna placeholder se nulo/indefinido.
       if (v === null || v === undefined) return 'R$ —';
       return 'R$ ' + parseFloat(v).toFixed(2).replace('.', ',');
     }
@@ -325,25 +333,21 @@
           const imgSrc = p.imagem_url ? p.imagem_url : 'assets/img/placeholder.png';
           const image = `<img src="${imgSrc}" alt="${p.nome}" class="w-full h-56 object-cover rounded-xl mb-4 bg-gray" loading="lazy">`;
           const title = `<h3 class="font-bold text-lg mb-1 text-black">${p.nome}</h3>`;
-          const desc = `<div class="text-black text-sm mb-1">${(p.descricao || '').substring(0, 60)}</div>`;
+          const desc = `<div class="text-black text-sm mb-1">${(p.estado || '').substring(0, 60)}</div>`;
           const price = `<div class="text-roxa font-bold text-xl mb-1">${formatPrice(p.valor)}</div>`;
 
-          // quick actions (edit/delete) visible only to seller owner
+          // Ações rápidas (editar/excluir) visíveis somente ao vendedor proprietário
           let actions = '';
           if (CURRENT_SELLER_ID && p.id_vendedor && Number(CURRENT_SELLER_ID) === Number(p.id_vendedor)) {
             actions = `
-                <div class="absolute top-3 right-3 flex gap-2 quick-actions">
-                  <button data-id="${p.id_produto}" class="edit-btn px-3 py-1 rounded bg-white text-sm">Editar</button>
-                  <button data-id="${p.id_produto}" class="delete-btn px-3 py-1 rounded bg-red-500 text-white text-sm">Excluir</button>
-                </div>
               `;
           }
 
           card.innerHTML = actions + image + title + desc + price;
 
-          // click to open product page
+          // Clique abre a página do produto
           card.addEventListener('click', (e) => {
-            // avoid clicking through when pressing action buttons
+            // evita navegação quando o clique foi em botões de ação (editar/excluir)
             if (e.target.closest('.edit-btn') || e.target.closest('.delete-btn')) return;
             window.location.href = 'product.php?id=' + p.id_produto;
           });
@@ -351,55 +355,7 @@
           grid.appendChild(card);
         });
 
-        // attach handlers for edit/delete
-        document.querySelectorAll('.edit-btn').forEach((btn) => {
-          btn.addEventListener('click', async (e) => {
-            e.stopPropagation();
-            const id = btn.getAttribute('data-id');
-            const newTitle = prompt('Novo título (deixe em branco para manter):');
-            const newPrice = prompt('Novo preço (ex: 199.90) (deixe em branco para manter):');
-            const fd = new FormData();
-            fd.append('id', id);
-            if (newTitle) fd.append('title', newTitle);
-            if (newPrice) fd.append('price', newPrice);
-            try {
-              const r = await fetch('api/update_product.php', { method: 'POST', body: fd });
-              const j = await r.json();
-              if (j && j.success) {
-                alert('Produto atualizado.');
-                loadProducts();
-              } else {
-                alert(j.error || 'Erro ao atualizar');
-              }
-            } catch (err) {
-              alert('Erro de conexão: ' + err.message);
-            }
-          });
-        });
-
-        document.querySelectorAll('.delete-btn').forEach((btn) => {
-          btn.addEventListener('click', async (e) => {
-            e.stopPropagation();
-            const id = btn.getAttribute('data-id');
-            if (!confirm('Tem certeza que deseja excluir este produto?')) return;
-            const fd = new FormData();
-            fd.append('id', id);
-            try {
-              const r = await fetch('api/delete_product.php', { method: 'POST', body: fd });
-              const j = await r.json();
-              if (j && j.success) {
-                alert('Produto excluído.');
-                loadProducts();
-              } else {
-                alert(j.error || 'Erro ao deletar');
-              }
-            } catch (err) {
-              alert('Erro de conexão: ' + err.message);
-            }
-          });
-        });
-
-        // re-run fade-in for new elements
+        // Reaplica animação de entrada para novos elementos adicionados ao grid
         setTimeout(() => {
           document.querySelectorAll('.fade-in').forEach((el, i) => {
             setTimeout(() => el.classList.add('visible'), 80 * i);

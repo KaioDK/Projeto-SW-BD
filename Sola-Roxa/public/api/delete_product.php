@@ -32,7 +32,7 @@ try {
         echo json_encode(['error' => 'Not owner']);
         exit;
     }
-    // delete image file
+    // Remoção do arquivo da imagem associada (se existir) para evitar arquivos órfãos
     if ($p['imagem_url']) {
         $path = __DIR__ . '/../' . $p['imagem_url'];
         if (file_exists($path)) unlink($path);
