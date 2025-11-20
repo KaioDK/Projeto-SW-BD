@@ -475,7 +475,7 @@
         <h5 class="font-semibold text-white mb-4">Sobre Nós</h5>
         <ul class="space-y-3">
           <li>
-            <a href="#" class="text-white/60 hover:text-white transition-colors">Nosso manifesto</a>
+            <a href="sobre_nos.php" class="text-white/60 hover:text-white transition-colors">Sobre Sola Roxa</a>
           </li>
           <li>
             <a href="#" class="text-white/60 hover:text-white transition-colors">Trabalhe conosco</a>
