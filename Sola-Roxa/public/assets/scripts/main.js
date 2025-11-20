@@ -58,28 +58,41 @@ if (featured) {
 }
 window.addEventListener("resize", updateFeatButtons);
 
-// Torna o header translúcido após scroll para melhorar legibilidade
+// Header behavior:
+// - On index (homepage) header starts transparent and becomes translucent on scroll
+// - On other pages header starts with the translucent background by default
 const header = qs("#site-header");
 if (header) {
-  // Aplicar classes diretamente no elemento `header` (mais consistente entre páginas)
-  window.addEventListener("scroll", () => {
-    const y = window.scrollY;
-    if (y > 40) {
-      header.classList.add(
-        "bg-black/70",
-        "backdrop-blur-md",
-        "glass-blur",
-        "rounded"
-      );
-    } else {
-      header.classList.remove(
-        "bg-black/70",
-        "backdrop-blur-md",
-        "glass-blur",
-        "rounded"
-      );
+  const classes = ["bg-black/70", "backdrop-blur-md", "glass-blur", "rounded"];
+  const path = window.location.pathname.toLowerCase();
+  const isIndex = path.endsWith('/index.php') || path === '/' || path.endsWith('/sola-roxa/') || path.endsWith('/sola-roxa');
+
+  function applyHeaderWithBg() {
+    header.classList.add(...classes);
+    const headerChild = header.firstElementChild;
+    if (headerChild) headerChild.classList.add(...classes);
+  }
+
+  function removeHeaderBg() {
+    header.classList.remove(...classes);
+    const headerChild = header.firstElementChild;
+    if (headerChild) headerChild.classList.remove(...classes);
+  }
+
+  if (isIndex) {
+    // homepage: toggle on scroll
+    function updateHeaderOnScroll() {
+      const y = window.scrollY;
+      if (y > 40) applyHeaderWithBg();
+      else removeHeaderBg();
     }
-  });
+    window.addEventListener("scroll", updateHeaderOnScroll);
+    window.addEventListener("load", updateHeaderOnScroll);
+    document.addEventListener('DOMContentLoaded', updateHeaderOnScroll);
+  } else {
+    // other pages: ensure header has background immediately
+    applyHeaderWithBg();
+  }
 }
 
 // Efeito de cursor aumentado ao passar sobre elementos interativos

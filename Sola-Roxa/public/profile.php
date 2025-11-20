@@ -239,9 +239,10 @@ function firstName($full)
                     </div>
 
                     <div class="flex items-center gap-4 mt-6">
-                        <button id="cancel-btn" type="button"
-                            class="px-6 py-3 border border-white/10 rounded text-white">CANCELAR</button>
-                        <button id="save-btn" type="button" class="px-6 py-3 bg-roxa text-white rounded">SALVAR</button>
+                                        <button id="cancel-btn" type="button"
+                                            class="px-6 py-3 border border-white/10 rounded text-white">CANCELAR</button>
+                                        <button id="logout-btn" type="button" class="px-6 py-3 border border-white/10 rounded text-white">SAIR</button>
+                                        <button id="save-btn" type="button" class="px-6 py-3 bg-roxa text-white rounded">SALVAR</button>
                     </div>
                 </form>
 
@@ -336,47 +337,75 @@ function firstName($full)
 
     <!-- Scripts -->
     <script src="assets/scripts/main.js"></script>
-
     <script>
+        // Navegação: cancelar volta para a home
         document.getElementById('cancel-btn').addEventListener('click', function () {
             window.location.href = 'index.php';
         });
 
+        // Logout: chama API e redireciona
+        document.getElementById('logout-btn').addEventListener('click', async function () {
+            if (!confirm('Deseja sair da sua conta?')) return;
+            const btn = document.getElementById('logout-btn');
+            btn.disabled = true;
+            try {
+                const res = await fetch('api/logout.php', { method: 'POST' });
+                // logout.php retorna JSON mesmo com session_destroy
+                window.location.href = 'index.php';
+            } catch (e) {
+                alert('Erro ao deslogar: ' + e.message);
+                btn.disabled = false;
+            }
+        });
+
+        // Atualizar perfil
         document.getElementById('save-btn').addEventListener('click', async function () {
             const form = document.getElementById('profile-form');
             const data = new FormData(form);
+            const btn = document.getElementById('save-btn');
+            btn.disabled = true;
             try {
                 const res = await fetch('api/update_profile.php', {
                     method: 'POST',
                     body: data
                 });
-                if (!res.ok) throw new Error('Resposta inválida');
                 const json = await res.json();
-                if (json.success) {
+                if (res.ok && json.success) {
                     alert('Perfil atualizado com sucesso');
-                    window.location.reload();
+                    // atualiza texto na UI se necessário e reabilita botão
+                    btn.disabled = false;
+                    // opcional: atualizar campos visíveis de nome
+                    location.reload();
                 } else {
                     alert(json.error || 'Falha ao atualizar perfil');
+                    btn.disabled = false;
                 }
             } catch (e) {
-                alert('Não foi possível atualizar — back-end pode não estar implementado. (' + e.message + ')');
+                alert('Não foi possível atualizar — erro de rede. (' + e.message + ')');
+                btn.disabled = false;
             }
         });
 
+        // Excluir conta (usa API criada)
         document.getElementById('delete-account').addEventListener('click', async function () {
             if (!confirm('Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita.')) return;
+            const btn = document.getElementById('delete-account');
+            btn.disabled = true;
             try {
                 const res = await fetch('api/delete_account.php', {
                     method: 'POST'
                 });
-                if (res.ok) {
+                const json = await res.json();
+                if (res.ok && json.success) {
                     alert('Conta excluída');
                     window.location.href = 'index.php';
                 } else {
-                    alert('Falha ao excluir conta');
+                    alert(json.error || 'Falha ao excluir conta');
+                    btn.disabled = false;
                 }
             } catch (e) {
                 alert('Erro ao conectar com o servidor');
+                btn.disabled = false;
             }
         });
     </script>

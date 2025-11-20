@@ -306,6 +306,7 @@
       }, 200);
     });
   </script>
+  <script src="assets/scripts/main.js"></script>
   <script>
     // Expõe informações de sessão atuais para o JS (usado para ações rápidas)
     const CURRENT_SELLER_ID = <?php echo isLoggedSeller() ? (int) $_SESSION['vendedor']['id'] : 'null'; ?>;

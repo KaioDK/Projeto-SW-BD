@@ -446,6 +446,7 @@ if (!isLoggedUser() && !isLoggedSeller()) {
       </div>
     </div>
   </footer>
+  <script src="assets/scripts/main.js"></script>
   <script src="assets/scripts/sell.js"></script>
 </body>
 

@@ -311,6 +311,7 @@ $product_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
     </div>
   </div>
 
+  <script src="assets/scripts/main.js"></script>
   <script>
     lucide.createIcons();
     document.getElementById('year').textContent = new Date().getFullYear();
