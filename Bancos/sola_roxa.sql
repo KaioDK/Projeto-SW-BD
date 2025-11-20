@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 22/10/2025 às 22:48
+-- Tempo de geração: 20/11/2025 às 20:20
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -94,20 +94,23 @@ CREATE TABLE `produto` (
   `id_vendedor` int(11) NOT NULL,
   `nome` varchar(255) NOT NULL,
   `descricao` text DEFAULT NULL,
-  `tamanho` varchar(50) DEFAULT NULL,
   `imagem_url` varchar(255) DEFAULT NULL,
   `valor` decimal(10,2) NOT NULL,
   `estoque` int(11) NOT NULL DEFAULT 0,
   `data_cadastro` datetime DEFAULT current_timestamp(),
-  `estado` enum('Novo','Semi-Novo','Usado','Sem caixa') DEFAULT 'Novo'
+  `estado` enum('Novo','Semi-Novo','Usado','Sem caixa') DEFAULT 'Novo',
+  `tamanho` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `produto`
 --
 
-INSERT INTO `produto` (`id_produto`, `id_vendedor`, `nome`, `descricao`, `tamanho`, `imagem_url`, `valor`, `estoque`, `data_cadastro`, `estado`) VALUES
-(3, 1, 'Nike Dunk Low', 'Tênis clássico de colecionador', NULL, 'https://exemplo.com/imagens/dunklow.jpg', 999.90, 5, '2025-10-20 21:12:41', 'Novo');
+INSERT INTO `produto` (`id_produto`, `id_vendedor`, `nome`, `descricao`, `imagem_url`, `valor`, `estoque`, `data_cadastro`, `estado`, `tamanho`) VALUES
+(3, 1, 'Nike Dunk Low', 'Tênis clássico de colecionador', 'https://cdn.runrepeat.com/storage/gallery/product_content/25696/nike-dunk-low-review-21438139-720.jpg', 999.90, 5, '2025-10-20 21:12:41', 'Novo', NULL),
+(11, 5, 'Mizuno Black cat', 'Novo', 'https://cdn.runrepeat.com/storage/gallery/product_content/40875/mizuno-wave-rider-29-23810792-720.jpg', 580.00, 1, '2025-11-18 21:04:54', 'Novo', NULL),
+(12, 5, 'Adidas Samba', 'Novo', 'assets/uploads/prod_691d0f1b6b9c45.19469098.webp', 580.00, 1, '2025-11-18 21:28:11', 'Novo', NULL),
+(13, 5, 'Under Armour SlipSpeed', 'O Under Armour SlipSpeed é o tênis versátil projetado para acompanhar qualquer ritmo do seu dia. Com design inovador 2 em 1, ele funciona tanto como tênis de treino quanto como um slip-on confortável, graças ao calcanhar dobrável que permite alternar entre os modos com facilidade. Sua estrutura leve e resistente oferece suporte ideal para treinos intensos, enquanto a palmilha interna com tecnologia Iso-Chill mantém os pés frescos mesmo nas sessões mais pesadas.\r\n\r\nA entressola com amortecimento responsivo garante pisadas mais macias e seguras, e a sola em borracha de alta tração proporciona estabilidade em diversos tipos de superfície. Estilo, conforto e desempenho em um único produto — perfeito para quem quer treinar forte e viver com praticidade.', 'assets/uploads/prod_691e63b07b1a84.71484186.webp', 879.00, 1, '2025-11-19 21:41:20', 'Novo', '40');
 
 -- --------------------------------------------------------
 
@@ -122,6 +125,16 @@ CREATE TABLE `usuario` (
   `senha` varchar(255) NOT NULL,
   `CPF` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `usuario`
+--
+
+INSERT INTO `usuario` (`id_cliente`, `nome`, `email`, `senha`, `CPF`) VALUES
+(1, 'teste', 'teste@example.com', '$2y$10$6/pwT6jrTz5mnxrbHEyqJOCNSPdaMCQ.7c.1eCPMUXl5ZkGrMpOae', ''),
+(7, 'Novo Usuario', 'novo@example.com', '$2y$10$4yhZ8U6PeSTbyQf6SIgwPeDLLtQNVGMzyifeT3ytX2pMH19AbnQn.', '14716143652'),
+(8, 'Novo Usuario', 'novo2@example.com', '$2y$10$zecCDTwlwp9.J4QLx6KnX.2v9VfxcQprnFCWEm.R6vmxsLdgeJuEa', '25292864669'),
+(9, 'admin', 'admin@example.com', '$2y$10$wFK36RGgTBIR3lejDolyKekBZ3v.WkX9poCKeGvHJNEhffdnUo.N.', '90860822878');
 
 -- --------------------------------------------------------
 
@@ -142,7 +155,9 @@ CREATE TABLE `vendedor` (
 --
 
 INSERT INTO `vendedor` (`id_vendedor`, `nome`, `email`, `senha`, `CPF`) VALUES
-(1, 'Vitor Sneaker', 'vitor@example.com', 'senha123', '12345678901');
+(1, 'Vitor Sneaker', 'vitor@example.com', 'senha123', '12345678901'),
+(4, 'Loja Vitor 2', 'loja.vitor2@test.com', '$2y$10$qI.b7gYJEJkQceWPY9mXP.rGvUjqWLhkctbtVjDrDIpc1rBdkNKV.', '98765432109'),
+(5, 'Asdawd', 'teste@gmail.com', '$2y$10$gqB6lKpMWseMv7sYMOExBOFFl5SSk1e.RK62LQYBnPJ6eTjcqH4EC', '12345678921');
 
 --
 -- Índices para tabelas despejadas
@@ -226,19 +241,19 @@ ALTER TABLE `pedido`
 -- AUTO_INCREMENT de tabela `produto`
 --
 ALTER TABLE `produto`
-  MODIFY `id_produto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_produto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de tabela `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de tabela `vendedor`
 --
 ALTER TABLE `vendedor`
-  MODIFY `id_vendedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_vendedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Restrições para tabelas despejadas
