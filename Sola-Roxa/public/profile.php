@@ -56,18 +56,19 @@ function firstName($full)
         .side-link:hover {
             color: #8B5CF6
         }
+
         /* Spinner mostrado em botões durante operações assíncronas */
-        button[aria-busy="true"]{
+        button[aria-busy="true"] {
             position: relative;
             pointer-events: none;
             opacity: 0.9;
         }
 
-        button[aria-busy="true"]::after{
+        button[aria-busy="true"]::after {
             content: "";
             width: 1rem;
             height: 1rem;
-            border: 2px solid rgba(255,255,255,0.15);
+            border: 2px solid rgba(255, 255, 255, 0.15);
             border-top-color: #ffffff;
             border-radius: 9999px;
             position: absolute;
@@ -77,7 +78,11 @@ function firstName($full)
             animation: spin 0.9s linear infinite;
         }
 
-        @keyframes spin { to { transform: translateY(-50%) rotate(360deg); } }
+        @keyframes spin {
+            to {
+                transform: translateY(-50%) rotate(360deg);
+            }
+        }
     </style>
 </head>
 
@@ -257,10 +262,10 @@ function firstName($full)
                     </div>
 
                     <div class="flex items-center gap-4 mt-6">
-                                        <button id="cancel-btn" type="button"
-                                            class="px-6 py-3 border border-white/10 rounded text-white">CANCELAR</button>
-                                        <button id="logout-btn" type="button" class="px-6 py-3 border border-white/10 rounded text-white">SAIR</button>
-                                        <button id="save-btn" type="button" class="px-6 py-3 bg-roxa text-white rounded">SALVAR</button>
+                        <button id="cancel-btn" type="button"
+                            class="px-6 py-3 border border-white/10 rounded text-white">CANCELAR</button>
+                        <button id="logout-btn" type="button" class="px-6 py-3 border border-white/10 rounded text-white">SAIR</button>
+                        <button id="save-btn" type="button" class="px-6 py-3 bg-roxa text-white rounded">SALVAR</button>
                     </div>
                 </form>
 
@@ -426,19 +431,21 @@ function firstName($full)
     <script src="assets/scripts/main.js"></script>
     <script>
         // Navegação: cancelar volta para a home
-        document.getElementById('cancel-btn').addEventListener('click', function () {
+        document.getElementById('cancel-btn').addEventListener('click', function() {
             window.location.href = 'index.php';
         });
 
         // Logout: chama API e redireciona
-        document.getElementById('logout-btn').addEventListener('click', async function () {
+        document.getElementById('logout-btn').addEventListener('click', async function() {
             if (!confirm('Deseja sair da sua conta?')) return;
             const btn = document.getElementById('logout-btn');
             btn.disabled = true;
             btn.setAttribute('aria-busy', 'true');
             btn.setAttribute('aria-disabled', 'true');
             try {
-                const res = await fetch('api/logout.php', { method: 'POST' });
+                const res = await fetch('api/logout.php', {
+                    method: 'POST'
+                });
                 // logout.php retorna JSON mesmo com session_destroy
                 window.srShowToast('Você saiu da conta', 'success');
                 window.location.href = 'index.php';
@@ -451,7 +458,7 @@ function firstName($full)
         });
 
         // Atualizar perfil
-        document.getElementById('save-btn').addEventListener('click', async function () {
+        document.getElementById('save-btn').addEventListener('click', async function() {
             const form = document.getElementById('profile-form');
             const data = new FormData(form);
             const btn = document.getElementById('save-btn');
@@ -488,7 +495,11 @@ function firstName($full)
 
                         // Se o backend retornou dados do vendedor (quando aplicável), recarregue a lista de produtos
                         if (json.vendedor && typeof loadSellerProducts !== 'undefined' && typeof CURRENT_SELLER_ID !== 'undefined' && CURRENT_SELLER_ID) {
-                            try { loadSellerProducts(CURRENT_SELLER_ID); } catch (err) { console.warn('Falha ao recarregar produtos:', err); }
+                            try {
+                                loadSellerProducts(CURRENT_SELLER_ID);
+                            } catch (err) {
+                                console.warn('Falha ao recarregar produtos:', err);
+                            }
                         }
                     } catch (err) {
                         console.warn('Erro ao aplicar atualização no DOM', err);
@@ -513,7 +524,7 @@ function firstName($full)
         });
 
         // Excluir conta (usa API criada)
-        document.getElementById('delete-account').addEventListener('click', async function () {
+        document.getElementById('delete-account').addEventListener('click', async function() {
             if (!confirm('Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita.')) return;
             const btn = document.getElementById('delete-account');
             btn.disabled = true;
@@ -544,7 +555,7 @@ function firstName($full)
         // Modal de alteração de senha
         const changeBtn = document.getElementById('change-password-btn');
         if (changeBtn) {
-            changeBtn.addEventListener('click', function () {
+            changeBtn.addEventListener('click', function() {
                 const modal = document.getElementById('sr-change-pass-modal');
                 if (!modal) return;
                 modal.classList.remove('hidden');
@@ -563,14 +574,17 @@ function firstName($full)
             });
 
             const form = modal.querySelector('form');
-            form.addEventListener('submit', async function (ev) {
+            form.addEventListener('submit', async function(ev) {
                 ev.preventDefault();
                 const fd = new FormData(form);
                 const btn = form.querySelector('button[type="submit"]');
                 btn.disabled = true;
                 btn.setAttribute('aria-busy', 'true');
                 try {
-                    const res = await fetch('api/change_password.php', { method: 'POST', body: fd });
+                    const res = await fetch('api/change_password.php', {
+                        method: 'POST',
+                        body: fd
+                    });
                     const json = await res.json();
                     if (res.ok && json.success) {
                         window.srShowToast('Senha alterada com sucesso', 'success');
@@ -588,34 +602,55 @@ function firstName($full)
             });
         }
 
-            // Formatação do campo de telefone: (xx) xxxx-xxxx enquanto digita
-            (function (){
-                const el = document.getElementById('profile-telefone');
-                if (!el) return;
-                function formatPhone(value){
-                    const digits = String(value || '').replace(/\D/g,'').slice(0,11);
-                    if (digits.length === 0) return '';
-                    if (digits.length <= 2) return '(' + digits;
-                    // até 6 dígitos após DDD: (xx) xxxx
-                    if (digits.length <= 6) return '(' + digits.slice(0,2) + ') ' + digits.slice(2);
-                    // 10 dígitos: (xx) xxxx-xxxx
-                    if (digits.length <= 10) return '(' + digits.slice(0,2) + ') ' + digits.slice(2,6) + '-' + digits.slice(6);
-                    // 11 dígitos (celular): (xx) xxxxx-xxxx
-                    return '(' + digits.slice(0,2) + ') ' + digits.slice(2,7) + '-' + digits.slice(7);
-                }
-                el.addEventListener('input', (e)=>{
-                    const pos = el.selectionStart;
-                    const before = el.value;
-                    const formatted = formatPhone(before);
-                    el.value = formatted;
-                    // try to keep caret at the end for simplicity
-                    el.selectionStart = el.selectionEnd = el.value.length;
-                });
-                // on paste, format after paste
-                el.addEventListener('paste', (e)=>{
-                    setTimeout(()=>{ el.value = formatPhone(el.value); }, 10);
-                });
-            })();
+        // Formatação do campo de telefone: (xx) xxxx-xxxx enquanto digita
+        (function() {
+            const el = document.getElementById('profile-telefone');
+            if (!el) return;
+
+            function formatPhone(value) {
+                const digits = String(value || '').replace(/\D/g, '').slice(0, 11);
+                if (digits.length === 0) return '';
+                if (digits.length <= 2) return '(' + digits;
+                // até 6 dígitos após DDD: (xx) xxxx
+                if (digits.length <= 6) return '(' + digits.slice(0, 2) + ') ' + digits.slice(2);
+                // 10 dígitos: (xx) xxxx-xxxx
+                if (digits.length <= 10) return '(' + digits.slice(0, 2) + ') ' + digits.slice(2, 6) + '-' + digits.slice(6);
+                // 11 dígitos (celular): (xx) xxxxx-xxxx
+                return '(' + digits.slice(0, 2) + ') ' + digits.slice(2, 7) + '-' + digits.slice(7);
+            }
+            el.addEventListener('input', (e) => {
+                const pos = el.selectionStart;
+                const before = el.value;
+                const formatted = formatPhone(before);
+                el.value = formatted;
+                // try to keep caret at the end for simplicity
+                el.selectionStart = el.selectionEnd = el.value.length;
+            });
+            // on paste, format after paste
+            el.addEventListener('paste', (e) => {
+                setTimeout(() => {
+                    el.value = formatPhone(el.value);
+                }, 10);
+            });
+        })();
+
+        //persistência de estado de checkbox usando sessionStorage
+        const checkbox1 = document.getElementById('consent1');
+        const checkbox2 = document.getElementById('consent2');
+        const savedState1 = sessionStorage.getItem('checkboxState1');
+        if (savedState1 === 'true') {
+            checkbox1.checked = true;
+        }
+        const savedState2 = sessionStorage.getItem('checkboxState2');
+        if (savedState2 === 'true') {
+            checkbox2.checked = true;
+        }
+        checkbox1.addEventListener('change', () => {
+            sessionStorage.setItem('checkboxState1', checkbox1.checked);
+        });
+        checkbox2.addEventListener('change', () => {
+            sessionStorage.setItem('checkboxState2', checkbox2.checked);
+        });
     </script>
 </body>
 
