@@ -49,6 +49,23 @@ function firstName($full)
     </script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <style>
+        /* Estiliza as opções do select para combinar com o tema escuro */
+        select[name="ddd"] option {
+            background-color: #090909;
+            /* Mesmo fundo do body */
+            color: white;
+            /* Texto branco */
+            padding: 8px;
+            /* Um pouco de padding para melhor aparência */
+        }
+
+        /* Opcional: Estiliza o select quando focado ou aberto (para consistência) */
+        select[name="ddd"]:focus {
+            outline: none;
+            border-color: #8B5CF6;
+            /* Cor roxa para foco */
+        }
+
         .side-link {
             transition: all .12s ease
         }
