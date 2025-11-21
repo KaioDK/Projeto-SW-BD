@@ -637,6 +637,7 @@ function firstName($full)
         //persistência de estado de checkbox usando sessionStorage
         const checkbox1 = document.getElementById('consent1');
         const checkbox2 = document.getElementById('consent2');
+        const salvarBtn = document.getElementById('save-btn');
         const savedState1 = sessionStorage.getItem('checkboxState1');
         if (savedState1 === 'true') {
             checkbox1.checked = true;
@@ -645,10 +646,8 @@ function firstName($full)
         if (savedState2 === 'true') {
             checkbox2.checked = true;
         }
-        checkbox1.addEventListener('change', () => {
+        salvarBtn.addEventListener('click', () => {
             sessionStorage.setItem('checkboxState1', checkbox1.checked);
-        });
-        checkbox2.addEventListener('change', () => {
             sessionStorage.setItem('checkboxState2', checkbox2.checked);
         });
     </script>
