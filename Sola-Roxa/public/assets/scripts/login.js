@@ -5,14 +5,14 @@ const toLogin = document.getElementById("to-login");
 const title = document.getElementById("form-title");
 
 function showRegister() {
-  // animate out login
+  // Animação: esconde o formulário de login
   gsap.to(loginForm, {
     duration: 0.4,
     opacity: 0,
     y: -20,
     pointerEvents: "none",
   });
-  // animate in register
+  // Animação: exibe o formulário de registro
   gsap.to(registerForm, {
     duration: 0.5,
     opacity: 1,
@@ -49,7 +49,7 @@ toLogin.addEventListener("click", (e) => {
   showLogin();
 });
 
-// small entrance animation
+// Animação de entrada suave dos elementos do formulário
 window.addEventListener("load", () => {
   gsap.from(".glass", { duration: 0.8, opacity: 0, y: 20 });
   gsap.from("#login-form > *", {
@@ -84,13 +84,16 @@ loginForm.addEventListener("submit", async (e) => {
     
     if (response.ok && data.success) {
       gsap.to(btn, { scale: 0.98, duration: 0.08, yoyo: true, repeat: 1 });
-      alert("Login realizado com sucesso!");
+      if (window.srShowToast) window.srShowToast('Login realizado com sucesso!', 'success');
+      else alert('Login realizado com sucesso!');
       window.location.href = 'index.php';
     } else {
-      alert(data.error || "Erro no login");
+      if (window.srShowToast) window.srShowToast(data.error || 'Erro no login', 'error');
+      else alert(data.error || 'Erro no login');
     }
   } catch (error) {
-    alert("Erro ao conectar: " + error.message);
+    if (window.srShowToast) window.srShowToast('Erro ao conectar: ' + error.message, 'error');
+    else alert('Erro ao conectar: ' + error.message);
   } finally {
     btn.disabled = false;
     btn.textContent = "Entrar";
@@ -99,14 +102,16 @@ loginForm.addEventListener("submit", async (e) => {
 
 registerForm.addEventListener("submit", async (e) => {
   e.preventDefault();
-  const name = registerForm.querySelector('input[type="text"]').value;
-  const email = registerForm.querySelector('input[type="email"]').value;
-  const password = registerForm.querySelectorAll('input[type="password"]')[0].value;
-  const confirmPassword = registerForm.querySelectorAll('input[type="password"]')[1].value;
+  const name = document.getElementById('register-name').value;
+  const email = document.getElementById('register-email').value;
+  const password = document.getElementById('register-password').value;
+  const confirmPassword = document.getElementById('register-password-confirm').value;
+  const cpf = document.getElementById('register-cpf') ? document.getElementById('register-cpf').value : '';
   const btn = registerForm.querySelector('button[type="submit"]');
   
   if (password !== confirmPassword) {
-    alert("As senhas não coincidem!");
+    if (window.srShowToast) window.srShowToast('As senhas não coincidem!', 'error');
+    else alert('As senhas não coincidem!');
     return;
   }
   
@@ -118,6 +123,7 @@ registerForm.addEventListener("submit", async (e) => {
     formData.append('name', name);
     formData.append('email', email);
     formData.append('password', password);
+    if (cpf) formData.append('cpf', cpf);
     
     const response = await fetch('api/register_usuario.php', {
       method: 'POST',
@@ -128,19 +134,22 @@ registerForm.addEventListener("submit", async (e) => {
     try {
       data = await response.json();
     } catch (e) {
-      // fallback to text if server returned non-json or empty
+      // Em fallback: se o servidor não retornou JSON, tenta ler o texto bruto
       const txt = await response.text();
       data = { error: txt || 'Invalid server response' };
     }
 
     if (response.ok && data.success) {
-      alert("Cadastro realizado! Faça login agora.");
+      if (window.srShowToast) window.srShowToast('Cadastro realizado! Faça login agora.', 'success');
+      else alert('Cadastro realizado! Faça login agora.');
       showLogin();
     } else {
-      alert(data.error || "Erro no cadastro");
+      if (window.srShowToast) window.srShowToast(data.error || 'Erro no cadastro', 'error');
+      else alert(data.error || 'Erro no cadastro');
     }
   } catch (error) {
-    alert("Erro ao conectar: " + error.message);
+    if (window.srShowToast) window.srShowToast('Erro ao conectar: ' + error.message, 'error');
+    else alert('Erro ao conectar: ' + error.message);
   } finally {
     btn.disabled = false;
     btn.textContent = "Cadastrar";

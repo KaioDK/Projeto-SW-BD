@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../backend/auth.php';
-// Only logged users may access the cart
+// Apenas usuários autenticados podem acessar o carrinho
 requireUser();
 ?>
 <!DOCTYPE html>
@@ -14,13 +14,13 @@ requireUser();
       content="Carrinho e checkout - Sola Roxa marketplace"
     />
 
-    <!-- Fonts -->
+    <!-- Fonts: import das fontes Google utilizadas no site -->
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
       rel="stylesheet"
     />
 
-    <!-- Tailwind CDN -->
+    <!-- Tailwind CDN: uso rápido do Tailwind para estilos utilitários -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -33,10 +33,11 @@ requireUser();
       };
     </script>
 
-    <!-- GSAP -->
+    <!-- GSAP: biblioteca de animações (entradas e transições) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <!-- Lucide icons -->
+    <!-- Lucide icons: ícones SVG usados na UI -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <link rel="icon" href="assets/img/favicon/favicon_io/favicon.ico" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -98,7 +99,7 @@ requireUser();
           class="hidden md:flex gap-8 text-sm text-white-200 uppercase tracking-wider"
         >
           <li>
-            <a class="hover:text-roxa transition" href="index.php/#lancamentos"
+            <a class="hover:text-roxa transition" href="index.php#lancamentos"
               >Lançamentos</a
             >
           </li>
@@ -108,10 +109,10 @@ requireUser();
             >
           </li>
           <li>
-            <a class="hover:text-roxa transition" href="index.php/#feminino">Feminino</a>
+            <a class="hover:text-roxa transition" href="index.php#feminino">Feminino</a>
           </li>
           <li>
-            <a class="hover:text-roxa transition" href="index.php/#colecoes"
+            <a class="hover:text-roxa transition" href="index.php#colecoes"
               >Colecionáveis</a
             >
           </li>
@@ -143,7 +144,7 @@ requireUser();
             </svg>
           </button>
           <!-- user -->
-          <a href="auth.php">
+          <a href="profile.php">
             <button
               aria-label="conta"
               class="p-2 rounded-md hover:bg-white/5 transition cursor-pointer"
@@ -192,7 +193,7 @@ requireUser();
 
     <main class="pt-20 pb-16">
       <div class="max-w-7xl mx-auto px-6 sm:px-8">
-        <!-- Progress bar -->
+        <!-- Barra de progresso do checkout (etapas) -->
         <div class="mb-8">
           <div class="flex items-center justify-center gap-6">
             <div id="step-cart" class="flex items-center gap-3">
@@ -224,7 +225,7 @@ requireUser();
           </div>
         </div>
 
-        <!-- Cart Section -->
+        <!-- Seção do Carrinho: lista de itens e resumo do pedido -->
         <section
           id="cart-section"
           class="grid grid-cols-1 lg:grid-cols-12 gap-8"
@@ -234,7 +235,7 @@ requireUser();
               Seu Carrinho
             </h1>
             <div class="mt-6 space-y-4">
-              <!-- Item 1 -->
+              <!-- Item 1: exemplo de cartão de item no carrinho -->
               <div class="flex gap-4 items-center p-4 rounded-xl card">
                 <img
                   src="https://cdn.runrepeat.com/storage/gallery/product_primary/32545/adidas-ozweego-21158485-720.jpg"
@@ -287,7 +288,7 @@ requireUser();
                 </div>
               </div>
 
-              <!-- Item 2 -->
+              <!-- Item 2: exemplo de cartão de item no carrinho -->
               <div class="flex gap-4 items-center p-4 rounded-xl card">
                 <img
                   src="https://cdn.runrepeat.com/storage/gallery/product_primary/38821/new-balance-9060-21208162-720.jpg"
@@ -339,7 +340,7 @@ requireUser();
                 </div>
               </div>
 
-              <!-- Item 3 -->
+              <!-- Item 3: exemplo de cartão de item no carrinho -->
               <div class="flex gap-4 items-center p-4 rounded-xl card">
                 <img
                   src="https://cdn.runrepeat.com/storage/gallery/product_primary/39411/nike-zoom-vomero-5-lab-test-and-review-3-21506315-720.jpg"
@@ -393,7 +394,7 @@ requireUser();
             </div>
           </div>
 
-          <!-- Order summary -->
+          <!-- Resumo do pedido (subtotal, frete, total) -->
           <aside class="lg:col-span-4">
             <div class="p-6 rounded-xl card sticky top-28">
               <h2 class="font-semibold text-lg">Resumo do Pedido</h2>
@@ -420,7 +421,7 @@ requireUser();
           </aside>
         </section>
 
-        <!-- Checkout Section (hidden initially) -->
+        <!-- Seção de Checkout (inicialmente oculto) -->
         <section id="checkout-section" class="hidden mt-12">
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <div class="lg:col-span-8">
@@ -531,7 +532,7 @@ requireUser();
               <div class="p-6 rounded-xl card">
                 <h3 class="font-semibold">Resumo do Pedido</h3>
                 <div id="mini-list" class="mt-4 space-y-3">
-                  <!-- small items populated by JS -->
+                  <!-- Itens compactos preenchidos pelo JavaScript durante o checkout -->
                 </div>
                 <div class="mt-4 flex justify-between text-white/70">
                   <span>Subtotal</span><span id="mini-sub">R$ 0</span>
@@ -566,21 +567,21 @@ requireUser();
           <ul class="space-y-3">
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >FAQ</a
               >
             </li>
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >Envios</a
               >
             </li>
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >Devoluções</a
               >
@@ -593,14 +594,14 @@ requireUser();
           <ul class="space-y-3">
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >Nosso manifesto</a
               >
             </li>
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >Trabalhe conosco</a
               >
@@ -613,14 +614,14 @@ requireUser();
           <ul class="space-y-3">
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >Instagram</a
               >
             </li>
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >Twitter</a
               >
@@ -633,14 +634,14 @@ requireUser();
           <ul class="space-y-3">
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >Política de Privacidade</a
               >
             </li>
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >Termos de Uso</a
               >
@@ -657,7 +658,7 @@ requireUser();
           </p>
           <div class="flex items-center gap-6">
             <a
-              href="#"
+              href="javascript:void(0)"
               class="text-white/60 hover:text-white transition-colors text-sm"
               >Contato</a
             >
@@ -666,7 +667,7 @@ requireUser();
       </div>
     </footer>
 
-    <!-- Confirmation modal -->
+    <!-- Modal de confirmação exibido após finalização do pedido -->
     <div
       id="modal"
       class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50"
@@ -687,6 +688,7 @@ requireUser();
       </div>
     </div>
 
+    <script src="assets/scripts/main.js"></script>
     <script src="assets/scripts/cart.js"></script>
   </body>
 </html>

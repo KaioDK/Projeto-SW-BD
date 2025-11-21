@@ -47,8 +47,9 @@
     <!-- GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
-    <!-- Favicon (assumes favicon exists at root) -->
+    <!-- Favicon (assumes favicon exists at root). Also link to local asset for environments without root favicon -->
     <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" href="assets/img/favicon/favicon_io/favicon.ico" />
 
     <style>
       body {
@@ -93,17 +94,17 @@
           class="hidden md:flex gap-8 text-sm text-white-200 uppercase tracking-wider"
         >
           <li>
-            <a class="hover:text-roxa transition" href="index.php/#lancamentos"
+            <a class="hover:text-roxa transition" href="index.php#lancamentos"
               >Lançamentos</a
             >
           </li>
           <li>
-            <a class="hover:text-roxa transition" href="index.php/#masculino"
+            <a class="hover:text-roxa transition" href="index.php#masculino"
               >Masculino</a
             >
           </li>
           <li>
-            <a class="hover:text-roxa transition" href="index.php/#feminino">Feminino</a>
+            <a class="hover:text-roxa transition" href="index.php#feminino">Feminino</a>
           </li>
           <li>
             <a class="hover:text-roxa transition" href="#colecoes"
@@ -138,7 +139,7 @@
             </svg>
           </button>
           <!-- user -->
-          <a href="auth.php">
+          <a href="profile.php">
             <button
               aria-label="conta"
               class="p-2 rounded-md hover:bg-white/5 transition cursor-pointer"
@@ -256,7 +257,7 @@
                 </div>
 
                 <div class="flex items-center justify-between text-sm">
-                  <a href="#" class="text-white/60 hover:text-roxa transition"
+                  <a href="javascript:void(0)" class="text-white/60 hover:text-roxa transition"
                     >Esqueceu sua senha?</a
                   >
                   <div class="flex items-center gap-2">
@@ -350,6 +351,8 @@
                 <div>
                   <label class="text-sm text-white/70">Nome completo</label>
                   <input
+                    id="register-name"
+                    name="name"
                     type="text"
                     placeholder="Seu nome"
                     class="w-full mt-2 p-3 rounded-lg bg-transparent border border-white/10 text-white placeholder-white/40 input-glow focus:border-roxa outline-none transition"
@@ -359,6 +362,8 @@
                 <div>
                   <label class="text-sm text-white/70">E-mail</label>
                   <input
+                    id="register-email"
+                    name="email"
                     type="email"
                     placeholder="seu@exemplo.com"
                     class="w-full mt-2 p-3 rounded-lg bg-transparent border border-white/10 text-white placeholder-white/40 input-glow focus:border-roxa outline-none transition"
@@ -369,6 +374,8 @@
                   <div>
                     <label class="text-sm text-white/70">Senha</label>
                     <input
+                      id="register-password"
+                      name="password"
                       type="password"
                       placeholder="••••••"
                       class="w-full mt-2 p-3 rounded-lg bg-transparent border border-white/10 text-white placeholder-white/40 input-glow focus:border-roxa outline-none transition"
@@ -378,12 +385,25 @@
                   <div>
                     <label class="text-sm text-white/70">Confirmar senha</label>
                     <input
+                      id="register-password-confirm"
+                      name="password_confirm"
                       type="password"
                       placeholder="••••••"
                       class="w-full mt-2 p-3 rounded-lg bg-transparent border border-white/10 text-white placeholder-white/40 input-glow focus:border-roxa outline-none transition"
                       required
                     />
                   </div>
+                </div>
+
+                <div>
+                  <label class="text-sm text-white/70">CPF</label>
+                  <input
+                    id="register-cpf"
+                    name="cpf"
+                    type="text"
+                    placeholder="000.000.000-00"
+                    class="w-full mt-2 p-3 rounded-lg bg-transparent border border-white/10 text-white placeholder-white/40 input-glow focus:border-roxa outline-none transition"
+                  />
                 </div>
 
                 <div>
@@ -419,21 +439,21 @@
           <ul class="space-y-3">
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >FAQ</a
               >
             </li>
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >Envios</a
               >
             </li>
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >Devoluções</a
               >
@@ -446,14 +466,14 @@
           <ul class="space-y-3">
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >Nosso manifesto</a
               >
             </li>
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >Trabalhe conosco</a
               >
@@ -466,14 +486,14 @@
           <ul class="space-y-3">
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >Instagram</a
               >
             </li>
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >Twitter</a
               >
@@ -486,14 +506,14 @@
           <ul class="space-y-3">
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >Política de Privacidade</a
               >
             </li>
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >Termos de Uso</a
               >
@@ -510,7 +530,7 @@
           </p>
           <div class="flex items-center gap-6">
             <a
-              href="#"
+              href="javascript:void(0)"
               class="text-white/60 hover:text-white transition-colors text-sm"
               >Contato</a
             >

@@ -7,9 +7,10 @@
   <title>Sola Roxa | Marketplace de sneakers</title>
   <meta name="description" content="Sola Roxa — Urban, premium sneakers marketplace inspired by editorial fashion." />
   <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="icon" href="assets/img/favicon/favicon_io/favicon.ico" />
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 
-  <!-- Inter font -->
+  <!-- Inter font: fonte principal para textos e UI -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,7 +35,7 @@
       scroll-behavior: smooth;
     }
   </style>
-  <!-- Tailwind Play CDN (fast for prototypes) -->
+  <!-- Tailwind Play CDN: configuração Tailwind usada para protótipos rápidos -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     // Tailwind config for custom color and fonts
@@ -55,12 +56,12 @@
     };
   </script>
 
-  <!-- GSAP for animations -->
+  <!-- GSAP: biblioteca de animações utilizada para transições do hero e componentes -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 
 <body class="bg-[#090909] text-white font-sans antialiased leading-normal">
-  <!-- Header / Navbar -->
+  <!-- Header / Navbar: navegação superior fixa com links principais -->
   <header id="site-header" class="fixed w-full z-40 top-0 transition-all duration-300">
     <nav class="max-w-7xl mx-auto px-6 sm:px-8 flex items-center justify-between h-16 transition-all duration-300">
       <div class="flex items-center gap-6">
@@ -95,7 +96,7 @@
           </svg>
         </button>
         <!-- user -->
-        <a href="auth.php">
+        <a href="profile.php">
           <button aria-label="conta" class="p-2 rounded-md hover:bg-white/5 transition cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
               stroke="currentColor" class="size-6">
@@ -118,13 +119,13 @@
     </nav>
   </header>
 
-  <!-- Hero -->
+  <!-- Hero: seção de destaque com vídeo de fundo e CTAs -->
   <section id="hero" class="relative h-screen w-full overflow-hidden">
-    <!-- background video (use muted autoplay loop) -->
+    <!-- Vídeo de fundo: autoplay silencioso em loop; há fallback para imagem -->
     <video id="hero-video" class="absolute inset-0 w-full h-full object-cover" autoplay muted loop playsinline
       preload="auto">
       <source src="assets/videos/videonatal.mp4" type="video/mp4" />
-      <!-- fallback image -->
+      <!-- Imagem de fallback caso o vídeo não carregue -->
       <img src="assets/img/carroussel/nike-o-fenomeno-jordan.jpg" alt="Sneakers urbanos"
         class="w-full h-full object-cover" />
     </video>
@@ -156,7 +157,7 @@
     </div>
   </section>
 
-  <!-- Featured Sneakers Carousel -->
+  <!-- Seção de lançamentos em destaque (carrossel) -->
   <section id="lancamentos" class="max-w-7xl mx-auto px-6 sm:px-8 py-20">
     <div class="flex items-center justify-between mb-6">
       <h2 class="text-2xl font-bold">Lançamentos</h2>
@@ -176,7 +177,7 @@
       </button>
 
       <div id="featured" class="flex gap-6 overflow-x-auto scrollbar-hide snap-x snap-mandatory scroll-smooth py-2">
-        <!-- sample cards -->
+        <!-- Cartões de exemplo para o carrossel de lançamentos -->
         <article
           class="min-w-[260px] md:min-w-[320px] snap-start bg-gradient-to-b from-white/[0.02] to-transparent backdrop-blur-sm rounded-lg overflow-hidden border border-white/10 hover:border-white/20 hover:scale-[1.02] transition-all duration-300">
           <img loading="lazy"
@@ -208,7 +209,7 @@
             <p class="text-sm text-white/60 mt-1">R$ 1.299</p>
             <div class="mt-4 flex items-center justify-between">
               <a class="inline-flex items-center gap-2 text-white hover:text-purple-300 font-medium transition-colors"
-                href="#">
+                href="javascript:void(0)">
                 Ver Mais
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -229,7 +230,7 @@
             <p class="text-sm text-white/60 mt-1">R$ 699</p>
             <div class="mt-4 flex items-center justify-between">
               <a class="inline-flex items-center gap-2 text-white hover:text-purple-300 font-medium transition-colors"
-                href="#">
+                href="javascript:void(0)">
                 Ver Mais
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -250,7 +251,7 @@
             <p class="text-sm text-white/60 mt-1">R$ 1.234</p>
             <div class="mt-4 flex items-center justify-between">
               <a class="inline-flex items-center gap-2 text-white hover:text-purple-300 font-medium transition-colors"
-                href="#">
+                href="javascript:void(0)">
                 Ver Mais
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -331,7 +332,7 @@
           curadoria feitas por especialistas.
         </p>
         <div class="mt-8 flex flex-wrap gap-4">
-          <a href="auth.php"
+          <a href="profile.php"
             class="group px-6 py-3 bg-white text-black rounded-md font-semibold hover:bg-purple-50 transition-all duration-300 flex items-center gap-2">
             Comece Agora
             <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24"
@@ -339,7 +340,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
           </a>
-          <a href="#"
+          <a href="javascript:void(0)"
             class="px-6 py-3 border border-white/20 text-white rounded-md hover:bg-white/5 transition-all duration-300">Saiba
             Como Funciona</a>
         </div>
@@ -460,13 +461,13 @@
         <h5 class="font-semibold text-white mb-4">Ajuda</h5>
         <ul class="space-y-3">
           <li>
-            <a href="#" class="text-white/60 hover:text-white transition-colors">FAQ</a>
+            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">FAQ</a>
           </li>
           <li>
-            <a href="#" class="text-white/60 hover:text-white transition-colors">Envios</a>
+            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Envios</a>
           </li>
           <li>
-            <a href="#" class="text-white/60 hover:text-white transition-colors">Devoluções</a>
+            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Devoluções</a>
           </li>
         </ul>
       </div>
@@ -474,11 +475,13 @@
       <div>
         <h5 class="font-semibold text-white mb-4">Sobre Nós</h5>
         <ul class="space-y-3">
+        <li>
+            <a href="sobre.php" class="text-white/60 hover:text-white transition-colors">
+            Sobre Sola Roxa
+            </a>
+        </li>
           <li>
-            <a href="#" class="text-white/60 hover:text-white transition-colors">Nosso manifesto</a>
-          </li>
-          <li>
-            <a href="#" class="text-white/60 hover:text-white transition-colors">Trabalhe conosco</a>
+            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Trabalhe conosco</a>
           </li>
         </ul>
       </div>
@@ -487,10 +490,10 @@
         <h5 class="font-semibold text-white mb-4">Redes Sociais</h5>
         <ul class="space-y-3">
           <li>
-            <a href="#" class="text-white/60 hover:text-white transition-colors">Instagram</a>
+            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Instagram</a>
           </li>
           <li>
-            <a href="#" class="text-white/60 hover:text-white transition-colors">Twitter</a>
+            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Twitter</a>
           </li>
         </ul>
       </div>
@@ -499,10 +502,10 @@
         <h5 class="font-semibold text-white mb-4">Termos</h5>
         <ul class="space-y-3">
           <li>
-            <a href="#" class="text-white/60 hover:text-white transition-colors">Política de Privacidade</a>
+            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Política de Privacidade</a>
           </li>
           <li>
-            <a href="#" class="text-white/60 hover:text-white transition-colors">Termos de Uso</a>
+            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Termos de Uso</a>
           </li>
         </ul>
       </div>
@@ -513,7 +516,7 @@
           © <span id="year"></span> SOLA ROXA — Todos os direitos reservados
         </p>
         <div class="flex items-center gap-6">
-          <a href="#" class="text-white/60 hover:text-white transition-colors text-sm">Contato</a>
+          <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors text-sm">Contato</a>
         </div>
       </div>
     </div>

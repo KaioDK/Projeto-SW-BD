@@ -20,7 +20,7 @@ try {
         exit;
     }
 
-    // check existing (schema uses id_vendedor)
+    // Verifica se o email já está registrado (a tabela usa `id_vendedor` como PK)
     $stmt = $pdo->prepare('SELECT id_vendedor FROM vendedor WHERE email = ? LIMIT 1');
     $stmt->execute([$email]);
     if ($stmt->fetch()) {
@@ -30,13 +30,14 @@ try {
     }
 
     $hash = password_hash($password, PASSWORD_DEFAULT);
-    // The `vendedor` table requires CPF (not null). 
-    // If not provided, generate a unique one (format: random 11 digits)
+    // A tabela `vendedor` exige CPF (campo NOT NULL).
+    // Se o CPF não for enviado, gera-se um CPF único temporário de 11 dígitos
+    // para não violar a restrição durante o cadastro via frontend.
     $cpf = trim($_POST['cpf'] ?? '');
     if (empty($cpf)) {
-        // Generate unique CPF: random 11-digit number
+        // Gera um CPF único: número aleatório de 11 dígitos
         $cpf = str_pad(rand(10000000000, 99999999999), 11, '0', STR_PAD_LEFT);
-        // Ensure uniqueness
+        // Verifica a unicidade e re-genera se necessário (limite de tentativas).
         $attempts = 0;
         while ($attempts < 10) {
             $checkStmt = $pdo->prepare('SELECT id_vendedor FROM vendedor WHERE CPF = ?');

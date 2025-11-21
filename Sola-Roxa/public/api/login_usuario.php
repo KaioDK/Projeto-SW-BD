@@ -18,7 +18,7 @@ if (!$email || !$password) {
     exit;
 }
 
-$stmt = $pdo->prepare('SELECT id_cliente, nome, email, senha FROM usuario WHERE email = ? LIMIT 1');
+$stmt = $pdo->prepare('SELECT id_cliente, nome, email, senha, CPF FROM usuario WHERE email = ? LIMIT 1');
 $stmt->execute([$email]);
 $u = $stmt->fetch();
 
@@ -28,11 +28,13 @@ if (!$u || !password_verify($password, $u['senha'])) {
     exit;
 }
 
-// set session for user (map id_cliente -> id)
+// Define sessão do usuário autenticado (mapeia id_cliente -> id)
+// - Efeito: altera `$_SESSION['user']` usado pelas páginas públicas
 $_SESSION['user'] = [
     'id' => $u['id_cliente'],
     'nome' => $u['nome'],
     'email' => $u['email'],
+    'cpf' => $u['CPF'] ?? null,
 ];
 
 echo json_encode(['success' => true, 'user' => $_SESSION['user']]);
