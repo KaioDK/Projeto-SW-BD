@@ -194,7 +194,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div>
-            <img src="assets/img/carroussel/pexels-jddaniel-2385477.jpg" alt="lifestyle"
+            <img src="assets/img/carroussel/shoes-4026771.jpg" alt="lifestyle"
               class="w-full h-80 object-cover rounded-md shadow-lg" />
           </div>
           <div class="text-left">
@@ -246,7 +246,7 @@
     <!-- Lifestyle full-width banner -->
     <section class="relative my-12">
       <div class="h-72 md:h-96 w-full overflow-hidden rounded-md">
-        <img src="assets/img/carroussel/Rebook campaign.png" alt="friends laughing"
+        <img src="assets/img/carroussel/child-8179655.jpg" alt="friends laughing"
           class="w-full h-full object-cover brightness-75" />
         <div class="absolute inset-0 flex items-center justify-center">
           <div class="text-center">
