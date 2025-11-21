@@ -105,18 +105,19 @@
             </svg>
           </button>
         </a>
-        <!-- cart -->
-        <a href="cart.php">
+        <!-- cart with badge -->
+        <a href="cart.php" class="relative">
           <button aria-label="carrinho" class="p-2 rounded-md hover:bg-white/5 transition cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
               stroke="currentColor" class="size-6">
               <path stroke-linecap="round" stroke-linejoin="round"
                 d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
             </svg>
+            <span id="cart-count"
+              class="absolute -top-2 -right-2 min-w-[22px] h-[22px] px-1 rounded-full bg-roxa text-black text-xs font-bold flex items-center justify-center border border-white/10"
+              style="display:none;">0</span>
           </button>
         </a>
-      </div>
-    </nav>
   </header>
 
   <!-- Hero: seção de destaque com vídeo de fundo e CTAs -->
@@ -475,11 +476,11 @@
       <div>
         <h5 class="font-semibold text-white mb-4">Sobre Nós</h5>
         <ul class="space-y-3">
-        <li>
+          <li>
             <a href="sobre.php" class="text-white/60 hover:text-white transition-colors">
-            Sobre Sola Roxa
+              Sobre Sola Roxa
             </a>
-        </li>
+          </li>
           <li>
             <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Trabalhe conosco</a>
           </li>
@@ -502,7 +503,8 @@
         <h5 class="font-semibold text-white mb-4">Termos</h5>
         <ul class="space-y-3">
           <li>
-            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Política de Privacidade</a>
+            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Política de
+              Privacidade</a>
           </li>
           <li>
             <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Termos de Uso</a>

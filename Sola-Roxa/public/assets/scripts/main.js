@@ -168,3 +168,22 @@ if (featured) {
   // expose globally
   window.srShowToast = showToast;
 })();
+
+// Atualiza badge do carrinho no header
+async function srUpdateCartCount() {
+  const el = qs('#cart-count');
+  if (!el) return;
+  try {
+    const res = await fetch('api/get_cart.php');
+    const data = await res.json();
+    const count = data.items_count || 0;
+    el.textContent = count;
+    el.style.display = count > 0 ? 'flex' : 'none';
+  } catch (e) {
+    el.textContent = '0';
+    el.style.display = 'none';
+  }
+}
+window.srUpdateCartCount = srUpdateCartCount;
+// Atualiza ao carregar página
+window.addEventListener('DOMContentLoaded', srUpdateCartCount);

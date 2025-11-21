@@ -100,6 +100,17 @@
 <?php
 // Pega o ID do produto da URL
 $product_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+session_start();
+$isSellerOfProduct = false;
+if ($product_id > 0 && isset($_SESSION['vendedor']['id'])) {
+  require_once __DIR__ . '/../backend/db.php';
+  $stmt = $pdo->prepare('SELECT id_vendedor FROM produto WHERE id_produto = ? LIMIT 1');
+  $stmt->execute([$product_id]);
+  $pidVendedor = $stmt->fetchColumn();
+  if ($pidVendedor && $pidVendedor == $_SESSION['vendedor']['id']) {
+    $isSellerOfProduct = true;
+  }
+}
 ?>
 
 <body class="font-pop text-white">
@@ -114,16 +125,16 @@ $product_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
       <ul class="hidden md:flex gap-8 text-sm text-white-200 uppercase tracking-wider">
         <li>
-          <a class="hover:text-roxa transition" href="index.php#lancamentos">Lançamentos</a>
+          <a class="hover:text-roxa transition" href="#lancamentos">Lançamentos</a>
         </li>
         <li>
-          <a class="hover:text-roxa transition" href="index.php#masculino">Masculino</a>
+          <a class="hover:text-roxa transition" href="#masculino">Masculino</a>
         </li>
         <li>
-          <a class="hover:text-roxa transition" href="index.php#feminino">Feminino</a>
+          <a class="hover:text-roxa transition" href="#feminino">Feminino</a>
         </li>
         <li>
-          <a class="hover:text-roxa transition" href="index.php#colecoes">Colecionáveis</a>
+          <a class="hover:text-roxa transition" href="#colecoes">Colecionáveis</a>
         </li>
         <li>
           <a class="hover:text-roxa transition" href="catalog.php">Marketplace</a>
@@ -148,18 +159,19 @@ $product_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
             </svg>
           </button>
         </a>
-        <!-- cart -->
-        <a href="cart.php">
+        <!-- cart with badge -->
+        <a href="cart.php" class="relative">
           <button aria-label="carrinho" class="p-2 rounded-md hover:bg-white/5 transition cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
               stroke="currentColor" class="size-6">
               <path stroke-linecap="round" stroke-linejoin="round"
                 d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
             </svg>
+            <span id="cart-count"
+              class="absolute -top-2 -right-2 min-w-[22px] h-[22px] px-1 rounded-full bg-roxa text-black text-xs font-bold flex items-center justify-center border border-white/10"
+              style="display:none;">0</span>
           </button>
         </a>
-      </div>
-    </nav>
   </header>
 
   <main class="pt-24 pb-16">
@@ -171,10 +183,6 @@ $product_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
         <div class="lg:col-span-7">
           <div class="rounded-xl overflow-hidden card p-6">
             <div class="relative">
-                <img id="main-image"
-                src="https://cdn.runrepeat.com/storage/gallery/product_primary/39891/nike-ja-1-21212250-720.jpg"
-                alt="Air Nova Roxa" class="w-full h-[540px] object-cover rounded-lg cursor-zoom-in" loading="lazy">
-
               <button id="fav-btn" class="absolute top-4 right-4 p-3 rounded-full bg-white/6 fav-heart"
                 aria-label="Favoritar">
                 <i data-lucide="heart" class="text-roxa"></i>
@@ -183,29 +191,6 @@ $product_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
             <!-- thumbnails -->
             <div class="mt-4 flex gap-3 overflow-x-auto">
-              <button class="thumb w-24 h-16 rounded-md overflow-hidden"
-                data-src="https://cdn.runrepeat.com/storage/gallery/product_primary/39891/nike-ja-1-21212250-720.jpg">
-                <img src="https://cdn.runrepeat.com/storage/gallery/product_primary/39891/nike-ja-1-21212250-720.jpg"
-                  class="w-full h-full object-cover" loading="lazy">
-              </button>
-              <button class="thumb w-24 h-16 rounded-md overflow-hidden"
-                data-src="https://cdn.runrepeat.com/storage/gallery/product_content/39891/nike-ja-1-review-20528489-720.jpg">
-                <img
-                  src="https://cdn.runrepeat.com/storage/gallery/product_content/39891/nike-ja-1-review-20528489-720.jpg"
-                  class="w-full h-full object-cover" loading="lazy">
-              </button>
-              <button class="thumb w-24 h-16 rounded-md overflow-hidden"
-                data-src="https://cdn.runrepeat.com/storage/gallery/product_content/39891/nike-ja-1-outsole-20528492-720.jpg">
-                <img
-                  src="https://cdn.runrepeat.com/storage/gallery/product_content/39891/nike-ja-1-outsole-20528492-720.jpg"
-                  class="w-full h-full object-cover" loading="lazy">
-              </button>
-              <button class="thumb w-24 h-16 rounded-md overflow-hidden"
-                data-src="https://cdn.runrepeat.com/storage/gallery/product_content/39891/nike-ja-1-heel-tab-20528479-720.jpg">
-                <img
-                  src="https://cdn.runrepeat.com/storage/gallery/product_content/39891/nike-ja-1-heel-tab-20528479-720.jpg"
-                  class="w-full h-full object-cover" loading="lazy">
-              </button>
             </div>
           </div>
         </div>
@@ -227,9 +212,7 @@ $product_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
         </div>
 
         <div id="tab-desc" class="mt-6 tab-content">
-          <p class="text-white/70">O Nike Ja 1 é o tênis de assinatura de Ja Morant. É um calçado de basquete que
-            equilibra alto desempenho, agilidade e amortecimento responsivo na quadra, com um design moderno e arrojado
-            que o torna um item de destaque também para o estilo casual/streetwear.</p>
+          <p class="text-white/70"></p>
         </div>
       </section>
 
@@ -404,11 +387,19 @@ $product_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
                   })()}
                 </div>
                 <div class="flex-shrink-0">
+                  <?php if ($isSellerOfProduct): ?>
+                  <button id="add-cart" class="px-6 py-3 rounded-md btn-glow bg-gray-500 text-white font-semibold cursor-not-allowed" disabled title="Você não pode comprar seu próprio produto">Adicionar ao Carrinho</button>
+                  <?php else: ?>
                   <button id="add-cart" class="px-6 py-3 rounded-md btn-glow bg-roxa text-black font-semibold">Adicionar ao Carrinho</button>
+                  <?php endif; ?>
                 </div>
               </div>
               <div class="mt-3">
+                <?php if ($isSellerOfProduct): ?>
+                <button id="buy-now" class="w-full mt-3 px-6 py-3 rounded-md border border-gray-500 text-gray-500 bg-gray-800 cursor-not-allowed" disabled title="Você não pode comprar seu próprio produto">Comprar Agora</button>
+                <?php else: ?>
                 <button id="buy-now" class="w-full mt-3 px-6 py-3 rounded-md border border-cyan text-cyan hover:bg-cyan/10 transition">Comprar Agora</button>
+                <?php endif; ?>
               </div>
             </div>
             <div class="mt-6 text-sm text-white/60">Compartilhe • <button class="text-white/80">Reportar</button></div>
@@ -432,13 +423,59 @@ $product_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
         document.querySelectorAll('.size-btn').forEach(x => x.classList.remove('active'));
         b.classList.add('active');
       }));
-      document.getElementById('add-cart').addEventListener('click', () => {
+      // Pre-seleciona o primeiro tamanho disponível para evitar envio sem tamanho
+      (function ensureDefaultSize() {
+        const btns = document.querySelectorAll('.size-btn');
+        if (btns && btns.length > 0 && !document.querySelector('.size-btn.active')) {
+          btns[0].classList.add('active');
+        }
+      })();
+      document.getElementById('add-cart').addEventListener('click', async () => {
         const btn = document.getElementById('add-cart');
         gsap.fromTo(btn, { scale: 1 }, { scale: 0.98, duration: 0.08, yoyo: true, repeat: 1 });
-        const cc = document.getElementById('cart-count');
-        if (cc) { cc.textContent = Number(cc.textContent || 0) + 1; }
+        // determine selected size
+        const selectedSize = document.querySelector('.size-btn.active') ? document.querySelector('.size-btn.active').textContent.trim() : '';
+        try {
+          const fd = new FormData();
+          fd.append('id_produto', product.id_produto || product.id);
+          if (selectedSize) fd.append('tamanho', selectedSize);
+          fd.append('quantidade', 1);
+          const res = await fetch('api/add_to_cart.php', { method: 'POST', body: fd });
+          const data = await res.json();
+          if (data && data.success) {
+            const cc = document.getElementById('cart-count');
+            if (cc) cc.textContent = data.items_count;
+            if (window.srShowToast) window.srShowToast('Adicionado ao carrinho', 'success');
+          } else {
+            const msg = data && data.error ? data.error : 'Erro ao adicionar ao carrinho';
+            if (window.srShowToast) window.srShowToast(msg, 'error'); else alert(msg);
+          }
+        } catch (e) {
+          if (window.srShowToast) window.srShowToast('Erro de conexão', 'error'); else alert('Erro de conexão: ' + e.message);
+        }
       });
-      document.getElementById('buy-now').addEventListener('click', () => location.href = 'cart.php');
+      document.getElementById('buy-now').addEventListener('click', async () => {
+        const btn = document.getElementById('buy-now');
+        gsap.fromTo(btn, { scale: 1 }, { scale: 0.98, duration: 0.08, yoyo: true, repeat: 1 });
+        const selectedSize = document.querySelector('.size-btn.active') ? document.querySelector('.size-btn.active').textContent.trim() : '';
+        try {
+          const fd = new FormData();
+          fd.append('id_produto', product.id_produto || product.id);
+          if (selectedSize) fd.append('tamanho', selectedSize);
+          fd.append('quantidade', 1);
+          const res = await fetch('api/add_to_cart.php', { method: 'POST', body: fd });
+          const data = await res.json();
+          if (data && data.success) {
+            // redirect straight to cart/checkout
+            window.location.href = 'cart.php';
+          } else {
+            const msg = data && data.error ? data.error : 'Erro ao adicionar ao carrinho';
+            if (window.srShowToast) window.srShowToast(msg, 'error'); else alert(msg);
+          }
+        } catch (e) {
+          if (window.srShowToast) window.srShowToast('Erro de conexão', 'error'); else alert('Erro de conexão: ' + e.message);
+        }
+      });
       window.addEventListener('load', () => {
         gsap.from('.card, #main-image, .card h1', { y: 8, opacity: 0, stagger: 0.05, duration: 0.6 });
       });

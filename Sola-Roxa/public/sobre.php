@@ -8,6 +8,13 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
   <link rel="icon" href="assets/img/favicon/favicon_io/favicon.ico" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Great+Vibes&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
   <style>
     :root {
       --roxa: #A020F0;
@@ -21,23 +28,23 @@
     }
 
     .accent-roxa {
-      background: linear-gradient(90deg, rgba(160,32,240,1) 0%, rgba(0,224,255,0.7) 100%);
+      background: linear-gradient(90deg, rgba(160, 32, 240, 1) 0%, rgba(0, 224, 255, 0.7) 100%);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
     }
 
     .glass-card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
       backdrop-filter: blur(6px);
-      border: 1px solid rgba(255,255,255,0.04);
+      border: 1px solid rgba(255, 255, 255, 0.04);
     }
 
     .hero-image-overlay::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.45));
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.45));
       pointer-events: none;
     }
 
@@ -57,12 +64,14 @@
     /* micro interactions */
     .hover-lift:hover {
       transform: translateY(-6px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
     }
 
     /* responsive tweaks */
     @media (max-width: 768px) {
-      .split-img-clip { clip-path: none; }
+      .split-img-clip {
+        clip-path: none;
+      }
     }
   </style>
 </head>
@@ -111,18 +120,19 @@
             </svg>
           </button>
         </a>
-        <!-- cart -->
-        <a href="cart.php">
+        <!-- cart with badge -->
+        <a href="cart.php" class="relative">
           <button aria-label="carrinho" class="p-2 rounded-md hover:bg-white/5 transition cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
               stroke="currentColor" class="size-6">
               <path stroke-linecap="round" stroke-linejoin="round"
                 d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
             </svg>
+            <span id="cart-count"
+              class="absolute -top-2 -right-2 min-w-[22px] h-[22px] px-1 rounded-full bg-roxa text-black text-xs font-bold flex items-center justify-center border border-white/10"
+              style="display:none;">0</span>
           </button>
         </a>
-      </div>
-    </nav>
   </header>
 
   <!-- HERO: Split 50/50 -->
@@ -184,7 +194,8 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div>
-            <img src="assets/img/carroussel/pexels-jddaniel-2385477.jpg" alt="lifestyle" class="w-full h-80 object-cover rounded-md shadow-lg" />
+            <img src="assets/img/carroussel/pexels-jddaniel-2385477.jpg" alt="lifestyle"
+              class="w-full h-80 object-cover rounded-md shadow-lg" />
           </div>
           <div class="text-left">
             <p class="text-white/70 mb-4">Mais do que vender tênis, nós escrevemos capítulos na história de quem
@@ -235,7 +246,8 @@
     <!-- Lifestyle full-width banner -->
     <section class="relative my-12">
       <div class="h-72 md:h-96 w-full overflow-hidden rounded-md">
-        <img src="assets/img/carroussel/Rebook campaign.png" alt="friends laughing" class="w-full h-full object-cover brightness-75" />
+        <img src="assets/img/carroussel/Rebook campaign.png" alt="friends laughing"
+          class="w-full h-full object-cover brightness-75" />
         <div class="absolute inset-0 flex items-center justify-center">
           <div class="text-center">
             <h3 class="text-3xl md:text-4xl font-extrabold">Mais do que sneakers — um movimento.</h3>
@@ -260,17 +272,21 @@
         <div id="community" class="flex gap-6 overflow-x-auto snap-x py-4 scroll-smooth">
           <!-- sample community images -->
           <div class="min-w-[260px] snap-item rounded-md overflow-hidden hover:scale-105 transition">
-            <img src="assets/img/carroussel/pexels-jddaniel-2385477.jpg" alt="user 1" class="w-full h-64 object-cover" />
+            <img src="assets/img/carroussel/pexels-jddaniel-2385477.jpg" alt="user 1"
+              class="w-full h-64 object-cover" />
           </div>
           <div class="min-w-[260px] snap-item rounded-md overflow-hidden hover:scale-105 transition">
             <img src="assets/img/carroussel/nike-o-fenomeno-jordan.jpg" alt="user 2" class="w-full h-64 object-cover" />
           </div>
           <div class="min-w-[260px] snap-item rounded-md overflow-hidden hover:scale-105 transition">
-            <img src="assets/img/carroussel/https___hypebeast.com_image_2019_08_best-sneakers-cartoons-collaborations-main-1.avif" alt="user 3" class="w-full h-64 object-cover" />
+            <img
+              src="assets/img/carroussel/https___hypebeast.com_image_2019_08_best-sneakers-cartoons-collaborations-main-1.avif"
+              alt="user 3" class="w-full h-64 object-cover" />
           </div>
         </div>
 
-        <p class="text-sm text-white/60 mt-6">Compartilhe seu look com <span class="text-roxa">#SolaRoxa</span> para aparecer
+        <p class="text-sm text-white/60 mt-6">Compartilhe seu look com <span class="text-roxa">#SolaRoxa</span> para
+          aparecer
           aqui.</p>
       </div>
     </section>
@@ -322,7 +338,8 @@
         <h5 class="font-semibold text-white mb-4">Termos</h5>
         <ul class="space-y-3">
           <li>
-            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Política de Privacidade</a>
+            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Política de
+              Privacidade</a>
           </li>
           <li>
             <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Termos de Uso</a>

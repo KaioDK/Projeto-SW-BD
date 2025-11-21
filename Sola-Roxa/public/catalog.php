@@ -151,16 +151,16 @@ try {
 
       <ul class="hidden md:flex gap-8 text-sm text-white-200 uppercase tracking-wider">
         <li>
-          <a class="hover:text-roxa transition" href="index.php#lancamentos">Lançamentos</a>
+          <a class="hover:text-roxa transition" href="#lancamentos">Lançamentos</a>
         </li>
         <li>
-          <a class="hover:text-roxa transition" href="index.php#masculino">Masculino</a>
+          <a class="hover:text-roxa transition" href="#masculino">Masculino</a>
         </li>
         <li>
-          <a class="hover:text-roxa transition" href="index.php#feminino">Feminino</a>
+          <a class="hover:text-roxa transition" href="#feminino">Feminino</a>
         </li>
         <li>
-          <a class="hover:text-roxa transition" href="index.php#colecoes">Colecionáveis</a>
+          <a class="hover:text-roxa transition" href="#colecoes">Colecionáveis</a>
         </li>
         <li>
           <a class="hover:text-roxa transition" href="catalog.php">Marketplace</a>
@@ -185,18 +185,19 @@ try {
             </svg>
           </button>
         </a>
-        <!-- cart -->
-        <a href="cart.php">
+        <!-- cart with badge -->
+        <a href="cart.php" class="relative">
           <button aria-label="carrinho" class="p-2 rounded-md hover:bg-white/5 transition cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
               stroke="currentColor" class="size-6">
               <path stroke-linecap="round" stroke-linejoin="round"
                 d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
             </svg>
+            <span id="cart-count"
+              class="absolute -top-2 -right-2 min-w-[22px] h-[22px] px-1 rounded-full bg-roxa text-black text-xs font-bold flex items-center justify-center border border-white/10"
+              style="display:none;">0</span>
           </button>
         </a>
-      </div>
-    </nav>
   </header>
 
   <main class="pt-24 pb-16 max-w-7xl mx-auto px-6 sm:px-8">
@@ -336,19 +337,69 @@ try {
   </main>
 
   <!-- Footer -->
-  <footer class="bg-black border-t border-white/10 mt-16">
-    <div class="max-w-7xl mx-auto px-6 sm:px-8 py-8 flex flex-col md:flex-row items-center justify-between gap-6">
-      <a href="index.php" style="font-family: Poppins; letter-spacing: 0.1em"
-        class="text-lg font-extrabold tracking-widest uppercase">SOLA <span class="text-roxa">ROXA</span></a>
-      <div class="flex gap-6">
-        <a href="javascript:void(0)" class="text-white/70 hover:text-roxa transition">Terms</a>
-        <a href="javascript:void(0)" class="text-white/70 hover:text-roxa transition">Privacy</a>
-        <a href="javascript:void(0)" class="text-white/70 hover:text-roxa transition">Support</a>
+  <footer class="bg-white/[0.01] mt-12 border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8 py-12 grid grid-cols-1 md:grid-cols-4 gap-8 text-sm">
+      <div>
+        <h5 class="font-semibold text-white mb-4">Ajuda</h5>
+        <ul class="space-y-3">
+          <li>
+            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">FAQ</a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Envios</a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Devoluções</a>
+          </li>
+        </ul>
       </div>
-      <div class="flex gap-4">
-        <a href="javascript:void(0)" class="text-white/70 hover:text-roxa transition"><i data-lucide="instagram"></i></a>
-        <a href="javascript:void(0)" class="text-white/70 hover:text-roxa transition"><i data-lucide="twitter"></i></a>
-        <a href="javascript:void(0)" class="text-white/70 hover:text-roxa transition"><i data-lucide="mail"></i></a>
+
+      <div>
+        <h5 class="font-semibold text-white mb-4">Sobre Nós</h5>
+        <ul class="space-y-3">
+        <li>
+            <a href="sobre.php" class="text-white/60 hover:text-white transition-colors">
+            Sobre Sola Roxa
+            </a>
+        </li>
+          <li>
+            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Trabalhe conosco</a>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h5 class="font-semibold text-white mb-4">Redes Sociais</h5>
+        <ul class="space-y-3">
+          <li>
+            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Instagram</a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Twitter</a>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h5 class="font-semibold text-white mb-4">Termos</h5>
+        <ul class="space-y-3">
+          <li>
+            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Política de Privacidade</a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Termos de Uso</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-white/10 text-center py-6">
+      <div class="max-w-7xl mx-auto px-6 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p class="text-white/40">
+          © <span id="year"></span> SOLA ROXA — Todos os direitos reservados
+        </p>
+        <div class="flex items-center gap-6">
+          <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors text-sm">Contato</a>
+        </div>
       </div>
     </div>
   </footer>
