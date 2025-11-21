@@ -75,6 +75,15 @@ if (!isLoggedUser() && !isLoggedSeller()) {
       border-color: rgba(255, 255, 255, 0.08);
     }
 
+    /* Tornar as opções do select visíveis no tema escuro.
+       Muitos navegadores aplicam estilos nativos ao dropdown; definimos
+       cor do texto e fundo das <option> para melhorar contraste no tema.
+    */
+    select, select option {
+      color: #f8fafb;
+      background-color: #0b0b0b;
+    }
+
     ::placeholder {
       color: rgba(255, 255, 255, 0.5);
     }
@@ -82,6 +91,14 @@ if (!isLoggedUser() && !isLoggedSeller()) {
     .chip {
       background: rgba(255, 255, 255, 0.04);
     }
+
+    /* Estilos específicos para o modal de sucesso (fundo branco):
+       o projeto usa `text-white` globalmente; aqui garantimos que o
+       conteúdo do modal tenha texto escuro e botões legíveis. */
+    #success-modal .modal-inner { color: #111827; }
+    #success-modal .modal-inner a { color: #111827; border-color: rgba(0,0,0,0.08); }
+    #success-modal .modal-inner a:hover { background-color: rgba(0,0,0,0.04); }
+    #success-modal .modal-inner .bg-roxa { background-color: #8B5CF6 !important; color: #fff !important; }
   </style>
 </head>
 
@@ -188,15 +205,7 @@ if (!isLoggedUser() && !isLoggedSeller()) {
               </div>
             </button>
 
-            <button class="w-full text-left p-3 rounded-2xl step flex items-center gap-3" data-step="4">
-              <div class="w-8 h-8 rounded-full flex items-center justify-center bg-white/5 text-white/60">
-                4
-              </div>
-              <div>
-                <div class="font-medium">Revisar & Publicar</div>
-                <div class="text-xs text-white/60">Confirmar listagem</div>
-              </div>
-            </button>
+            <!-- passo 4 removido (Revisar & Publicar) -->
           </nav>
 
           <div class="mt-6">
@@ -272,10 +281,9 @@ if (!isLoggedUser() && !isLoggedSeller()) {
               <div>
                 <label class="text-sm font-medium">Condição</label>
                 <select id="condition" class="mt-2 w-full rounded-md border px-3 py-2">
-                  <option>Novo</option>
-                  <option>Seminovo</option>
-                  <option>Vintage</option>
-                  <option>Usado</option>
+                  <option value="Novo">Novo</option>
+                  <option value="Semi-Novo">Semi-Novo</option>
+                  <option value="Usado">Usado</option>
                 </select>
               </div>
             </div>
@@ -289,12 +297,7 @@ if (!isLoggedUser() && !isLoggedSeller()) {
               </div>
             </div>
 
-            <div class="mt-4">
-              <label class="text-sm font-medium">Tags</label>
-              <div id="tags" class="mt-2 flex flex-wrap gap-2"></div>
-              <input id="tags-input" type="text" placeholder="Pressione Enter para adicionar tag"
-                class="mt-2 w-full rounded-md border px-3 py-2" />
-            </div>
+            <!-- Tags removidas conforme solicitado -->
           </div>
 
           <!-- Preço e fotos (passo 3) -->
@@ -335,12 +338,7 @@ if (!isLoggedUser() && !isLoggedSeller()) {
           </div>
 
           <!-- Revisar e publicar (passo 4) -->
-          <div data-panel="4" class="panel hidden">
-            <h4 class="font-medium">Revisar anúncio</h4>
-            <div id="review-area" class="mt-4 p-4 bg-white/5 rounded-md text-sm text-white/70">
-              Aqui será gerado um preview do anúncio antes da publicação.
-            </div>
-          </div>
+          <!-- Painel de revisão removido -->
 
           <div class="flex items-center justify-between">
             <div>
@@ -351,10 +349,7 @@ if (!isLoggedUser() && !isLoggedSeller()) {
                 Próximo
               </button>
             </div>
-            <div class="flex items-center gap-3">
-              <button type="button" id="preview-btn" class="px-4 py-2 rounded-md border border-roxa text-roxa">
-                Preview Listing
-              </button>
+              <div class="flex items-center gap-3">
               <button type="button" id="publish-btn"
                 class="px-5 py-2 rounded-2xl bg-gradient-to-r from-roxa to-roxa text-white font-semibold">
                 Publicar
@@ -368,7 +363,7 @@ if (!isLoggedUser() && !isLoggedSeller()) {
 
   <!-- Modal de sucesso exibido após publicação do anúncio -->
   <div id="success-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
-    <div class="bg-white rounded-2xl p-8 max-w-md w-full text-center shadow-xl">
+    <div class="bg-white modal-inner rounded-2xl p-8 max-w-md w-full text-center shadow-xl">
       <h3 class="text-2xl font-semibold">
         ✨ Seu produto foi publicado com sucesso na Sola Roxa!
       </h3>
@@ -376,7 +371,7 @@ if (!isLoggedUser() && !isLoggedSeller()) {
         Seu anúncio já está visível no marketplace.
       </p>
       <div class="mt-6 flex justify-center gap-3">
-        <a href="product.php" class="px-4 py-2 rounded-md border">Ver anúncio</a>
+        <a href="catalog.php" class="px-4 py-2 rounded-md border">Ver anúncio</a>
         <button id="close-success" class="px-4 py-2 rounded-md bg-roxa text-white">
           Fechar
         </button>

@@ -70,6 +70,31 @@
       transform: scale(1.15);
       filter: drop-shadow(0 6px 18px rgba(139, 92, 246, 0.18));
     }
+    /* Layout improvements for product page */
+    .product-info {
+      position: static;
+    }
+    @media (min-width: 1024px) {
+      .product-info {
+        position: sticky;
+        top: 84px;
+        align-self: start;
+      }
+    }
+    /* Make main image adapt better and keep aspect ratio */
+    #main-image {
+      width: 100%;
+      height: min(60vh, 540px);
+      object-fit: cover;
+      border-radius: 0.5rem;
+    }
+    /* Thumbnails smaller and consistent */
+    .thumb { width: 96px; height: 64px; flex: 0 0 auto; }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; border-radius: 6px; }
+    /* Product gallery images consistent height */
+    #product-gallery-grid img { height: 180px; object-fit: cover; border-radius: 8px; }
+    /* Make right column content spacing cleaner */
+    .product-info .card { padding: 1.25rem; }
   </style>
 </head>
 <?php
@@ -146,7 +171,7 @@ $product_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
         <div class="lg:col-span-7">
           <div class="rounded-xl overflow-hidden card p-6">
             <div class="relative">
-              <img id="main-image"
+                <img id="main-image"
                 src="https://cdn.runrepeat.com/storage/gallery/product_primary/39891/nike-ja-1-21212250-720.jpg"
                 alt="Air Nova Roxa" class="w-full h-[540px] object-cover rounded-lg cursor-zoom-in" loading="lazy">
 
@@ -324,18 +349,32 @@ $product_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
       hero.innerHTML = `
           <div class="lg:col-span-7">
             <div class="rounded-xl overflow-hidden card p-6">
-              <div class="relative">
-                <img id="main-image" src="${product.imagem_url || 'https://cdn.runrepeat.com/storage/gallery/product_primary/39891/nike-ja-1-21212250-720.jpg'}" alt="${product.nome}" class="w-full h-[540px] object-cover rounded-lg cursor-zoom-in" loading="lazy">
-                <button id="fav-btn" class="absolute top-4 right-4 p-3 rounded-full bg-white/6 fav-heart" aria-label="Favoritar">
-                  <i data-lucide="heart" class="text-roxa"></i>
-                </button>
-              </div>
-              <div class="mt-4 flex gap-3 overflow-x-auto">
-                ${(product.galeria || []).map(img => `
-                  <button class="thumb w-24 h-16 rounded-md overflow-hidden" data-src="${img}">
-                    <img src="${img}" class="w-full h-full object-cover" loading="lazy">
-                  </button>
-                `).join('')}
+              <div class="lg:flex lg:items-start lg:gap-6">
+                <!-- Vertical thumbnails on large screens -->
+                <div class="hidden lg:flex flex-col gap-3 w-28">
+                  ${(product.galeria || []).map(img => `
+                    <button class="thumb thumb-vertical rounded-md overflow-hidden" data-src="${img}">
+                      <img src="${img}" class="w-full h-full object-cover" loading="lazy">
+                    </button>
+                  `).join('')}
+                </div>
+                <!-- Main image -->
+                <div class="flex-1">
+                  <div class="relative">
+                    <img id="main-image" src="${product.imagem_url || (product.galeria && product.galeria[0]) || 'https://cdn.runrepeat.com/storage/gallery/product_primary/39891/nike-ja-1-21212250-720.jpg'}" alt="${product.nome}" class="w-full rounded-lg cursor-zoom-in" loading="lazy">
+                    <button id="fav-btn" class="absolute top-4 right-4 p-3 rounded-full bg-white/6 fav-heart" aria-label="Favoritar">
+                      <i data-lucide="heart" class="text-roxa"></i>
+                    </button>
+                  </div>
+                  <!-- Horizontal thumbnails for small screens -->
+                  <div class="mt-4 flex gap-3 overflow-x-auto block lg:hidden">
+                    ${(product.galeria || []).map(img => `
+                      <button class="thumb w-24 h-16 rounded-md overflow-hidden" data-src="${img}">
+                        <img src="${img}" class="w-full h-full object-cover" loading="lazy">
+                      </button>
+                    `).join('')}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -347,24 +386,26 @@ $product_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
                 <div class="text-2xl font-bold text-roxa">R$ ${product.valor ?? product.preco ?? product.price ?? ''}</div>
                 <div class="text-sm text-white/60">Envio gratuito para todo o Brasil</div>
               </div>
-              ${(function () {
-              // Constroi o bloco de tamanhos somente quando o produto possui informação
-              // - Suporta `tamanhos` (array ou string separada por vírgula), `tamanho` (único)
-              // - Ou `size` (campo alternativo) para compatibilidade com diferentes fontes
-          let sizes = [];
-          if (product.tamanhos) {
-            if (Array.isArray(product.tamanhos)) sizes = product.tamanhos;
-            else sizes = String(product.tamanhos).split(',').map(s => s.trim()).filter(Boolean);
-          } else if (product.tamanho) {
-            sizes = [String(product.tamanho)];
-          } else if (product.size) {
-            sizes = Array.isArray(product.size) ? product.size : [String(product.size)];
-          }
-          if (sizes.length === 0) return '';
-          return `<div class="mt-6"><div class="text-sm text-white/70 mb-2">Tamanho</div><div class="flex flex-wrap gap-2">${sizes.map(t => `<button class="size-btn px-4 py-2 rounded-md border border-white/10">${t}</button>`).join('')}</div></div>`;
-        })()}
-              <div class="mt-6 flex items-center gap-3">
-                <button id="add-cart" class="ml-auto px-6 py-3 rounded-md btn-glow bg-roxa text-black font-semibold">Adicionar ao Carrinho</button>
+              <div class="mt-6 flex items-center justify-between gap-3">
+                <div class="w-full lg:w-auto">
+                  ${(function () {
+                    // Constroi o bloco de tamanhos somente quando o produto possui informação
+                    let sizes = [];
+                    if (product.tamanhos) {
+                      if (Array.isArray(product.tamanhos)) sizes = product.tamanhos;
+                      else sizes = String(product.tamanhos).split(',').map(s => s.trim()).filter(Boolean);
+                    } else if (product.tamanho) {
+                      sizes = [String(product.tamanho)];
+                    } else if (product.size) {
+                      sizes = Array.isArray(product.size) ? product.size : [String(product.size)];
+                    }
+                    if (sizes.length === 0) return '';
+                    return `<div class="product-sizes"><div class="text-sm text-white/70 mb-2">Tamanho</div><div class="flex flex-wrap gap-2">${sizes.map(t => `<button class="size-btn px-4 py-2 rounded-md border border-white/10">${t}</button>`).join('')}</div></div>`;
+                  })()}
+                </div>
+                <div class="flex-shrink-0">
+                  <button id="add-cart" class="px-6 py-3 rounded-md btn-glow bg-roxa text-black font-semibold">Adicionar ao Carrinho</button>
+                </div>
               </div>
               <div class="mt-3">
                 <button id="buy-now" class="w-full mt-3 px-6 py-3 rounded-md border border-cyan text-cyan hover:bg-cyan/10 transition">Comprar Agora</button>

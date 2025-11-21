@@ -41,46 +41,13 @@ if (desc) {
   );
 }
 
-// Campo de tags (chips)
-const tagsInput = document.getElementById("tags-input");
-const tagsArea = document.getElementById("tags");
-let tags = [];
-tagsInput.addEventListener("keydown", (e) => {
-  if (e.key === "Enter" && tagsInput.value.trim()) {
-    e.preventDefault();
-    addTag(tagsInput.value.trim());
-    tagsInput.value = "";
-  }
-  if (e.key === "Backspace" && !tagsInput.value) {
-    tags.pop();
-    renderTags();
-  }
-});
-function addTag(t) {
-  if (tags.length >= 12) return;
-  tags.push(t);
-  renderTags();
-}
-function removeTag(i) {
-  tags.splice(i, 1);
-  renderTags();
-}
-function renderTags() {
-  tagsArea.innerHTML = "";
-  tags.forEach((t, i) => {
-    const chip = document.createElement("div");
-    chip.className =
-      "px-3 py-1 bg-gray-100 rounded-full text-sm flex items-center gap-2";
-    chip.innerHTML = `<span>${t}</span><button data-i="${i}" class="text-xs">×</button>`;
-    tagsArea.appendChild(chip);
-    chip.querySelector("button").addEventListener("click", () => removeTag(i));
-  });
-}
+// tags removed per UX change
 
 // Upload de imagens (drag & drop + miniaturas)
 const drop = document.getElementById("drop-zone");
 const fileInput = document.getElementById("file-input");
 const thumbs = document.getElementById("thumbs");
+// `files` agora armazena objetos { file: File, name: string, src: dataURL }
 let files = [];
 drop.addEventListener("click", () => fileInput.click());
 fileInput.addEventListener("change", (e) => handleFiles(e.target.files));
@@ -101,7 +68,8 @@ function handleFiles(list) {
     if (!file.type.startsWith("image/")) return;
     const reader = new FileReader();
     reader.onload = (ev) => {
-      files.push({ name: file.name, src: ev.target.result });
+      // Armazena também o objeto File para envio posterior
+      files.push({ file: file, name: file.name, src: ev.target.result });
       renderThumbs();
     };
     reader.readAsDataURL(file);
@@ -121,30 +89,7 @@ function renderThumbs() {
   });
 }
 
-// Botão de pré-visualização: monta um resumo com título, marca, categoria,
-// descrição e tags. Avança para o passo de revisão (4).
-document.getElementById("preview-btn").addEventListener("click", () => {
-  const area = document.getElementById("review-area");
-  area.innerHTML = `
-          <h4 class="font-semibold">${
-            document.getElementById("title").value || "—"
-          }</h4>
-          <div class='text-sm text-gray-600'>${
-            document.getElementById("brand").value || ""
-          } • ${document.getElementById("category").value || ""}</div>
-          <p class='mt-3 text-gray-700'>${
-            document.getElementById("description").value ||
-            "<i>Sem descrição</i>"
-          }</p>
-          <div class='mt-3 flex gap-2'>${tags
-            .map(
-              (t) =>
-                `<span class='px-2 py-1 bg-gray-100 rounded-full text-sm'>${t}</span>`
-            )
-            .join("")}</div>
-        `;
-  showStep(4);
-});
+// preview step removed per UX change
 
 // Publicar: valida campos básicos, monta um FormData e chama `api/create_product.php`.
 // - Envia: nome (title), descricao (description), valor (price), estoque (stock), estado, imagem_url (opcional), tamanho (opcional)
@@ -183,9 +128,23 @@ document.getElementById("publish-btn").addEventListener("click", () => {
   // default stock to 1 (seller can update later)
   formData.append('estoque', 1);
   formData.append('estado', document.getElementById('condition').value || 'Novo');
-  if (fileInput.files && fileInput.files[0]) {
-    formData.append('image', fileInput.files[0]);
+  // Prefer files adicionadas via drag&drop / seleção; enviar todas como `images[]`.
+  // Compatibiliza com file input padrão e com o array `files` que armazena objetos File.
+  let imagesCount = 0;
+  if (files.length > 0) {
+    files.forEach((f, idx) => {
+      if (f && f.file) {
+        formData.append('images[]', f.file, f.name || `image_${idx}`);
+        imagesCount++;
+      }
+    });
+  } else if (fileInput.files && fileInput.files.length > 0) {
+    Array.from(fileInput.files).forEach((f, idx) => {
+      formData.append('images[]', f, f.name || `image_${idx}`);
+      imagesCount++;
+    });
   }
+  console.log('Uploading images count:', imagesCount);
   // optionally include seller onboarding data
   const sellerName = document.getElementById('seller-name').value.trim();
   const sellerDoc = document.getElementById('seller-doc').value.trim();

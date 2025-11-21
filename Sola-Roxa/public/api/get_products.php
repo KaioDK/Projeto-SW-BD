@@ -58,6 +58,21 @@ try {
     $stmt = $pdo->prepare($sql);
     $stmt->execute($params);
     $products = $stmt->fetchAll();
+    // Para compatibilidade com múltiplas imagens salvas como CSV em `imagem_url`:
+    // - expõe `galeria` como array
+    // - define `imagem_url` como a primeira imagem (usada pelas listagens)
+    foreach ($products as &$prod) {
+        if (!empty($prod['imagem_url'])) {
+            $parts = array_filter(array_map('trim', explode(',', $prod['imagem_url'])));
+            if (!empty($parts)) {
+                $prod['galeria'] = array_values($parts);
+                // mantém imagem_url como a primeira imagem para compatibilidade com frontend
+                $prod['imagem_url'] = $parts[0];
+            }
+        }
+    }
+    unset($prod);
+
     echo json_encode(['success'=>true,'products'=>$products]);
 } catch (Throwable $e) {
     http_response_code(500);

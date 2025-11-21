@@ -20,6 +20,17 @@ try {
         echo json_encode(['error'=>'Not found']);
         exit;
     }
+    // Expor `galeria` como array quando `imagem_url` armazenar múltiplos
+    if (!empty($p['imagem_url'])) {
+        // Separe por vírgula e remova espaços em branco
+        $parts = array_filter(array_map('trim', explode(',', $p['imagem_url'])));
+        if (!empty($parts)) {
+            $p['galeria'] = array_values($parts);
+            // Define imagem_url como a primeira imagem para evitar que a tag <img>
+            // receba uma string CSV (causando imagem quebrada)
+            $p['imagem_url'] = $parts[0];
+        }
+    }
     echo json_encode(['success'=>true,'product'=>$p]);
 } catch (Throwable $e) {
     http_response_code(500);

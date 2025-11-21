@@ -52,9 +52,12 @@ async function loadSellerProducts(sellerId) {
         const card = btn.closest('div');
         if (card) {
           const nome = card.querySelector('h4') ? card.querySelector('h4').textContent.trim() : '';
-          const valor = card.querySelector('.text-white/60') ? card.querySelector('.text-white/60').textContent.replace(/[R$\s]/g, '').replace(',', '.') : '';
-          const tamanhoEl = card.querySelector('.text-white\/50');
-          const tamanho = tamanhoEl ? tamanhoEl.textContent.replace('Tamanho:','').trim() : '';
+          // preço: procura parágrafo que contenha 'R$'
+          const priceP = Array.from(card.querySelectorAll('p')).find(p => p.textContent && p.textContent.includes('R$')) || null;
+          const valor = priceP ? priceP.textContent.replace(/[R$\s]/g, '').replace(',', '.') : '';
+          // tamanho: procura parágrafo que contenha 'Tamanho:'
+          const tamanhoEl = Array.from(card.querySelectorAll('p')).find(p => p.textContent && p.textContent.includes('Tamanho:')) || null;
+          const tamanho = tamanhoEl ? tamanhoEl.textContent.replace('Tamanho:', '').trim() : '';
           if (nome) form.querySelector('input[name="nome"]').value = nome;
           if (valor) form.querySelector('input[name="valor"]').value = valor;
           if (tamanho) form.querySelector('input[name="tamanho"]').value = tamanho;

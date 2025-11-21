@@ -87,7 +87,35 @@ $valor = trim($_POST['price'] ?? $_POST['valor'] ?? '');
 $estoque = intval($_POST['stock'] ?? $_POST['estoque'] ?? 0);
 $descricao = trim($_POST['description'] ?? $_POST['descricao'] ?? '');
 $tamanho = trim($_POST['size'] ?? $_POST['tamanho'] ?? '');
-$estado = $_POST['estado'] ?? 'Novo';
+$estado_raw = trim($_POST['estado'] ?? 'Novo');
+
+// Normaliza variantes de estado vindas do frontend para os valores
+// canônicos esperados pela coluna ENUM (`Novo`,`Semi-Novo`,`Usado`,`Sem caixa`).
+// Exemplos de entrada: "Seminovo", "Semi-Novo", "sem caixa", "Vintage".
+$k = strtolower(preg_replace('/[^a-z0-9]/i', '', $estado_raw));
+switch ($k) {
+    case 'novo':
+        $estado = 'Novo';
+        break;
+    case 'seminovo':
+    case 'semnovo':
+        $estado = 'Semi-Novo';
+        break;
+    case 'semcaixa':
+    case 'semcaixas':
+        $estado = 'Sem caixa';
+        break;
+    case 'usado':
+        $estado = 'Usado';
+        break;
+    case 'vintage':
+        // Não existe 'Vintage' no ENUM do DB; mapear para 'Usado'
+        $estado = 'Usado';
+        break;
+    default:
+        // fallback seguro
+        $estado = 'Novo';
+}
 
 if (!$nome || $valor === '') {
     http_response_code(400);
@@ -96,43 +124,55 @@ if (!$nome || $valor === '') {
 }
 
 try {
-    // Tratamento da imagem de produto (opcional, imagem única)
+    // Tratamento das imagens do produto (opcional, suporta múltiplas imagens)
     $imagem_url = null;
-    if (!empty($_FILES['image']['name'])) {
+    $saved_urls = [];
+    // Tipos permitidos
+    $allowed = ['image/jpeg','image/png','image/webp','image/avif'];
+
+    // Garante UPLOAD_DIR disponível
+    if (!defined('UPLOAD_DIR')) {
+        require_once __DIR__ . '/../../backend/config.php';
+    }
+    if (!is_dir(UPLOAD_DIR)) {
+        mkdir(UPLOAD_DIR, 0755, true);
+    }
+
+    // Caso múltiplos arquivos enviados como `images[]`
+    if (!empty($_FILES['images']) && is_array($_FILES['images']['name'])) {
+        $images = $_FILES['images'];
+        for ($i = 0; $i < count($images['name']); $i++) {
+            $name = $images['name'][$i];
+            $type = $images['type'][$i] ?? '';
+            $tmp = $images['tmp_name'][$i] ?? null;
+            $error = $images['error'][$i] ?? UPLOAD_ERR_NO_FILE;
+            if (!$name || $error !== UPLOAD_ERR_OK) continue;
+            if (!in_array($type, $allowed)) continue;
+            $ext = pathinfo($name, PATHINFO_EXTENSION);
+            $filename = uniqid('prod_', true) . '.' . $ext;
+            $destination = rtrim(UPLOAD_DIR, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $filename;
+            if (move_uploaded_file($tmp, $destination)) {
+                $saved_urls[] = 'assets/uploads/' . $filename;
+            }
+        }
+    }
+
+    // Fallback para campo único `image` (compatibilidade retroativa)
+    if (empty($saved_urls) && !empty($_FILES['image']['name'])) {
         $file = $_FILES['image'];
-        // Verificações básicas de segurança e formato:
-        // - tipos permitidos: jpg, png, webp
-        // - checar `error` do upload
-        // Observação: para produção, também limite tamanho máximo e valide
-        // nomes de arquivo para evitar problemas com caracteres inválidos.
-        $allowed = ['image/jpeg','image/png','image/webp'];
-        if (!in_array($file['type'], $allowed)) {
-            http_response_code(400);
-            echo json_encode(['error' => 'Invalid image type']);
-            exit;
+        if ($file['error'] === UPLOAD_ERR_OK && in_array($file['type'], $allowed)) {
+            $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+            $filename = uniqid('prod_', true) . '.' . $ext;
+            $destination = rtrim(UPLOAD_DIR, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $filename;
+            if (move_uploaded_file($file['tmp_name'], $destination)) {
+                $saved_urls[] = 'assets/uploads/' . $filename;
+            }
         }
-        if ($file['error'] !== UPLOAD_ERR_OK) {
-            http_response_code(400);
-            echo json_encode(['error' => 'Image upload failed']);
-            exit;
-        }
-        $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
-        $filename = uniqid('prod_', true) . '.' . $ext;
-        // Usa a constante UPLOAD_DIR (definida em backend/config.php)
-        if (!defined('UPLOAD_DIR')) {
-            require_once __DIR__ . '/../../backend/config.php';
-        }
-        if (!is_dir(UPLOAD_DIR)) {
-            mkdir(UPLOAD_DIR, 0755, true);
-        }
-        $destination = rtrim(UPLOAD_DIR, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $filename;
-        if (!move_uploaded_file($file['tmp_name'], $destination)) {
-            http_response_code(500);
-            echo json_encode(['error' => 'Failed to save image']);
-            exit;
-        }
-        // Armazena caminho relativo (`assets/uploads/...`) para uso pelo frontend
-        $imagem_url = 'assets/uploads/' . $filename;
+    }
+
+    // Constrói `imagem_url` como CSV das imagens (para compatibilidade com DB atual)
+    if (!empty($saved_urls)) {
+        $imagem_url = implode(',', $saved_urls);
     }
 
     // Realiza a inserção do produto no banco. Campos aceitos:

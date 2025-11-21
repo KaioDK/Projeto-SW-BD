@@ -376,7 +376,7 @@ function firstName($full)
         <?php else: ?>
             <!-- Mensagem para usuários que não são vendedores -->
             <div class="mt-12 bg-white/[0.02] rounded shadow-sm p-6 border border-white/10">
-                <h2 class="text-2xl font-bold text-white mb-4">QUEIRA VENDER CONOSCO?</h2>
+                <h2 class="text-2xl font-bold text-white mb-4">QUER VENDER CONOSCO?</h2>
                 <p class="text-white/60 mb-4">Você não está cadastrado como vendedor. Clique no botão abaixo para iniciar o
                     processo de onboarding.</p>
                 <a href="seller-onboarding.php"
@@ -581,43 +581,51 @@ function firstName($full)
             });
         }
 
-        // Modal: cancelar / enviar
-        const modal = document.getElementById('sr-change-pass-modal');
-        if (modal) {
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal || e.target.classList.contains('sr-modal-close')) {
-                    modal.classList.add('hidden');
-                }
-            });
-
-            const form = modal.querySelector('form');
-            form.addEventListener('submit', async function(ev) {
-                ev.preventDefault();
-                const fd = new FormData(form);
-                const btn = form.querySelector('button[type="submit"]');
-                btn.disabled = true;
-                btn.setAttribute('aria-busy', 'true');
-                try {
-                    const res = await fetch('api/change_password.php', {
-                        method: 'POST',
-                        body: fd
-                    });
-                    const json = await res.json();
-                    if (res.ok && json.success) {
-                        window.srShowToast('Senha alterada com sucesso', 'success');
-                        modal.classList.add('hidden');
-                        form.reset();
-                    } else {
-                        window.srShowToast(json.error || 'Falha ao alterar senha', 'error');
+        // Modal handlers: fecha qualquer modal quando o usuário clica no backdrop
+        // ou em um botão com a classe `sr-modal-close`. Aplica-se aos modais abaixo.
+        (function() {
+            const modalIds = ['sr-change-pass-modal', 'sr-edit-product-modal', 'sr-delete-product-modal'];
+            modalIds.forEach(id => {
+                const m = document.getElementById(id);
+                if (!m) return;
+                m.addEventListener('click', (e) => {
+                    if (e.target === m || e.target.classList.contains('sr-modal-close')) {
+                        m.classList.add('hidden');
                     }
-                } catch (e) {
-                    window.srShowToast('Erro de rede ao alterar senha', 'error');
-                } finally {
-                    btn.disabled = false;
-                    btn.removeAttribute('aria-busy');
+                });
+                // If modal contains a form, wire a submit handler for change-password modal specifically
+                if (id === 'sr-change-pass-modal') {
+                    const form = m.querySelector('form');
+                    if (!form) return;
+                    form.addEventListener('submit', async function(ev) {
+                        ev.preventDefault();
+                        const fd = new FormData(form);
+                        const btn = form.querySelector('button[type="submit"]');
+                        btn.disabled = true;
+                        btn.setAttribute('aria-busy', 'true');
+                        try {
+                            const res = await fetch('api/change_password.php', {
+                                method: 'POST',
+                                body: fd
+                            });
+                            const json = await res.json();
+                            if (res.ok && json.success) {
+                                window.srShowToast('Senha alterada com sucesso', 'success');
+                                m.classList.add('hidden');
+                                form.reset();
+                            } else {
+                                window.srShowToast(json.error || 'Falha ao alterar senha', 'error');
+                            }
+                        } catch (e) {
+                            window.srShowToast('Erro de rede ao alterar senha', 'error');
+                        } finally {
+                            btn.disabled = false;
+                            btn.removeAttribute('aria-busy');
+                        }
+                    });
                 }
             });
-        }
+        })();
 
         // Formatação do campo de telefone: (xx) xxxx-xxxx enquanto digita
         (function() {

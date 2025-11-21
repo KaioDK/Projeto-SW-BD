@@ -288,8 +288,8 @@ try {
               <span>Novo</span>
             </label>
             <label class="flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" value="seminovo" class="rounded text-roxa focus:ring-roxa" />
-              <span>Seminovo</span>
+              <input type="checkbox" value="semi-novo" class="rounded text-roxa focus:ring-roxa" />
+              <span>Semi-Novo</span>
             </label>
             <label class="flex items-center gap-2 cursor-pointer">
               <input type="checkbox" value="usado" class="rounded text-roxa focus:ring-roxa" />
@@ -392,7 +392,7 @@ try {
         const imgSrc = p.imagem_url ? p.imagem_url : 'assets/img/placeholder.png';
         const image = `<img src="${imgSrc}" alt="${p.nome}" class="w-full h-56 object-cover rounded-xl mb-4 bg-gray" loading="lazy">`;
         const title = `<h3 class="font-bold text-lg mb-1 text-black">${p.nome}</h3>`;
-        const desc = `<div class="text-black text-sm mb-1">${(p.estado || '').substring(0, 60)}</div>`;
+        const desc = `<div class="text-black text-sm mb-1">${(p.estado || '').substring(0, 60)} | ${(p.tamanho || '')}</div>`;
         const price = `<div class="text-roxa font-bold text-xl mb-1">${formatPrice(p.valor)}</div>`;
 
         // Ações rápidas (editar/excluir) visíveis somente ao vendedor proprietário

@@ -39,10 +39,21 @@ try {
 
     $fields = [];
     $params = [];
+    // Nome do produto: aceitar tanto `title` (inglês) quanto `nome` (pt-br)
     if (isset($_POST['title'])) { $fields[] = 'nome = ?'; $params[] = $_POST['title']; }
+    if (isset($_POST['nome'])) { $fields[] = 'nome = ?'; $params[] = $_POST['nome']; }
     if (isset($_POST['descricao'])) { $fields[] = 'descricao = ?'; $params[] = $_POST['descricao']; }
     if (isset($_POST['size']) || isset($_POST['tamanho'])) { $fields[] = 'tamanho = ?'; $params[] = $_POST['size'] ?? $_POST['tamanho']; }
-    if (isset($_POST['price'])) { $fields[] = 'valor = ?'; $params[] = $_POST['price']; }
+    // Preço: aceitar `price` (inglês) ou `valor` (pt-br). Sanitiza formatação com vírgula.
+    if (isset($_POST['price']) || isset($_POST['valor'])) {
+        $raw = isset($_POST['price']) ? $_POST['price'] : $_POST['valor'];
+        // remove símbolos e espaços, substitui ',' por '.' para decimal
+        $san = str_replace(['R$', ' ', '\u00A0'], '', $raw);
+        $san = str_replace(',', '.', $san);
+        $san = preg_replace('/[^0-9.\-]/', '', $san);
+        $fields[] = 'valor = ?';
+        $params[] = $san;
+    }
     if (isset($_POST['stock'])) { $fields[] = 'estoque = ?'; $params[] = intval($_POST['stock']); }
     if (isset($_POST['estado'])) { $fields[] = 'estado = ?'; $params[] = $_POST['estado']; }
 

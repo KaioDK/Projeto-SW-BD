@@ -102,10 +102,11 @@ loginForm.addEventListener("submit", async (e) => {
 
 registerForm.addEventListener("submit", async (e) => {
   e.preventDefault();
-  const name = registerForm.querySelector('input[type="text"]').value;
-  const email = registerForm.querySelector('input[type="email"]').value;
-  const password = registerForm.querySelectorAll('input[type="password"]')[0].value;
-  const confirmPassword = registerForm.querySelectorAll('input[type="password"]')[1].value;
+  const name = document.getElementById('register-name').value;
+  const email = document.getElementById('register-email').value;
+  const password = document.getElementById('register-password').value;
+  const confirmPassword = document.getElementById('register-password-confirm').value;
+  const cpf = document.getElementById('register-cpf') ? document.getElementById('register-cpf').value : '';
   const btn = registerForm.querySelector('button[type="submit"]');
   
   if (password !== confirmPassword) {
@@ -122,6 +123,7 @@ registerForm.addEventListener("submit", async (e) => {
     formData.append('name', name);
     formData.append('email', email);
     formData.append('password', password);
+    if (cpf) formData.append('cpf', cpf);
     
     const response = await fetch('api/register_usuario.php', {
       method: 'POST',

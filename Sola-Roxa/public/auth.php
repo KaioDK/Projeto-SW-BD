@@ -351,6 +351,8 @@
                 <div>
                   <label class="text-sm text-white/70">Nome completo</label>
                   <input
+                    id="register-name"
+                    name="name"
                     type="text"
                     placeholder="Seu nome"
                     class="w-full mt-2 p-3 rounded-lg bg-transparent border border-white/10 text-white placeholder-white/40 input-glow focus:border-roxa outline-none transition"
@@ -360,6 +362,8 @@
                 <div>
                   <label class="text-sm text-white/70">E-mail</label>
                   <input
+                    id="register-email"
+                    name="email"
                     type="email"
                     placeholder="seu@exemplo.com"
                     class="w-full mt-2 p-3 rounded-lg bg-transparent border border-white/10 text-white placeholder-white/40 input-glow focus:border-roxa outline-none transition"
@@ -370,6 +374,8 @@
                   <div>
                     <label class="text-sm text-white/70">Senha</label>
                     <input
+                      id="register-password"
+                      name="password"
                       type="password"
                       placeholder="••••••"
                       class="w-full mt-2 p-3 rounded-lg bg-transparent border border-white/10 text-white placeholder-white/40 input-glow focus:border-roxa outline-none transition"
@@ -379,12 +385,25 @@
                   <div>
                     <label class="text-sm text-white/70">Confirmar senha</label>
                     <input
+                      id="register-password-confirm"
+                      name="password_confirm"
                       type="password"
                       placeholder="••••••"
                       class="w-full mt-2 p-3 rounded-lg bg-transparent border border-white/10 text-white placeholder-white/40 input-glow focus:border-roxa outline-none transition"
                       required
                     />
                   </div>
+                </div>
+
+                <div>
+                  <label class="text-sm text-white/70">CPF</label>
+                  <input
+                    id="register-cpf"
+                    name="cpf"
+                    type="text"
+                    placeholder="000.000.000-00"
+                    class="w-full mt-2 p-3 rounded-lg bg-transparent border border-white/10 text-white placeholder-white/40 input-glow focus:border-roxa outline-none transition"
+                  />
                 </div>
 
                 <div>
