@@ -79,117 +79,63 @@ requireUser();
     </style>
   </head>
   <body class="font-pop text-white antialiased leading-relaxed">
-    <header
-      id="site-header"
-      class="fixed w-full z-40 top-0 transition-all duration-300"
-    >
-      <nav
-        class="max-w-7xl mx-auto px-6 sm:px-8 flex items-center justify-between h-16 transition-all duration-300"
-      >
-        <div class="flex items-center gap-6">
-          <a
-            href="index.php"
-            style="font-family: Fjalla One"
-            class="text-xl font-extrabold tracking-widest"
-            >SOLA <span class="text-purple-700">ROXA</span></a
-          >
-        </div>
+    <header id="site-header" class="fixed w-full z-40 top-0 transition-all duration-300">
+    <nav class="max-w-7xl mx-auto px-6 sm:px-8 flex items-center justify-between h-16 transition-all duration-300">
+      <div class="flex items-center gap-6">
+        <a href="index.php" style="font-family: Fjalla One" class="text-xl font-extrabold tracking-widest">SOLA <span
+            class="text-purple-700">ROXA</span></a>
+      </div>
 
-        <ul
-          class="hidden md:flex gap-8 text-sm text-white-200 uppercase tracking-wider"
-        >
-          <li>
-            <a class="hover:text-roxa transition" href="index.php#lancamentos"
-              >Lançamentos</a
-            >
-          </li>
-          <li>
-            <a class="hover:text-roxa transition" href="index.php#masculino"
-              >Masculino</a
-            >
-          </li>
-          <li>
-            <a class="hover:text-roxa transition" href="index.php#feminino">Feminino</a>
-          </li>
-          <li>
-            <a class="hover:text-roxa transition" href="index.php#colecoes"
-              >Colecionáveis</a
-            >
-          </li>
-          <li>
-            <a class="hover:text-roxa transition" href="catalog.php"
-              >Marketplace</a
-            >
-          </li>
-        </ul>
+      <ul class="hidden md:flex gap-8 text-sm text-white-200 uppercase tracking-wider">
+        <li>
+          <a class="hover:text-roxa transition" href="#lancamentos">Lançamentos</a>
+        </li>
+        <li>
+          <a class="hover:text-roxa transition" href="#masculino">Masculino</a>
+        </li>
+        <li>
+          <a class="hover:text-roxa transition" href="#feminino">Feminino</a>
+        </li>
+        <li>
+          <a class="hover:text-roxa transition" href="#colecoes">Colecionáveis</a>
+        </li>
+        <li>
+          <a class="hover:text-roxa transition" href="catalog.php">Marketplace</a>
+        </li>
+      </ul>
 
-        <div class="flex items-center gap-4">
-          <button
-            aria-label="buscar"
-            class="p-2 rounded-md hover:bg-white/5 transition cursor-pointer"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="size-6"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-              />
+      <div class="flex items-center gap-4">
+        <button aria-label="buscar" class="p-2 rounded-md hover:bg-white/5 transition cursor-pointer">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+          </svg>
+        </button>
+        <!-- user -->
+        <a href="profile.php">
+          <button aria-label="conta" class="p-2 rounded-md hover:bg-white/5 transition cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
             </svg>
           </button>
-          <!-- user -->
-          <a href="profile.php">
-            <button
-              aria-label="conta"
-              class="p-2 rounded-md hover:bg-white/5 transition cursor-pointer"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="size-6"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-                />
-              </svg>
-            </button>
-          </a>
-          <!-- cart -->
-          <a href="cart.php">
-            <button
-              aria-label="carrinho"
-              class="p-2 rounded-md hover:bg-white/5 transition cursor-pointer"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="size-6"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
-                />
-              </svg>
-            </button>
-          </a>
-        </div>
-      </nav>
-    </header>
+        </a>
+        <!-- cart with badge -->
+        <a href="cart.php" class="relative">
+          <button aria-label="carrinho" class="p-2 rounded-md hover:bg-white/5 transition cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+            </svg>
+            <span id="cart-count"
+              class="absolute -top-2 -right-2 min-w-[22px] h-[22px] px-1 rounded-full bg-roxa text-black text-xs font-bold flex items-center justify-center border border-white/10"
+              style="display:none;">0</span>
+          </button>
+        </a>
+  </header>
 
     <main class="pt-20 pb-16">
       <div class="max-w-7xl mx-auto px-6 sm:px-8">
@@ -234,163 +180,62 @@ requireUser();
             <h1 class="text-3xl font-bold text-center lg:text-left">
               Seu Carrinho
             </h1>
-            <div class="mt-6 space-y-4">
-              <!-- Item 1: exemplo de cartão de item no carrinho -->
-              <div class="flex gap-4 items-center p-4 rounded-xl card">
-                <img
-                  src="https://cdn.runrepeat.com/storage/gallery/product_primary/32545/adidas-ozweego-21158485-720.jpg"
-                  alt="sneaker"
-                  class="w-28 h-20 object-cover rounded-md"
-                />
-                <div class="flex-1">
-                  <div class="flex items-start justify-between">
-                    <div>
-                      <h3 class="font-semibold">Adidas Ozweego</h3>
-                      <p class="text-sm text-white/60">
-                        Tamanho: 42 • Cor: Branco/Azul
-                      </p>
-                    </div>
-                    <div class="text-right">
-                      <div class="text-lg font-semibold">R$ 699</div>
-                      <button
-                        class="text-sm text-white/60 hover:text-roxa mt-2 remove-btn"
-                        data-id="1"
-                      >
-                        Remover
-                      </button>
-                    </div>
-                  </div>
-
-                  <div class="mt-4 flex items-center gap-3">
-                    <label class="text-sm text-white/60">Quantidade</label>
-                    <div class="ml-2 flex items-center gap-2">
-                      <button
-                        class="px-2 py-1 rounded border border-white/10 qty-decrease"
-                        data-id="1"
-                      >
-                        -
-                      </button>
-                      <input
-                        type="number"
-                        min="1"
-                        value="1"
-                        class="w-14 text-center rounded bg-transparent border border-white/10 p-1 qty-input"
-                        data-id="1"
-                      />
-                      <button
-                        class="px-2 py-1 rounded border border-white/10 qty-increase"
-                        data-id="1"
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Item 2: exemplo de cartão de item no carrinho -->
-              <div class="flex gap-4 items-center p-4 rounded-xl card">
-                <img
-                  src="https://cdn.runrepeat.com/storage/gallery/product_primary/38821/new-balance-9060-21208162-720.jpg"
-                  alt="sneaker"
-                  class="w-28 h-20 object-cover rounded-md"
-                />
-                <div class="flex-1">
-                  <div class="flex items-start justify-between">
-                    <div>
-                      <h3 class="font-semibold">New Balance 9060</h3>
-                      <p class="text-sm text-white/60">
-                        Tamanho: 40 • Cor: Branco
-                      </p>
-                    </div>
-                    <div class="text-right">
-                      <div class="text-lg font-semibold">R$ 1.299</div>
-                      <button
-                        class="text-sm text-white/60 hover:text-roxa mt-2 remove-btn"
-                        data-id="2"
-                      >
-                        Remover
-                      </button>
-                    </div>
-                  </div>
-                  <div class="mt-4 flex items-center gap-3">
-                    <label class="text-sm text-white/60">Quantidade</label>
-                    <div class="ml-2 flex items-center gap-2">
-                      <button
-                        class="px-2 py-1 rounded border border-white/10 qty-decrease"
-                        data-id="2"
-                      >
-                        -
-                      </button>
-                      <input
-                        type="number"
-                        min="1"
-                        value="2"
-                        class="w-14 text-center rounded bg-transparent border border-white/10 p-1 qty-input"
-                        data-id="2"
-                      />
-                      <button
-                        class="px-2 py-1 rounded border border-white/10 qty-increase"
-                        data-id="2"
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Item 3: exemplo de cartão de item no carrinho -->
-              <div class="flex gap-4 items-center p-4 rounded-xl card">
-                <img
-                  src="https://cdn.runrepeat.com/storage/gallery/product_primary/39411/nike-zoom-vomero-5-lab-test-and-review-3-21506315-720.jpg"
-                  alt="sneaker"
-                  class="w-28 h-20 object-cover rounded-md"
-                />
-                <div class="flex-1">
-                  <div class="flex items-start justify-between">
-                    <div>
-                      <h3 class="font-semibold">Nike Zoom Vomero 5</h3>
-                      <p class="text-sm text-white/60">
-                        Tamanho: 41 • Cor: Branco
-                      </p>
-                    </div>
-                    <div class="text-right">
-                      <div class="text-lg font-semibold">R$ 1.234</div>
-                      <button
-                        class="text-sm text-white/60 hover:text-roxa mt-2 remove-btn"
-                        data-id="3"
-                      >
-                        Remover
-                      </button>
-                    </div>
-                  </div>
-                  <div class="mt-4 flex items-center gap-3">
-                    <label class="text-sm text-white/60">Quantidade</label>
-                    <div class="ml-2 flex items-center gap-2">
-                      <button
-                        class="px-2 py-1 rounded border border-white/10 qty-decrease"
-                        data-id="3"
-                      >
-                        -
-                      </button>
-                      <input
-                        type="number"
-                        min="1"
-                        value="1"
-                        class="w-14 text-center rounded bg-transparent border border-white/10 p-1 qty-input"
-                        data-id="3"
-                      />
-                      <button
-                        class="px-2 py-1 rounded border border-white/10 qty-increase"
-                        data-id="3"
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div id="cart-items" class="mt-6 space-y-4">
+              <?php
+              // Render cart items from session (server-side) so content appears even
+              // if JS is cached/disabled. Falls back to empty box when no items.
+              if (session_status() === PHP_SESSION_NONE) session_start();
+              $cart = $_SESSION['cart'] ?? [];
+              if (!empty($cart)) {
+                  try {
+                      require_once __DIR__ . '/../backend/db.php';
+                      foreach ($cart as $k => $it) {
+                          $pid = intval($it['id_produto'] ?? 0);
+                          $qty = intval($it['qty'] ?? 1);
+                          $size = htmlspecialchars($it['tamanho'] ?? '');
+                          if ($pid <= 0) continue;
+                          $stmt = $pdo->prepare('SELECT id_produto, nome, valor, imagem_url FROM produto WHERE id_produto = ? LIMIT 1');
+                          $stmt->execute([$pid]);
+                          $p = $stmt->fetch();
+                          if (!$p) continue;
+                            $img_raw = $p['imagem_url'] ?? '';
+                            if (strpos($img_raw, ',') !== false) {
+                              $parts = array_filter(array_map('trim', explode(',', $img_raw)));
+                              $img_raw = !empty($parts) ? $parts[0] : $img_raw;
+                            }
+                            $img = htmlspecialchars($img_raw ?: 'assets/img/placeholder.png');
+                          $nome = htmlspecialchars($p['nome']);
+                          $valor = number_format((float)$p['valor'], 2, ',', '.');
+                          $subtotal = number_format($qty * (float)$p['valor'], 2, ',', '.');
+                          ?>
+                          <div class="flex gap-4 items-center p-4 rounded-xl card">
+                            <img src="<?php echo $img; ?>" alt="sneaker" class="w-28 h-20 object-cover rounded-md" />
+                            <div class="flex-1">
+                              <div class="flex items-start justify-between">
+                                <div>
+                                  <h3 class="font-semibold"><?php echo $nome; ?></h3>
+                                  <p class="text-sm text-white/60">Tamanho: <?php echo $size ? $size : '-'; ?></p>
+                                </div>
+                                <div class="text-right">
+                                  <div class="text-lg font-semibold">R$ <?php echo $valor; ?></div>
+                                  <button class="text-sm text-white/60 hover:text-roxa mt-2 remove-btn" data-id="<?php echo $pid; ?>" data-size="<?php echo $size; ?>">Remover</button>
+                                </div>
+                              </div>
+                              <!-- Cada anúncio é um item único — não exibimos controle de quantidade -->
+                              <div class="mt-4 flex items-center gap-3">
+                                <div class="text-sm text-white/60">Quantidade: 1</div>
+                              </div>
+                            </div>
+                          </div>
+                          <?php
+                      }
+                  } catch (Throwable $e) {
+                      // ignore rendering errors; JS will attempt to load cart dynamically
+                  }
+              } else {
+                  echo '<div class="col-span-full text-center py-12 text-white/60">Seu carrinho está vazio.</div>';
+              }
+              ?>
             </div>
           </div>
 

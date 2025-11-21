@@ -106,57 +106,62 @@ function firstName($full)
 <body class="bg-[#090909] text-white font-sans antialiased leading-normal">
 
     <header id="site-header" class="fixed w-full z-40 top-0 transition-all duration-300">
-        <nav class="max-w-7xl mx-auto px-6 sm:px-8 flex items-center justify-between h-16 transition-all duration-300">
-            <div class="flex items-center gap-6">
-                <a href="index.php" style="font-family: Fjalla One" class="text-xl font-extrabold tracking-widest">SOLA
-                    <span class="text-purple-700">ROXA</span></a>
-            </div>
+    <nav class="max-w-7xl mx-auto px-6 sm:px-8 flex items-center justify-between h-16 transition-all duration-300">
+      <div class="flex items-center gap-6">
+        <a href="index.php" style="font-family: Fjalla One" class="text-xl font-extrabold tracking-widest">SOLA <span
+            class="text-purple-700">ROXA</span></a>
+      </div>
 
-            <ul class="hidden md:flex gap-8 text-sm text-white-200 uppercase tracking-wider">
-                <li>
-                    <a class="hover:text-roxa transition" href="index.php#lancamentos">Lançamentos</a>
-                </li>
-                <li>
-                    <a class="hover:text-roxa transition" href="index.php#masculino">Masculino</a>
-                </li>
-                <li>
-                    <a class="hover:text-roxa transition" href="index.php#feminino">Feminino</a>
-                </li>
-                <li>
-                    <a class="hover:text-roxa transition" href="index.php#colecoes">Colecionáveis</a>
-                </li>
-                <li>
-                    <a class="hover:text-roxa transition" href="catalog.php">Marketplace</a>
-                </li>
-            </ul>
+      <ul class="hidden md:flex gap-8 text-sm text-white-200 uppercase tracking-wider">
+        <li>
+          <a class="hover:text-roxa transition" href="#lancamentos">Lançamentos</a>
+        </li>
+        <li>
+          <a class="hover:text-roxa transition" href="#masculino">Masculino</a>
+        </li>
+        <li>
+          <a class="hover:text-roxa transition" href="#feminino">Feminino</a>
+        </li>
+        <li>
+          <a class="hover:text-roxa transition" href="#colecoes">Colecionáveis</a>
+        </li>
+        <li>
+          <a class="hover:text-roxa transition" href="catalog.php">Marketplace</a>
+        </li>
+      </ul>
 
-            <div class="flex items-center gap-4">
-                <button aria-label="buscar" class="p-2 rounded-md hover:bg-white/5 transition cursor-pointer">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                    </svg>
-                </button>
-                <!-- Ícone / link para área do usuário (acesso à autenticação/perfil) -->
-                <a href="profile.php" aria-label="conta" class="p-2 rounded-md hover:bg-white/5 transition cursor-pointer">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                    </svg>
-                </a>
-                <!-- Ícone / link para o carrinho de compras -->
-                <a href="cart.php" aria-label="carrinho" class="p-2 rounded-md hover:bg-white/5 transition cursor-pointer">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-                    </svg>
-                </a>
-            </div>
-        </nav>
-    </header>
+      <div class="flex items-center gap-4">
+        <button aria-label="buscar" class="p-2 rounded-md hover:bg-white/5 transition cursor-pointer">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+          </svg>
+        </button>
+        <!-- user -->
+        <a href="profile.php">
+          <button aria-label="conta" class="p-2 rounded-md hover:bg-white/5 transition cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+            </svg>
+          </button>
+        </a>
+        <!-- cart with badge -->
+        <a href="cart.php" class="relative">
+          <button aria-label="carrinho" class="p-2 rounded-md hover:bg-white/5 transition cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+            </svg>
+            <span id="cart-count"
+              class="absolute -top-2 -right-2 min-w-[22px] h-[22px] px-1 rounded-full bg-roxa text-black text-xs font-bold flex items-center justify-center border border-white/10"
+              style="display:none;">0</span>
+          </button>
+        </a>
+  </header>
 
     <main class="max-w-7xl mx-auto px-6 sm:px-8 py-20">
         <h2 class="text-3xl font-bold text-white  mb-6">BEM-VINDO(A),
