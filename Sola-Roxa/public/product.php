@@ -183,10 +183,6 @@ if ($product_id > 0 && isset($_SESSION['vendedor']['id'])) {
         <div class="lg:col-span-7">
           <div class="rounded-xl overflow-hidden card p-6">
             <div class="relative">
-                <img id="main-image"
-                src="https://cdn.runrepeat.com/storage/gallery/product_primary/39891/nike-ja-1-21212250-720.jpg"
-                alt="Air Nova Roxa" class="w-full h-[540px] object-cover rounded-lg cursor-zoom-in" loading="lazy">
-
               <button id="fav-btn" class="absolute top-4 right-4 p-3 rounded-full bg-white/6 fav-heart"
                 aria-label="Favoritar">
                 <i data-lucide="heart" class="text-roxa"></i>
@@ -195,29 +191,6 @@ if ($product_id > 0 && isset($_SESSION['vendedor']['id'])) {
 
             <!-- thumbnails -->
             <div class="mt-4 flex gap-3 overflow-x-auto">
-              <button class="thumb w-24 h-16 rounded-md overflow-hidden"
-                data-src="https://cdn.runrepeat.com/storage/gallery/product_primary/39891/nike-ja-1-21212250-720.jpg">
-                <img src="https://cdn.runrepeat.com/storage/gallery/product_primary/39891/nike-ja-1-21212250-720.jpg"
-                  class="w-full h-full object-cover" loading="lazy">
-              </button>
-              <button class="thumb w-24 h-16 rounded-md overflow-hidden"
-                data-src="https://cdn.runrepeat.com/storage/gallery/product_content/39891/nike-ja-1-review-20528489-720.jpg">
-                <img
-                  src="https://cdn.runrepeat.com/storage/gallery/product_content/39891/nike-ja-1-review-20528489-720.jpg"
-                  class="w-full h-full object-cover" loading="lazy">
-              </button>
-              <button class="thumb w-24 h-16 rounded-md overflow-hidden"
-                data-src="https://cdn.runrepeat.com/storage/gallery/product_content/39891/nike-ja-1-outsole-20528492-720.jpg">
-                <img
-                  src="https://cdn.runrepeat.com/storage/gallery/product_content/39891/nike-ja-1-outsole-20528492-720.jpg"
-                  class="w-full h-full object-cover" loading="lazy">
-              </button>
-              <button class="thumb w-24 h-16 rounded-md overflow-hidden"
-                data-src="https://cdn.runrepeat.com/storage/gallery/product_content/39891/nike-ja-1-heel-tab-20528479-720.jpg">
-                <img
-                  src="https://cdn.runrepeat.com/storage/gallery/product_content/39891/nike-ja-1-heel-tab-20528479-720.jpg"
-                  class="w-full h-full object-cover" loading="lazy">
-              </button>
             </div>
           </div>
         </div>
@@ -239,9 +212,7 @@ if ($product_id > 0 && isset($_SESSION['vendedor']['id'])) {
         </div>
 
         <div id="tab-desc" class="mt-6 tab-content">
-          <p class="text-white/70">O Nike Ja 1 é o tênis de assinatura de Ja Morant. É um calçado de basquete que
-            equilibra alto desempenho, agilidade e amortecimento responsivo na quadra, com um design moderno e arrojado
-            que o torna um item de destaque também para o estilo casual/streetwear.</p>
+          <p class="text-white/70"></p>
         </div>
       </section>
 
