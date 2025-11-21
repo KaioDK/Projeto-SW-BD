@@ -37,75 +37,118 @@ async function loadSellerProducts(sellerId) {
     });
 
     // attach handlers
+    // attach handlers for edit and delete buttons
     document.querySelectorAll('.edit-btn').forEach(btn => {
-      btn.addEventListener('click', async (e) => {
+      btn.addEventListener('click', (e) => {
         e.stopPropagation();
         const id = btn.getAttribute('data-id');
-        const title = prompt('Novo título (deixe em branco para manter):');
-        const price = prompt('Novo preço (ex: 199.90) (deixe em branco para manter):');
-        const size = prompt('Novo tamanho (deixe em branco para manter):');
-        if (!title && !price && !size) return;
-        const fd = new FormData();
-        fd.append('id', id);
-        if (title) fd.append('nome', title);
-        if (price) fd.append('valor', price);
-        if (size) fd.append('tamanho', size);
+        // open edit modal and populate
+        const modal = document.getElementById('sr-edit-product-modal');
+        if (!modal) return;
+        const form = modal.querySelector('form');
+        form.reset();
+        form.querySelector('input[name="id"]').value = id;
+        // try to pull current values from the card
+        const card = btn.closest('div');
+        if (card) {
+          const nome = card.querySelector('h4') ? card.querySelector('h4').textContent.trim() : '';
+          const valor = card.querySelector('.text-white/60') ? card.querySelector('.text-white/60').textContent.replace(/[R$\s]/g, '').replace(',', '.') : '';
+          const tamanhoEl = card.querySelector('.text-white\/50');
+          const tamanho = tamanhoEl ? tamanhoEl.textContent.replace('Tamanho:','').trim() : '';
+          if (nome) form.querySelector('input[name="nome"]').value = nome;
+          if (valor) form.querySelector('input[name="valor"]').value = valor;
+          if (tamanho) form.querySelector('input[name="tamanho"]').value = tamanho;
+        }
+        modal.classList.remove('hidden');
+        const first = form.querySelector('input[name="nome"]');
+        if (first) first.focus();
+      });
+    });
+
+    
+    // Delete button handler
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const id = btn.getAttribute('data-id');
+        const modal = document.getElementById('sr-delete-product-modal');
+        if (!modal) return;
+        modal.classList.remove('hidden');
+        const confirmBtn = document.getElementById('sr-delete-product-confirm');
+        confirmBtn.dataset.id = id;
+        confirmBtn.focus();
+      });
+    });
+
+    // Edit modal submit handler
+    const editModal = document.getElementById('sr-edit-product-modal');
+    if (editModal) {
+      const editForm = editModal.querySelector('form');
+      editForm.addEventListener('submit', async (ev) => {
+        ev.preventDefault();
+        const btn = editForm.querySelector('button[type="submit"]');
+        btn.disabled = true;
+        btn.setAttribute('aria-busy', 'true');
+        const fd = new FormData(editForm);
         try {
           const r = await fetch('api/update_product.php', { method: 'POST', body: fd });
           const text = await r.text();
           let j;
-          try {
-            j = JSON.parse(text);
-          } catch {
-            console.error('Resposta não é JSON:', text);
-            alert('Erro: servidor respondeu com formato inválido');
-            return;
-          }
+          try { j = JSON.parse(text); } catch (err) { console.error('Invalid JSON', text, err); if (window.srShowToast) window.srShowToast('Resposta inválida do servidor', 'error'); return; }
           if (j && j.success) {
-            alert('Produto atualizado.');
+            if (window.srShowToast) window.srShowToast('Produto atualizado.', 'success');
+            editModal.classList.add('hidden');
             loadSellerProducts(sellerId);
           } else {
-            alert(j.error || 'Erro ao atualizar');
+            if (window.srShowToast) window.srShowToast(j.error || 'Erro ao atualizar', 'error');
           }
         } catch (err) {
-          alert('Erro de conexão: ' + err.message);
+          if (window.srShowToast) window.srShowToast('Erro de conexão: ' + err.message, 'error');
+        } finally {
+          btn.disabled = false;
+          btn.removeAttribute('aria-busy');
         }
       });
-    });
+    }
 
-    document.querySelectorAll('.delete-btn').forEach(btn => {
-      btn.addEventListener('click', async (e) => {
-        e.stopPropagation();
-        const id = btn.getAttribute('data-id');
-        if (!confirm('Tem certeza que deseja excluir este produto?')) return;
-        const fd = new FormData();
-        fd.append('id', id);
+    // Delete confirm handler
+    const deleteModal = document.getElementById('sr-delete-product-modal');
+    if (deleteModal) {
+      const confirmBtn = document.getElementById('sr-delete-product-confirm');
+      confirmBtn.addEventListener('click', async () => {
+        const id = confirmBtn.dataset.id;
+        if (!id) return;
+        confirmBtn.disabled = true;
+        confirmBtn.setAttribute('aria-busy', 'true');
+        const fd = new FormData(); fd.append('id', id);
         try {
           const r = await fetch('api/delete_product.php', { method: 'POST', body: fd });
           const text = await r.text();
-          let j;
-          try {
-            j = JSON.parse(text);
-          } catch {
-            console.error('Resposta não é JSON:', text);
-            alert('Erro: servidor respondeu com formato inválido');
-            return;
-          }
+          let j; try { j = JSON.parse(text); } catch (err) { console.error('Invalid JSON', text, err); if (window.srShowToast) window.srShowToast('Resposta inválida do servidor', 'error'); return; }
           if (j && j.success) {
-            alert('Produto excluído.');
+            if (window.srShowToast) window.srShowToast('Produto excluído.', 'success');
+            deleteModal.classList.add('hidden');
             loadSellerProducts(sellerId);
           } else {
-            alert(j.error || 'Erro ao deletar');
+            if (window.srShowToast) window.srShowToast(j.error || 'Erro ao deletar', 'error');
           }
         } catch (err) {
-          alert('Erro de conexão: ' + err.message);
+          if (window.srShowToast) window.srShowToast('Erro de conexão: ' + err.message, 'error');
+        } finally {
+          confirmBtn.disabled = false;
+          confirmBtn.removeAttribute('aria-busy');
         }
       });
-    });
+    }
 
   } catch (err) {
-    container.innerHTML = '<div class="col-span-full text-center text-red-400 py-8">Erro ao carregar produtos.</div>';
+    container.innerHTML = '<div class="col-span-full text-center text-red-400 py-8">Erro ao carregar produtos. <button id="sr-retry-products" class="ml-3 px-3 py-1 bg-roxa rounded text-sm">Tentar novamente</button></div>';
     console.error('Failed loadSellerProducts', err);
+    const retry = document.getElementById('sr-retry-products');
+    if (retry) {
+      retry.addEventListener('click', () => loadSellerProducts(sellerId));
+    }
+    if (window.srShowToast) window.srShowToast('Erro ao carregar seus produtos', 'error');
   }
 }
 

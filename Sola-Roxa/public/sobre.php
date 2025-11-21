@@ -268,12 +268,6 @@
           <div class="min-w-[260px] snap-item rounded-md overflow-hidden hover:scale-105 transition">
             <img src="assets/img/carroussel/https___hypebeast.com_image_2019_08_best-sneakers-cartoons-collaborations-main-1.avif" alt="user 3" class="w-full h-64 object-cover" />
           </div>
-          <div class="min-w-[260px] snap-item rounded-md overflow-hidden hover:scale-105 transition">
-            <img src="assets/img/uploads/prod_691d0f1b6b9c45.19469098.webp" alt="user 4" class="w-full h-64 object-cover" />
-          </div>
-          <div class="min-w-[260px] snap-item rounded-md overflow-hidden hover:scale-105 transition">
-            <img src="assets/img/uploads/prod_691e63b07b1a84.71484186.webp" alt="user 5" class="w-full h-64 object-cover" />
-          </div>
         </div>
 
         <p class="text-sm text-white/60 mt-6">Compartilhe seu look com <span class="text-roxa">#SolaRoxa</span> para aparecer

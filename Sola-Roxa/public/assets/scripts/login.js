@@ -84,13 +84,16 @@ loginForm.addEventListener("submit", async (e) => {
     
     if (response.ok && data.success) {
       gsap.to(btn, { scale: 0.98, duration: 0.08, yoyo: true, repeat: 1 });
-      alert("Login realizado com sucesso!");
+      if (window.srShowToast) window.srShowToast('Login realizado com sucesso!', 'success');
+      else alert('Login realizado com sucesso!');
       window.location.href = 'index.php';
     } else {
-      alert(data.error || "Erro no login");
+      if (window.srShowToast) window.srShowToast(data.error || 'Erro no login', 'error');
+      else alert(data.error || 'Erro no login');
     }
   } catch (error) {
-    alert("Erro ao conectar: " + error.message);
+    if (window.srShowToast) window.srShowToast('Erro ao conectar: ' + error.message, 'error');
+    else alert('Erro ao conectar: ' + error.message);
   } finally {
     btn.disabled = false;
     btn.textContent = "Entrar";
@@ -106,7 +109,8 @@ registerForm.addEventListener("submit", async (e) => {
   const btn = registerForm.querySelector('button[type="submit"]');
   
   if (password !== confirmPassword) {
-    alert("As senhas não coincidem!");
+    if (window.srShowToast) window.srShowToast('As senhas não coincidem!', 'error');
+    else alert('As senhas não coincidem!');
     return;
   }
   
@@ -134,13 +138,16 @@ registerForm.addEventListener("submit", async (e) => {
     }
 
     if (response.ok && data.success) {
-      alert("Cadastro realizado! Faça login agora.");
+      if (window.srShowToast) window.srShowToast('Cadastro realizado! Faça login agora.', 'success');
+      else alert('Cadastro realizado! Faça login agora.');
       showLogin();
     } else {
-      alert(data.error || "Erro no cadastro");
+      if (window.srShowToast) window.srShowToast(data.error || 'Erro no cadastro', 'error');
+      else alert(data.error || 'Erro no cadastro');
     }
   } catch (error) {
-    alert("Erro ao conectar: " + error.message);
+    if (window.srShowToast) window.srShowToast('Erro ao conectar: ' + error.message, 'error');
+    else alert('Erro ao conectar: ' + error.message);
   } finally {
     btn.disabled = false;
     btn.textContent = "Cadastrar";

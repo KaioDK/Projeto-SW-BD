@@ -159,7 +159,8 @@ document.getElementById("publish-btn").addEventListener("click", () => {
   console.log('DEBUG: price =', price);
   
   if (!title || !price) {
-    alert("Por favor preencha título e preço antes de publicar.");
+    if (window.srShowToast) window.srShowToast('Por favor preencha título e preço antes de publicar.', 'error');
+    else alert('Por favor preencha título e preço antes de publicar.');
     showStep(2);
     return;
   }
@@ -204,17 +205,21 @@ document.getElementById("publish-btn").addEventListener("click", () => {
         } else {
           // Se o servidor retornou JSON com `error`, exibe a mensagem;
           // caso contrário, mostra o texto bruto recebido para ajudar a depurar.
-          alert((data && data.error) ? (data.error + (data.details ? '\n' + data.details : '')) : ('Erro ao cadastrar produto. Resposta do servidor:\n' + text));
+          const msg = (data && data.error) ? (data.error + (data.details ? '\n' + data.details : '')) : ('Erro ao cadastrar produto. Resposta do servidor:\n' + text);
+          if (window.srShowToast) window.srShowToast(msg, 'error');
+          else alert(msg);
         }
       } catch (e) {
         // Resposta não-JSON: mostra texto bruto (útil em dev quando a API
         // retorna HTML/erro inesperado em vez de JSON). Em produção, a API
         // deve sempre retornar JSON previsível.
-        alert('Erro ao cadastrar produto. Resposta do servidor não é JSON:\n' + text);
+        if (window.srShowToast) window.srShowToast('Erro ao cadastrar produto. Resposta do servidor não é JSON.', 'error');
+        else alert('Erro ao cadastrar produto. Resposta do servidor não é JSON:\n' + text);
       }
     })
     .catch((err) => {
-      alert('Erro ao conectar: ' + err.message);
+      if (window.srShowToast) window.srShowToast('Erro ao conectar: ' + err.message, 'error');
+      else alert('Erro ao conectar: ' + err.message);
     });
 });
 document.getElementById("close-success").addEventListener("click", () => {

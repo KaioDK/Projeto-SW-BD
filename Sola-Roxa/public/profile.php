@@ -56,6 +56,28 @@ function firstName($full)
         .side-link:hover {
             color: #8B5CF6
         }
+        /* Spinner mostrado em botões durante operações assíncronas */
+        button[aria-busy="true"]{
+            position: relative;
+            pointer-events: none;
+            opacity: 0.9;
+        }
+
+        button[aria-busy="true"]::after{
+            content: "";
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid rgba(255,255,255,0.15);
+            border-top-color: #ffffff;
+            border-radius: 9999px;
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            animation: spin 0.9s linear infinite;
+        }
+
+        @keyframes spin { to { transform: translateY(-50%) rotate(360deg); } }
     </style>
 </head>
 
@@ -95,24 +117,20 @@ function firstName($full)
                     </svg>
                 </button>
                 <!-- Ícone / link para área do usuário (acesso à autenticação/perfil) -->
-                <a href="profile.php">
-                    <button aria-label="conta" class="p-2 rounded-md hover:bg-white/5 transition cursor-pointer">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                        </svg>
-                    </button>
+                <a href="profile.php" aria-label="conta" class="p-2 rounded-md hover:bg-white/5 transition cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                    </svg>
                 </a>
                 <!-- Ícone / link para o carrinho de compras -->
-                <a href="cart.php">
-                    <button aria-label="carrinho" class="p-2 rounded-md hover:bg-white/5 transition cursor-pointer">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-                        </svg>
-                    </button>
+                <a href="cart.php" aria-label="carrinho" class="p-2 rounded-md hover:bg-white/5 transition cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                    </svg>
                 </a>
             </div>
         </nav>
@@ -137,7 +155,7 @@ function firstName($full)
 
                         <span class="font-semibold">Perfil</span>
                     </a>
-                    <a href="javascript:void(0)" class="flex items-center gap-3 p-3 rounded side-link bg-transparent text-white">
+                    <button type="button" class="flex items-center gap-3 p-3 rounded side-link bg-transparent text-white" aria-label="Pedidos">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -145,8 +163,8 @@ function firstName($full)
                         </svg>
 
                         <span>Pedidos</span>
-                    </a>
-                    <a href="javascript:void(0)" class="flex items-center gap-3 p-3 rounded side-link bg-transparent text-white">
+                    </button>
+                    <button type="button" class="flex items-center gap-3 p-3 rounded side-link bg-transparent text-white" aria-label="Devoluções">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -154,8 +172,8 @@ function firstName($full)
                         </svg>
 
                         <span>Devoluções</span>
-                    </a>
-                    <a href="javascript:void(0)" class="flex items-center gap-3 p-3 rounded side-link bg-transparent text-white">
+                    </button>
+                    <button type="button" class="flex items-center gap-3 p-3 rounded side-link bg-transparent text-white" aria-label="Meus Endereços">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -163,7 +181,7 @@ function firstName($full)
                         </svg>
 
                         <span>Meus Endereços</span>
-                    </a>
+                    </button>
                 </nav>
             </aside>
 
@@ -203,9 +221,8 @@ function firstName($full)
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
                         <div>
                             <label class="text-sm text-white/70">Senha</label>
-                            <input name="senha" type="password" placeholder="••••••••"
-                                class="w-full mt-2 p-3 border rounded bg-transparent border-white/10 text-white placeholder-white/40" />
-                            <a href="javascript:void(0)" class="text-sm text-roxa mt-2 inline-block">Alterar senha</a>
+                            <div class="w-full mt-2 p-3 border rounded bg-transparent border-white/10 text-white placeholder-white/40">********</div>
+                            <button id="change-password-btn" type="button" aria-label="Alterar senha" class="text-sm text-roxa mt-2 inline-block">Alterar senha</button>
                         </div>
                         <div class="mb-7">
                             <label class="text-sm text-white/70">Código de área</label>
@@ -221,7 +238,7 @@ function firstName($full)
                         </div>
                         <div class="mb-7">
                             <label class="text-sm text-white/70">Telefone</label>
-                            <input name="telefone" type="tel" value=""
+                            <input id="profile-telefone" name="telefone" type="tel" value=""
                                 class="w-full mt-2 p-3 border rounded bg-transparent border-white/10 text-white placeholder-white/40" />
                         </div>
                     </div>
@@ -257,6 +274,73 @@ function firstName($full)
             </section>
         </div>
 
+        <!-- Modal de alterar senha -->
+        <div id="sr-change-pass-modal" class="fixed inset-0 bg-black/95 flex items-center justify-center hidden" role="dialog" aria-modal="true" aria-labelledby="sr-change-pass-title">
+            <div class="bg-white/5 p-6 rounded max-w-lg w-full mx-4">
+                <h3 id="sr-change-pass-title" class="text-white text-lg font-bold mb-4">Alterar senha</h3>
+                <form>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="text-sm text-white/70">Senha atual</label>
+                            <input name="current_password" type="password" required class="w-full mt-2 p-3 border rounded bg-transparent border-white/10 text-white" />
+                        </div>
+                        <div>
+                            <label class="text-sm text-white/70">Nova senha</label>
+                            <input name="new_password" type="password" required class="w-full mt-2 p-3 border rounded bg-transparent border-white/10 text-white" />
+                        </div>
+                        <div>
+                            <label class="text-sm text-white/70">Confirmar nova senha</label>
+                            <input name="new_password_confirm" type="password" required class="w-full mt-2 p-3 border rounded bg-transparent border-white/10 text-white" />
+                        </div>
+                    </div>
+                    <div class="mt-4 flex gap-3 justify-end">
+                        <button type="button" class="sr-modal-close px-4 py-2 border border-white/10 rounded text-white">Cancelar</button>
+                        <button type="submit" class="px-4 py-2 bg-roxa text-white rounded">Alterar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal de editar produto (usado em MEUS PRODUTOS) -->
+        <div id="sr-edit-product-modal" class="fixed inset-0 bg-black/95 flex items-center justify-center hidden" role="dialog" aria-modal="true" aria-labelledby="sr-edit-product-title">
+            <div class="bg-white/5 p-6 rounded max-w-lg w-full mx-4">
+                <h3 id="sr-edit-product-title" class="text-white text-lg font-bold mb-4">Editar produto</h3>
+                <form id="sr-edit-product-form">
+                    <input type="hidden" name="id" />
+                    <div class="space-y-3">
+                        <div>
+                            <label class="text-sm text-white/70">Título</label>
+                            <input name="nome" type="text" required class="w-full mt-2 p-3 border rounded bg-transparent border-white/10 text-white" />
+                        </div>
+                        <div>
+                            <label class="text-sm text-white/70">Preço</label>
+                            <input name="valor" type="text" required class="w-full mt-2 p-3 border rounded bg-transparent border-white/10 text-white" />
+                        </div>
+                        <div>
+                            <label class="text-sm text-white/70">Tamanho</label>
+                            <input name="tamanho" type="text" class="w-full mt-2 p-3 border rounded bg-transparent border-white/10 text-white" />
+                        </div>
+                    </div>
+                    <div class="mt-4 flex gap-3 justify-end">
+                        <button type="button" class="sr-modal-close px-4 py-2 border border-white/10 rounded text-white">Cancelar</button>
+                        <button type="submit" class="px-4 py-2 bg-roxa text-white rounded">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal de confirmar exclusão de produto -->
+        <div id="sr-delete-product-modal" class="fixed inset-0 bg-black/95 flex items-center justify-center hidden" role="dialog" aria-modal="true" aria-labelledby="sr-delete-product-title">
+            <div class="bg-white/5 p-6 rounded max-w-md w-full mx-4">
+                <h3 id="sr-delete-product-title" class="text-white text-lg font-bold mb-4">Confirmar exclusão</h3>
+                <p class="text-white/60">Tem certeza que deseja excluir este produto? Esta ação não pode ser desfeita.</p>
+                <div class="mt-4 flex gap-3 justify-end">
+                    <button type="button" class="sr-modal-close px-4 py-2 border border-white/10 rounded text-white">Cancelar</button>
+                    <button id="sr-delete-product-confirm" type="button" class="px-4 py-2 bg-red-500 text-white rounded">Excluir</button>
+                </div>
+            </div>
+        </div>
+
         <?php if (isLoggedSeller()): ?>
             <!-- Seção de produtos do vendedor (apenas visível para vendedores) -->
             <div class="mt-12">
@@ -284,6 +368,8 @@ function firstName($full)
     <script>
         lucide.createIcons();
     </script>
+
+    <!-- Toast container style hint (no-op if main.js already creates container) -->
 
     <?php if (isLoggedSeller()): ?>
         <script>
@@ -349,13 +435,18 @@ function firstName($full)
             if (!confirm('Deseja sair da sua conta?')) return;
             const btn = document.getElementById('logout-btn');
             btn.disabled = true;
+            btn.setAttribute('aria-busy', 'true');
+            btn.setAttribute('aria-disabled', 'true');
             try {
                 const res = await fetch('api/logout.php', { method: 'POST' });
                 // logout.php retorna JSON mesmo com session_destroy
+                window.srShowToast('Você saiu da conta', 'success');
                 window.location.href = 'index.php';
             } catch (e) {
-                alert('Erro ao deslogar: ' + e.message);
+                window.srShowToast('Erro ao deslogar: ' + e.message, 'error');
                 btn.disabled = false;
+                btn.removeAttribute('aria-busy');
+                btn.removeAttribute('aria-disabled');
             }
         });
 
@@ -365,6 +456,8 @@ function firstName($full)
             const data = new FormData(form);
             const btn = document.getElementById('save-btn');
             btn.disabled = true;
+            btn.setAttribute('aria-busy', 'true');
+            btn.setAttribute('aria-disabled', 'true');
             try {
                 const res = await fetch('api/update_profile.php', {
                     method: 'POST',
@@ -372,18 +465,50 @@ function firstName($full)
                 });
                 const json = await res.json();
                 if (res.ok && json.success) {
-                    alert('Perfil atualizado com sucesso');
-                    // atualiza texto na UI se necessário e reabilita botão
+                    window.srShowToast('Perfil atualizado com sucesso', 'success');
+                    // Atualiza campos do formulário com os valores retornados (sem reload)
+                    const user = json.user || {};
+                    try {
+                        const formEl = document.getElementById('profile-form');
+                        if (formEl) {
+                            const nameInput = formEl.querySelector('input[name="nome"]');
+                            const emailInput = formEl.querySelector('input[name="email"]');
+                            const emailConf = formEl.querySelector('input[name="email_confirm"]');
+                            if (nameInput && user.nome) nameInput.value = user.nome;
+                            if (emailInput && user.email) emailInput.value = user.email;
+                            if (emailConf && user.email) emailConf.value = user.email;
+                        }
+
+                        // Atualiza saudação (primeiro nome)
+                        if (user.nome) {
+                            const first = (user.nome || '').trim().split(/\s+/)[0] || '';
+                            const h2 = document.querySelector('main h2');
+                            if (h2) h2.innerHTML = 'BEM-VINDO(A), ' + (first ? first.toUpperCase() : 'USUÁRIO');
+                        }
+
+                        // Se o backend retornou dados do vendedor (quando aplicável), recarregue a lista de produtos
+                        if (json.vendedor && typeof loadSellerProducts !== 'undefined' && typeof CURRENT_SELLER_ID !== 'undefined' && CURRENT_SELLER_ID) {
+                            try { loadSellerProducts(CURRENT_SELLER_ID); } catch (err) { console.warn('Falha ao recarregar produtos:', err); }
+                        }
+                    } catch (err) {
+                        console.warn('Erro ao aplicar atualização no DOM', err);
+                    }
+
+                    // limpa estado do botão
                     btn.disabled = false;
-                    // opcional: atualizar campos visíveis de nome
-                    location.reload();
+                    btn.removeAttribute('aria-busy');
+                    btn.removeAttribute('aria-disabled');
                 } else {
-                    alert(json.error || 'Falha ao atualizar perfil');
+                    window.srShowToast(json.error || 'Falha ao atualizar perfil', 'error');
                     btn.disabled = false;
+                    btn.removeAttribute('aria-busy');
+                    btn.removeAttribute('aria-disabled');
                 }
             } catch (e) {
-                alert('Não foi possível atualizar — erro de rede. (' + e.message + ')');
+                window.srShowToast('Não foi possível atualizar — erro de rede.', 'error');
                 btn.disabled = false;
+                btn.removeAttribute('aria-busy');
+                btn.removeAttribute('aria-disabled');
             }
         });
 
@@ -392,23 +517,105 @@ function firstName($full)
             if (!confirm('Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita.')) return;
             const btn = document.getElementById('delete-account');
             btn.disabled = true;
+            btn.setAttribute('aria-busy', 'true');
+            btn.setAttribute('aria-disabled', 'true');
             try {
                 const res = await fetch('api/delete_account.php', {
                     method: 'POST'
                 });
                 const json = await res.json();
                 if (res.ok && json.success) {
-                    alert('Conta excluída');
-                    window.location.href = 'index.php';
+                    window.srShowToast('Conta excluída', 'success');
+                    setTimeout(() => window.location.href = 'index.php', 600);
                 } else {
-                    alert(json.error || 'Falha ao excluir conta');
+                    window.srShowToast(json.error || 'Falha ao excluir conta', 'error');
                     btn.disabled = false;
+                    btn.removeAttribute('aria-busy');
+                    btn.removeAttribute('aria-disabled');
                 }
             } catch (e) {
-                alert('Erro ao conectar com o servidor');
+                window.srShowToast('Erro ao conectar com o servidor', 'error');
                 btn.disabled = false;
+                btn.removeAttribute('aria-busy');
+                btn.removeAttribute('aria-disabled');
             }
         });
+
+        // Modal de alteração de senha
+        const changeBtn = document.getElementById('change-password-btn');
+        if (changeBtn) {
+            changeBtn.addEventListener('click', function () {
+                const modal = document.getElementById('sr-change-pass-modal');
+                if (!modal) return;
+                modal.classList.remove('hidden');
+                const first = modal.querySelector('input[name="current_password"]');
+                if (first) first.focus();
+            });
+        }
+
+        // Modal: cancelar / enviar
+        const modal = document.getElementById('sr-change-pass-modal');
+        if (modal) {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal || e.target.classList.contains('sr-modal-close')) {
+                    modal.classList.add('hidden');
+                }
+            });
+
+            const form = modal.querySelector('form');
+            form.addEventListener('submit', async function (ev) {
+                ev.preventDefault();
+                const fd = new FormData(form);
+                const btn = form.querySelector('button[type="submit"]');
+                btn.disabled = true;
+                btn.setAttribute('aria-busy', 'true');
+                try {
+                    const res = await fetch('api/change_password.php', { method: 'POST', body: fd });
+                    const json = await res.json();
+                    if (res.ok && json.success) {
+                        window.srShowToast('Senha alterada com sucesso', 'success');
+                        modal.classList.add('hidden');
+                        form.reset();
+                    } else {
+                        window.srShowToast(json.error || 'Falha ao alterar senha', 'error');
+                    }
+                } catch (e) {
+                    window.srShowToast('Erro de rede ao alterar senha', 'error');
+                } finally {
+                    btn.disabled = false;
+                    btn.removeAttribute('aria-busy');
+                }
+            });
+        }
+
+            // Formatação do campo de telefone: (xx) xxxx-xxxx enquanto digita
+            (function (){
+                const el = document.getElementById('profile-telefone');
+                if (!el) return;
+                function formatPhone(value){
+                    const digits = String(value || '').replace(/\D/g,'').slice(0,11);
+                    if (digits.length === 0) return '';
+                    if (digits.length <= 2) return '(' + digits;
+                    // até 6 dígitos após DDD: (xx) xxxx
+                    if (digits.length <= 6) return '(' + digits.slice(0,2) + ') ' + digits.slice(2);
+                    // 10 dígitos: (xx) xxxx-xxxx
+                    if (digits.length <= 10) return '(' + digits.slice(0,2) + ') ' + digits.slice(2,6) + '-' + digits.slice(6);
+                    // 11 dígitos (celular): (xx) xxxxx-xxxx
+                    return '(' + digits.slice(0,2) + ') ' + digits.slice(2,7) + '-' + digits.slice(7);
+                }
+                el.addEventListener('input', (e)=>{
+                    const pos = el.selectionStart;
+                    const before = el.value;
+                    const formatted = formatPhone(before);
+                    el.value = formatted;
+                    // try to keep caret at the end for simplicity
+                    el.selectionStart = el.selectionEnd = el.value.length;
+                });
+                // on paste, format after paste
+                el.addEventListener('paste', (e)=>{
+                    setTimeout(()=>{ el.value = formatPhone(el.value); }, 10);
+                });
+            })();
     </script>
 </body>
 

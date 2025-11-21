@@ -118,3 +118,53 @@ if (cursor) {
 if (featured) {
   featured.setAttribute("tabindex", "0");
 }
+
+// Toast system (global)
+(function () {
+  function createContainer() {
+    let c = document.getElementById('sr-toasts');
+    if (c) return c;
+    c = document.createElement('div');
+    c.id = 'sr-toasts';
+    c.setAttribute('aria-live', 'polite');
+    c.setAttribute('aria-atomic', 'true');
+    c.style.position = 'fixed';
+    c.style.right = '1rem';
+    c.style.bottom = '1rem';
+    c.style.zIndex = '9999';
+    c.style.display = 'flex';
+    c.style.flexDirection = 'column';
+    c.style.gap = '0.5rem';
+    document.body.appendChild(c);
+    return c;
+  }
+
+  function makeToastEl(message, type) {
+    const el = document.createElement('div');
+    el.className = 'sr-toast ' + (type || 'info');
+    el.style.background = type === 'error' ? 'rgba(220,38,38,0.95)' : (type === 'success' ? 'rgba(16,185,129,0.95)' : 'rgba(55,65,81,0.95)');
+    el.style.color = 'white';
+    el.style.padding = '0.6rem 0.9rem';
+    el.style.borderRadius = '0.5rem';
+    el.style.boxShadow = '0 6px 18px rgba(0,0,0,0.4)';
+    el.style.fontSize = '0.95rem';
+    el.textContent = message;
+    return el;
+  }
+
+  function showToast(message, type = 'info', duration = 3500) {
+    const c = createContainer();
+    const el = makeToastEl(message, type);
+    c.appendChild(el);
+    setTimeout(() => {
+      el.style.transition = 'opacity 240ms, transform 240ms';
+      el.style.opacity = '0';
+      el.style.transform = 'translateX(12px)';
+      setTimeout(() => el.remove(), 260);
+    }, duration);
+    return el;
+  }
+
+  // expose globally
+  window.srShowToast = showToast;
+})();
