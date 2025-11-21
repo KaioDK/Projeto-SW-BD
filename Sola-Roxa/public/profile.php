@@ -29,6 +29,7 @@ function firstName($full)
         href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Great+Vibes&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/img/favicon/favicon_io/favicon.ico" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -136,7 +137,7 @@ function firstName($full)
 
                         <span class="font-semibold">Perfil</span>
                     </a>
-                    <a href="#" class="flex items-center gap-3 p-3 rounded side-link bg-transparent text-white">
+                    <a href="javascript:void(0)" class="flex items-center gap-3 p-3 rounded side-link bg-transparent text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -145,7 +146,7 @@ function firstName($full)
 
                         <span>Pedidos</span>
                     </a>
-                    <a href="#" class="flex items-center gap-3 p-3 rounded side-link bg-transparent text-white">
+                    <a href="javascript:void(0)" class="flex items-center gap-3 p-3 rounded side-link bg-transparent text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -154,7 +155,7 @@ function firstName($full)
 
                         <span>Devoluções</span>
                     </a>
-                    <a href="#" class="flex items-center gap-3 p-3 rounded side-link bg-transparent text-white">
+                    <a href="javascript:void(0)" class="flex items-center gap-3 p-3 rounded side-link bg-transparent text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -204,7 +205,7 @@ function firstName($full)
                             <label class="text-sm text-white/70">Senha</label>
                             <input name="senha" type="password" placeholder="••••••••"
                                 class="w-full mt-2 p-3 border rounded bg-transparent border-white/10 text-white placeholder-white/40" />
-                            <a href="#" class="text-sm text-roxa mt-2 inline-block">Alterar senha</a>
+                            <a href="javascript:void(0)" class="text-sm text-roxa mt-2 inline-block">Alterar senha</a>
                         </div>
                         <div class="mb-7">
                             <label class="text-sm text-white/70">Código de área</label>
@@ -298,38 +299,38 @@ function firstName($full)
             <div>
                 <h5 class="font-semibold text-white mb-4">Ajuda</h5>
                 <ul class="space-y-3">
-                    <li><a href="#" class="text-white/60 hover:text-white transition-colors">FAQ</a></li>
-                    <li><a href="#" class="text-white/60 hover:text-white transition-colors">Envios</a></li>
-                    <li><a href="#" class="text-white/60 hover:text-white transition-colors">Devoluções</a></li>
+                    <li><a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">FAQ</a></li>
+                    <li><a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Envios</a></li>
+                    <li><a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Devoluções</a></li>
                 </ul>
             </div>
             <div>
                 <h5 class="font-semibold text-white mb-4">Sobre Nós</h5>
                 <ul class="space-y-3">
-                    <li><a href="#" class="text-white/60 hover:text-white transition-colors">Nosso manifesto</a></li>
-                    <li><a href="#" class="text-white/60 hover:text-white transition-colors">Trabalhe conosco</a></li>
+                    <li><a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Nosso manifesto</a></li>
+                    <li><a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Trabalhe conosco</a></li>
                 </ul>
             </div>
             <div>
                 <h5 class="font-semibold text-white mb-4">Redes Sociais</h5>
                 <ul class="space-y-3">
-                    <li><a href="#" class="text-white/60 hover:text-white transition-colors">Instagram</a></li>
-                    <li><a href="#" class="text-white/60 hover:text-white transition-colors">Twitter</a></li>
+                    <li><a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Instagram</a></li>
+                    <li><a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Twitter</a></li>
                 </ul>
             </div>
             <div>
                 <h5 class="font-semibold text-white mb-4">Termos</h5>
                 <ul class="space-y-3">
-                    <li><a href="#" class="text-white/60 hover:text-white transition-colors">Política de Privacidade</a>
+                    <li><a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Política de Privacidade</a>
                     </li>
-                    <li><a href="#" class="text-white/60 hover:text-white transition-colors">Termos de Uso</a></li>
+                    <li><a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Termos de Uso</a></li>
                 </ul>
             </div>
         </div>
         <div class="border-t border-white/10 text-center py-6">
             <div class="max-w-7xl mx-auto px-6 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <p class="text-white/40">© <span id="year"></span> SOLA ROXA — Todos os direitos reservados</p>
-                <div class="flex items-center gap-6"><a href="#"
+                <div class="flex items-center gap-6"><a href="javascript:void(0)"
                         class="text-white/60 hover:text-white transition-colors text-sm">Contato</a></div>
             </div>
         </div>

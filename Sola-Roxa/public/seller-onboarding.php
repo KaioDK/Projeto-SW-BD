@@ -26,6 +26,7 @@ if (!isLoggedUser() && !isLoggedSeller()) {
     href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Great+Vibes&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
     rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap" rel="stylesheet">
+  <link rel="icon" href="assets/img/favicon/favicon_io/favicon.ico" />
 
   <!-- Tailwind CDN: configuração rápida do Tailwind para protótipo -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -95,16 +96,16 @@ if (!isLoggedUser() && !isLoggedSeller()) {
 
       <ul class="hidden md:flex gap-8 text-sm text-white-200 uppercase tracking-wider">
         <li>
-          <a class="hover:text-roxa transition" href="index.php/#lancamentos">Lançamentos</a>
+          <a class="hover:text-roxa transition" href="index.php#lancamentos">Lançamentos</a>
         </li>
         <li>
-          <a class="hover:text-roxa transition" href="index.php/#masculino">Masculino</a>
+          <a class="hover:text-roxa transition" href="index.php#masculino">Masculino</a>
         </li>
         <li>
-          <a class="hover:text-roxa transition" href="index.php/#feminino">Feminino</a>
+          <a class="hover:text-roxa transition" href="index.php#feminino">Feminino</a>
         </li>
         <li>
-          <a class="hover:text-roxa transition" href="index.php/#colecoes">Colecionáveis</a>
+          <a class="hover:text-roxa transition" href="index.php#colecoes">Colecionáveis</a>
         </li>
         <li>
           <a class="hover:text-roxa transition" href="catalog.php">Marketplace</a>
@@ -388,13 +389,13 @@ if (!isLoggedUser() && !isLoggedSeller()) {
         <h5 class="font-semibold text-white mb-4">Ajuda</h5>
         <ul class="space-y-3">
           <li>
-            <a href="#" class="text-white/60 hover:text-white transition-colors">FAQ</a>
+            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">FAQ</a>
           </li>
           <li>
-            <a href="#" class="text-white/60 hover:text-white transition-colors">Envios</a>
+            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Envios</a>
           </li>
           <li>
-            <a href="#" class="text-white/60 hover:text-white transition-colors">Devoluções</a>
+            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Devoluções</a>
           </li>
         </ul>
       </div>
@@ -403,10 +404,10 @@ if (!isLoggedUser() && !isLoggedSeller()) {
         <h5 class="font-semibold text-white mb-4">Sobre Nós</h5>
         <ul class="space-y-3">
           <li>
-            <a href="#" class="text-white/60 hover:text-white transition-colors">Nosso manifesto</a>
+            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Nosso manifesto</a>
           </li>
           <li>
-            <a href="#" class="text-white/60 hover:text-white transition-colors">Trabalhe conosco</a>
+            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Trabalhe conosco</a>
           </li>
         </ul>
       </div>
@@ -415,10 +416,10 @@ if (!isLoggedUser() && !isLoggedSeller()) {
         <h5 class="font-semibold text-white mb-4">Redes Sociais</h5>
         <ul class="space-y-3">
           <li>
-            <a href="#" class="text-white/60 hover:text-white transition-colors">Instagram</a>
+            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Instagram</a>
           </li>
           <li>
-            <a href="#" class="text-white/60 hover:text-white transition-colors">Twitter</a>
+            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Twitter</a>
           </li>
         </ul>
       </div>
@@ -427,10 +428,10 @@ if (!isLoggedUser() && !isLoggedSeller()) {
         <h5 class="font-semibold text-white mb-4">Termos</h5>
         <ul class="space-y-3">
           <li>
-            <a href="#" class="text-white/60 hover:text-white transition-colors">Política de Privacidade</a>
+            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Política de Privacidade</a>
           </li>
           <li>
-            <a href="#" class="text-white/60 hover:text-white transition-colors">Termos de Uso</a>
+            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Termos de Uso</a>
           </li>
         </ul>
       </div>
@@ -441,7 +442,7 @@ if (!isLoggedUser() && !isLoggedSeller()) {
           © <span id="year"></span> SOLA ROXA — Todos os direitos reservados
         </p>
         <div class="flex items-center gap-6">
-          <a href="#" class="text-white/60 hover:text-white transition-colors text-sm">Contato</a>
+          <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors text-sm">Contato</a>
         </div>
       </div>
     </div>

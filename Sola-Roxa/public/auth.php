@@ -47,8 +47,9 @@
     <!-- GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
-    <!-- Favicon (assumes favicon exists at root) -->
+    <!-- Favicon (assumes favicon exists at root). Also link to local asset for environments without root favicon -->
     <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" href="assets/img/favicon/favicon_io/favicon.ico" />
 
     <style>
       body {
@@ -93,17 +94,17 @@
           class="hidden md:flex gap-8 text-sm text-white-200 uppercase tracking-wider"
         >
           <li>
-            <a class="hover:text-roxa transition" href="index.php/#lancamentos"
+            <a class="hover:text-roxa transition" href="index.php#lancamentos"
               >Lançamentos</a
             >
           </li>
           <li>
-            <a class="hover:text-roxa transition" href="index.php/#masculino"
+            <a class="hover:text-roxa transition" href="index.php#masculino"
               >Masculino</a
             >
           </li>
           <li>
-            <a class="hover:text-roxa transition" href="index.php/#feminino">Feminino</a>
+            <a class="hover:text-roxa transition" href="index.php#feminino">Feminino</a>
           </li>
           <li>
             <a class="hover:text-roxa transition" href="#colecoes"
@@ -256,7 +257,7 @@
                 </div>
 
                 <div class="flex items-center justify-between text-sm">
-                  <a href="#" class="text-white/60 hover:text-roxa transition"
+                  <a href="javascript:void(0)" class="text-white/60 hover:text-roxa transition"
                     >Esqueceu sua senha?</a
                   >
                   <div class="flex items-center gap-2">
@@ -419,21 +420,21 @@
           <ul class="space-y-3">
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >FAQ</a
               >
             </li>
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >Envios</a
               >
             </li>
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >Devoluções</a
               >
@@ -446,14 +447,14 @@
           <ul class="space-y-3">
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >Nosso manifesto</a
               >
             </li>
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >Trabalhe conosco</a
               >
@@ -466,14 +467,14 @@
           <ul class="space-y-3">
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >Instagram</a
               >
             </li>
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >Twitter</a
               >
@@ -486,14 +487,14 @@
           <ul class="space-y-3">
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >Política de Privacidade</a
               >
             </li>
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >Termos de Uso</a
               >
@@ -510,7 +511,7 @@
           </p>
           <div class="flex items-center gap-6">
             <a
-              href="#"
+              href="javascript:void(0)"
               class="text-white/60 hover:text-white transition-colors text-sm"
               >Contato</a
             >

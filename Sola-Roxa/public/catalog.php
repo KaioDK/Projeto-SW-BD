@@ -151,16 +151,16 @@ try {
 
       <ul class="hidden md:flex gap-8 text-sm text-white-200 uppercase tracking-wider">
         <li>
-          <a class="hover:text-roxa transition" href="index.php/#lancamentos">Lançamentos</a>
+          <a class="hover:text-roxa transition" href="index.php#lancamentos">Lançamentos</a>
         </li>
         <li>
-          <a class="hover:text-roxa transition" href="index.php/#masculino">Masculino</a>
+          <a class="hover:text-roxa transition" href="index.php#masculino">Masculino</a>
         </li>
         <li>
-          <a class="hover:text-roxa transition" href="index.php/#feminino">Feminino</a>
+          <a class="hover:text-roxa transition" href="index.php#feminino">Feminino</a>
         </li>
         <li>
-          <a class="hover:text-roxa transition" href="index.php/#colecoes">Colecionáveis</a>
+          <a class="hover:text-roxa transition" href="index.php#colecoes">Colecionáveis</a>
         </li>
         <li>
           <a class="hover:text-roxa transition" href="catalog.php">Marketplace</a>
@@ -341,14 +341,14 @@ try {
       <a href="index.php" style="font-family: Poppins; letter-spacing: 0.1em"
         class="text-lg font-extrabold tracking-widest uppercase">SOLA <span class="text-roxa">ROXA</span></a>
       <div class="flex gap-6">
-        <a href="#" class="text-white/70 hover:text-roxa transition">Terms</a>
-        <a href="#" class="text-white/70 hover:text-roxa transition">Privacy</a>
-        <a href="#" class="text-white/70 hover:text-roxa transition">Support</a>
+        <a href="javascript:void(0)" class="text-white/70 hover:text-roxa transition">Terms</a>
+        <a href="javascript:void(0)" class="text-white/70 hover:text-roxa transition">Privacy</a>
+        <a href="javascript:void(0)" class="text-white/70 hover:text-roxa transition">Support</a>
       </div>
       <div class="flex gap-4">
-        <a href="#" class="text-white/70 hover:text-roxa transition"><i data-lucide="instagram"></i></a>
-        <a href="#" class="text-white/70 hover:text-roxa transition"><i data-lucide="twitter"></i></a>
-        <a href="#" class="text-white/70 hover:text-roxa transition"><i data-lucide="mail"></i></a>
+        <a href="javascript:void(0)" class="text-white/70 hover:text-roxa transition"><i data-lucide="instagram"></i></a>
+        <a href="javascript:void(0)" class="text-white/70 hover:text-roxa transition"><i data-lucide="twitter"></i></a>
+        <a href="javascript:void(0)" class="text-white/70 hover:text-roxa transition"><i data-lucide="mail"></i></a>
       </div>
     </div>
   </footer>

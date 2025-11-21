@@ -37,6 +37,7 @@ requireUser();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <!-- Lucide icons: ícones SVG usados na UI -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <link rel="icon" href="assets/img/favicon/favicon_io/favicon.ico" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -98,7 +99,7 @@ requireUser();
           class="hidden md:flex gap-8 text-sm text-white-200 uppercase tracking-wider"
         >
           <li>
-            <a class="hover:text-roxa transition" href="index.php/#lancamentos"
+            <a class="hover:text-roxa transition" href="index.php#lancamentos"
               >Lançamentos</a
             >
           </li>
@@ -108,10 +109,10 @@ requireUser();
             >
           </li>
           <li>
-            <a class="hover:text-roxa transition" href="index.php/#feminino">Feminino</a>
+            <a class="hover:text-roxa transition" href="index.php#feminino">Feminino</a>
           </li>
           <li>
-            <a class="hover:text-roxa transition" href="index.php/#colecoes"
+            <a class="hover:text-roxa transition" href="index.php#colecoes"
               >Colecionáveis</a
             >
           </li>
@@ -566,21 +567,21 @@ requireUser();
           <ul class="space-y-3">
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >FAQ</a
               >
             </li>
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >Envios</a
               >
             </li>
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >Devoluções</a
               >
@@ -593,14 +594,14 @@ requireUser();
           <ul class="space-y-3">
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >Nosso manifesto</a
               >
             </li>
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >Trabalhe conosco</a
               >
@@ -613,14 +614,14 @@ requireUser();
           <ul class="space-y-3">
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >Instagram</a
               >
             </li>
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >Twitter</a
               >
@@ -633,14 +634,14 @@ requireUser();
           <ul class="space-y-3">
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >Política de Privacidade</a
               >
             </li>
             <li>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-white/60 hover:text-white transition-colors"
                 >Termos de Uso</a
               >
@@ -657,7 +658,7 @@ requireUser();
           </p>
           <div class="flex items-center gap-6">
             <a
-              href="#"
+              href="javascript:void(0)"
               class="text-white/60 hover:text-white transition-colors text-sm"
               >Contato</a
             >
