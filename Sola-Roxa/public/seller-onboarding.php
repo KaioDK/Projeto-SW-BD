@@ -34,8 +34,14 @@ if (!isLoggedUser() && !isLoggedSeller()) {
     tailwind.config = {
       theme: {
         extend: {
-          colors: { roxa: "#8B5CF6", cyan: "#00F0FF", pagebg: "#090909" },
-          fontFamily: { sans: ["Inter", "ui-sans-serif", "system-ui"] },
+          colors: {
+            roxa: "#8B5CF6",
+            cyan: "#00F0FF",
+            pagebg: "#090909"
+          },
+          fontFamily: {
+            sans: ["Inter", "ui-sans-serif", "system-ui"]
+          },
         },
       },
     };
@@ -79,7 +85,8 @@ if (!isLoggedUser() && !isLoggedSeller()) {
        Muitos navegadores aplicam estilos nativos ao dropdown; definimos
        cor do texto e fundo das <option> para melhorar contraste no tema.
     */
-    select, select option {
+    select,
+    select option {
       color: #f8fafb;
       background-color: #0b0b0b;
     }
@@ -95,10 +102,23 @@ if (!isLoggedUser() && !isLoggedSeller()) {
     /* Estilos específicos para o modal de sucesso (fundo branco):
        o projeto usa `text-white` globalmente; aqui garantimos que o
        conteúdo do modal tenha texto escuro e botões legíveis. */
-    #success-modal .modal-inner { color: #111827; }
-    #success-modal .modal-inner a { color: #111827; border-color: rgba(0,0,0,0.08); }
-    #success-modal .modal-inner a:hover { background-color: rgba(0,0,0,0.04); }
-    #success-modal .modal-inner .bg-roxa { background-color: #8B5CF6 !important; color: #fff !important; }
+    #success-modal .modal-inner {
+      color: #111827;
+    }
+
+    #success-modal .modal-inner a {
+      color: #111827;
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+
+    #success-modal .modal-inner a:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+    }
+
+    #success-modal .modal-inner .bg-roxa {
+      background-color: #8B5CF6 !important;
+      color: #fff !important;
+    }
   </style>
 </head>
 
@@ -113,16 +133,16 @@ if (!isLoggedUser() && !isLoggedSeller()) {
 
       <ul class="hidden md:flex gap-8 text-sm text-white-200 uppercase tracking-wider">
         <li>
-          <a class="hover:text-roxa transition" href="#lancamentos">Lançamentos</a>
+          <a class="hover:text-roxa transition" href="index.php#lancamentos">Lançamentos</a>
         </li>
         <li>
-          <a class="hover:text-roxa transition" href="#masculino">Masculino</a>
+          <a class="hover:text-roxa transition" href="index.php#masculino">Masculino</a>
         </li>
         <li>
-          <a class="hover:text-roxa transition" href="#feminino">Feminino</a>
+          <a class="hover:text-roxa transition" href="index.php#feminino">Feminino</a>
         </li>
         <li>
-          <a class="hover:text-roxa transition" href="#colecoes">Colecionáveis</a>
+          <a class="hover:text-roxa transition" href="index.php#colecoes">Colecionáveis</a>
         </li>
         <li>
           <a class="hover:text-roxa transition" href="catalog.php">Marketplace</a>
@@ -350,7 +370,7 @@ if (!isLoggedUser() && !isLoggedSeller()) {
                 Próximo
               </button>
             </div>
-              <div class="flex items-center gap-3">
+            <div class="flex items-center gap-3">
               <button type="button" id="publish-btn"
                 class="px-5 py-2 rounded-2xl bg-gradient-to-r from-roxa to-roxa text-white font-semibold">
                 Publicar

@@ -102,7 +102,7 @@ try {
     /* Badge animation for active filters */
     #filters-badge {
       transform-origin: center;
-      transition: transform 220ms cubic-bezier(.2,.9,.2,1), opacity 220ms ease;
+      transition: transform 220ms cubic-bezier(.2, .9, .2, 1), opacity 220ms ease;
       will-change: transform, opacity;
       opacity: 0;
       transform: scale(.8);
@@ -112,7 +112,7 @@ try {
     /* visible state (entry animation) */
     #filters-badge.show {
       display: inline-flex;
-      animation: pop 360ms cubic-bezier(.2,.9,.2,1);
+      animation: pop 360ms cubic-bezier(.2, .9, .2, 1);
       opacity: 1;
       transform: scale(1);
     }
@@ -125,18 +125,42 @@ try {
     }
 
     @keyframes pop {
-      0% { transform: scale(.6); opacity: 0; }
-      60% { transform: scale(1.08); opacity: 1; }
-      100% { transform: scale(1); }
+      0% {
+        transform: scale(.6);
+        opacity: 0;
+      }
+
+      60% {
+        transform: scale(1.08);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(1);
+      }
     }
 
     /* Clear button animations */
-    #clear-filters { transition: background-color 220ms ease, color 220ms ease, transform 200ms ease, box-shadow 220ms ease, opacity 200ms ease; }
-    #clear-filters.clear-show { transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 24px rgba(139,92,246,0.12); }
-    #clear-filters.clear-hide { transform: translateY(0) scale(.985); opacity: 0.92; }
+    #clear-filters {
+      transition: background-color 220ms ease, color 220ms ease, transform 200ms ease, box-shadow 220ms ease, opacity 200ms ease;
+    }
 
-      /* filtered & total count gentle transition */
-      #filtered-count, #total-count { display: inline-block; transition: opacity 300ms ease, transform 300ms ease; }
+    #clear-filters.clear-show {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 8px 24px rgba(139, 92, 246, 0.12);
+    }
+
+    #clear-filters.clear-hide {
+      transform: translateY(0) scale(.985);
+      opacity: 0.92;
+    }
+
+    /* filtered & total count gentle transition */
+    #filtered-count,
+    #total-count {
+      display: inline-block;
+      transition: opacity 300ms ease, transform 300ms ease;
+    }
   </style>
 </head>
 
@@ -151,16 +175,16 @@ try {
 
       <ul class="hidden md:flex gap-8 text-sm text-white-200 uppercase tracking-wider">
         <li>
-          <a class="hover:text-roxa transition" href="#lancamentos">Lançamentos</a>
+          <a class="hover:text-roxa transition" href="index.php#lancamentos">Lançamentos</a>
         </li>
         <li>
-          <a class="hover:text-roxa transition" href="#masculino">Masculino</a>
+          <a class="hover:text-roxa transition" href="index.php#masculino">Masculino</a>
         </li>
         <li>
-          <a class="hover:text-roxa transition" href="#feminino">Feminino</a>
+          <a class="hover:text-roxa transition" href="index.php#feminino">Feminino</a>
         </li>
         <li>
-          <a class="hover:text-roxa transition" href="#colecoes">Colecionáveis</a>
+          <a class="hover:text-roxa transition" href="index.php#colecoes">Colecionáveis</a>
         </li>
         <li>
           <a class="hover:text-roxa transition" href="catalog.php">Marketplace</a>
@@ -315,21 +339,21 @@ try {
         </div>
       </div>
 
-        <!-- Toolbar: results count and clear filters -->
-        <div class="flex items-center justify-between mb-4">
-          <div id="results-count" class="text-white/70 text-sm">Carregando...</div>
-          <div class="flex items-center gap-3">
-            <div class="relative">
-              <button id="clear-filters" class="text-sm text-white/60 hover:text-roxa px-3 py-1 rounded-md">Limpar filtros</button>
-              <span id="filters-badge" class="hidden absolute -top-2 -right-2 inline-flex items-center justify-center px-2 py-0.5 text-xs font-medium rounded-full bg-red-600 text-white">0</span>
-            </div>
+      <!-- Toolbar: results count and clear filters -->
+      <div class="flex items-center justify-between mb-4">
+        <div id="results-count" class="text-white/70 text-sm">Carregando...</div>
+        <div class="flex items-center gap-3">
+          <div class="relative">
+            <button id="clear-filters" class="text-sm text-white/60 hover:text-roxa px-3 py-1 rounded-md">Limpar filtros</button>
+            <span id="filters-badge" class="hidden absolute -top-2 -right-2 inline-flex items-center justify-center px-2 py-0.5 text-xs font-medium rounded-full bg-red-600 text-white">0</span>
           </div>
         </div>
+      </div>
 
-        <!-- Catalog Grid (rendered dynamically) -->
-        <div id="catalog-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          <!-- cards will be rendered here by JS -->
-        </div>
+      <!-- Catalog Grid (rendered dynamically) -->
+      <div id="catalog-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        <!-- cards will be rendered here by JS -->
+      </div>
     </section>
 
     <!-- Optional Filter Sidebar (not implemented, placeholder) -->
@@ -357,11 +381,11 @@ try {
       <div>
         <h5 class="font-semibold text-white mb-4">Sobre Nós</h5>
         <ul class="space-y-3">
-        <li>
+          <li>
             <a href="sobre.php" class="text-white/60 hover:text-white transition-colors">
-            Sobre Sola Roxa
+              Sobre Sola Roxa
             </a>
-        </li>
+          </li>
           <li>
             <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Trabalhe conosco</a>
           </li>
@@ -529,17 +553,29 @@ try {
 
         // highlight clear button (entry)
         clearBtn.classList.remove('clear-hide');
-        clearBtn.classList.add('bg-roxa','text-white','clear-show');
+        clearBtn.classList.add('bg-roxa', 'text-white', 'clear-show');
 
         // subtle pulse when number changes
         if (previous !== String(active)) {
           try {
-            badge.animate([
-              { transform: 'scale(1)', offset: 0 },
-              { transform: 'scale(1.12)', offset: 0.4 },
-              { transform: 'scale(1)', offset: 1 }
-            ], { duration: 260, easing: 'cubic-bezier(.2,.9,.2,1)' });
-          } catch (e) { /* animate may not be available in older browsers */ }
+            badge.animate([{
+                transform: 'scale(1)',
+                offset: 0
+              },
+              {
+                transform: 'scale(1.12)',
+                offset: 0.4
+              },
+              {
+                transform: 'scale(1)',
+                offset: 1
+              }
+            ], {
+              duration: 260,
+              easing: 'cubic-bezier(.2,.9,.2,1)'
+            });
+          } catch (e) {
+            /* animate may not be available in older browsers */ }
         }
 
       } else {
@@ -557,7 +593,7 @@ try {
         clearBtn.classList.add('clear-hide');
         // remove color classes after animation completes
         setTimeout(() => {
-          clearBtn.classList.remove('bg-roxa','text-white','clear-hide');
+          clearBtn.classList.remove('bg-roxa', 'text-white', 'clear-hide');
         }, 220);
       }
     }
@@ -578,18 +614,37 @@ try {
         function animateFilteredCount(el, newVal) {
           if (!el) return el.textContent = newVal;
           const prev = el.textContent;
-          if (String(prev) === String(newVal)) { el.textContent = newVal; return; }
+          if (String(prev) === String(newVal)) {
+            el.textContent = newVal;
+            return;
+          }
           try {
             // fade out, change, fade in
-            el.animate([
-              { opacity: 1, transform: 'translateY(0)' },
-              { opacity: 0, transform: 'translateY(-6px)' }
-            ], { duration: 180, easing: 'ease-out' }).onfinish = () => {
+            el.animate([{
+                opacity: 1,
+                transform: 'translateY(0)'
+              },
+              {
+                opacity: 0,
+                transform: 'translateY(-6px)'
+              }
+            ], {
+              duration: 180,
+              easing: 'ease-out'
+            }).onfinish = () => {
               el.textContent = newVal;
-              el.animate([
-                { opacity: 0, transform: 'translateY(6px)' },
-                { opacity: 1, transform: 'translateY(0)' }
-              ], { duration: 240, easing: 'cubic-bezier(.22,.9,.35,1)' });
+              el.animate([{
+                  opacity: 0,
+                  transform: 'translateY(6px)'
+                },
+                {
+                  opacity: 1,
+                  transform: 'translateY(0)'
+                }
+              ], {
+                duration: 240,
+                easing: 'cubic-bezier(.22,.9,.35,1)'
+              });
             };
           } catch (e) {
             // fallback
@@ -601,17 +656,36 @@ try {
         function animateTotalCount(el, newVal) {
           if (!el) return el.textContent = newVal;
           const prev = el.textContent;
-          if (String(prev) === String(newVal)) { el.textContent = newVal; return; }
+          if (String(prev) === String(newVal)) {
+            el.textContent = newVal;
+            return;
+          }
           try {
-            el.animate([
-              { opacity: 1, transform: 'translateY(0)' },
-              { opacity: 0, transform: 'translateY(-6px)' }
-            ], { duration: 200, easing: 'ease-out' }).onfinish = () => {
+            el.animate([{
+                opacity: 1,
+                transform: 'translateY(0)'
+              },
+              {
+                opacity: 0,
+                transform: 'translateY(-6px)'
+              }
+            ], {
+              duration: 200,
+              easing: 'ease-out'
+            }).onfinish = () => {
               el.textContent = newVal;
-              el.animate([
-                { opacity: 0, transform: 'translateY(6px)' },
-                { opacity: 1, transform: 'translateY(0)' }
-              ], { duration: 260, easing: 'cubic-bezier(.22,.9,.35,1)' });
+              el.animate([{
+                  opacity: 0,
+                  transform: 'translateY(6px)'
+                },
+                {
+                  opacity: 1,
+                  transform: 'translateY(0)'
+                }
+              ], {
+                duration: 260,
+                easing: 'cubic-bezier(.22,.9,.35,1)'
+              });
             };
           } catch (e) {
             el.textContent = newVal;
@@ -678,24 +752,42 @@ try {
       const searchInput = document.querySelector('input[placeholder^="Buscar"]');
       if (searchInput) {
         let t;
-        searchInput.addEventListener('input', () => { clearTimeout(t); t = setTimeout(() => { loadProducts(); updateFilterIndicator(); }, 300); });
+        searchInput.addEventListener('input', () => {
+          clearTimeout(t);
+          t = setTimeout(() => {
+            loadProducts();
+            updateFilterIndicator();
+          }, 300);
+        });
       }
 
       // size buttons
       document.querySelectorAll('.size-btn').forEach(btn => {
-        btn.addEventListener('click', () => { btn.classList.toggle('active'); loadProducts(); updateFilterIndicator(); });
+        btn.addEventListener('click', () => {
+          btn.classList.toggle('active');
+          loadProducts();
+          updateFilterIndicator();
+        });
       });
 
       // estado checkboxes
-      document.querySelectorAll('[data-filter="estado"] input[type="checkbox"]').forEach(cb => cb.addEventListener('change', () => { loadProducts(); updateFilterIndicator(); }));
+      document.querySelectorAll('[data-filter="estado"] input[type="checkbox"]').forEach(cb => cb.addEventListener('change', () => {
+        loadProducts();
+        updateFilterIndicator();
+      }));
 
       // ordenar select
       const orderSel = document.querySelector('select');
-      if (orderSel) orderSel.addEventListener('change', () => { loadProducts(); updateFilterIndicator(); });
+      if (orderSel) orderSel.addEventListener('change', () => {
+        loadProducts();
+        updateFilterIndicator();
+      });
 
       // clear filters button
       const clearBtn = document.getElementById('clear-filters');
-      if (clearBtn) clearBtn.addEventListener('click', () => { clearFilters(); });
+      if (clearBtn) clearBtn.addEventListener('click', () => {
+        clearFilters();
+      });
     });
   </script>
 </body>
