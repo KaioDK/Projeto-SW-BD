@@ -3,7 +3,7 @@ require_once __DIR__ . '/../../backend/auth.php';
 header('Content-Type: application/json; charset=utf-8');
 if (session_status() === PHP_SESSION_NONE) session_start();
 
-if (!isLoggedUser()) { http_response_code(401); echo json_encode(['error'=>'Not authenticated']); exit; }
+if (!isLoggedUser()) { http_response_code(401); echo json_encode(['error'=>'Não autenticado']); exit; }
 
 $id = intval($_POST['id_produto'] ?? 0);
 // Quantidade fixada em 1 (cada anúncio é uma unidade)

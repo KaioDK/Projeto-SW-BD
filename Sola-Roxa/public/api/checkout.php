@@ -4,7 +4,7 @@ require_once __DIR__ . '/../../backend/db.php';
 header('Content-Type: application/json; charset=utf-8');
 if (session_status() === PHP_SESSION_NONE) session_start();
 
-if (!isLoggedUser()) { http_response_code(401); echo json_encode(['error'=>'Not authenticated']); exit; }
+if (!isLoggedUser()) { http_response_code(401); echo json_encode(['error'=>'Não autenticado']); exit; }
 
 $cart = $_SESSION['cart'] ?? [];
 if (empty($cart)) { http_response_code(400); echo json_encode(['error'=>'Cart empty']); exit; }
@@ -92,7 +92,7 @@ try {
     }
 
     // register payment (simulate approval) based on selected method
-    $metodo = trim($_POST['pay'] ?? $_POST['metodo'] ?? 'pix');
+    $metodo = trim($_POST['payment_method'] ?? $_POST['pay'] ?? $_POST['metodo'] ?? 'credito');
     $status = 'aprovado';
     $stmt = $pdo->prepare('INSERT INTO pagamento (id_pedido, metodo, status, valor_pago) VALUES (?, ?, ?, ?)');
     $stmt->execute([$id_pedido, $metodo, $status, $valor_total]);

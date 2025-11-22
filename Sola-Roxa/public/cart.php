@@ -159,7 +159,7 @@ requireUser();
           <div class="w-32 h-0.5 bg-white/6"></div>
           <div id="step-address" class="flex items-center gap-3">
             <div
-              class="w-9 h-9 rounded-full bg-white/6 flex items-center justify-center text-black">
+              class="w-9 h-9 rounded-full bg-white/6 flex items-center justify-center text-white">
               2
             </div>
             <div class="text-sm text-white/50">Endereço</div>
@@ -167,7 +167,7 @@ requireUser();
           <div class="w-32 h-0.5 bg-white/6"></div>
           <div id="step-pay" class="flex items-center gap-3">
             <div
-              class="w-9 h-9 rounded-full bg-white/6 flex items-center justify-center text-black">
+              class="w-9 h-9 rounded-full bg-white/6 flex items-center justify-center text-white">
               3
             </div>
             <div class="text-sm text-white/50">Pagamento</div>
@@ -270,95 +270,119 @@ requireUser();
       <!-- Seção de Checkout (inicialmente oculto) -->
       <section id="checkout-section" class="hidden mt-12">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          <div class="lg:col-span-8">
-            <h2 class="text-2xl font-bold mb-4">Finalizar Compra</h2>
+          <div class="lg:col-span-8 space-y-6">
+            <h2 class="text-2xl font-bold">Finalizar Compra</h2>
+            
+            <!-- Seleção de Endereço -->
             <div class="p-6 rounded-xl card">
-              <form id="checkout-form" class="space-y-4">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  <div>
-                    <label class="text-sm text-white/70">Nome completo</label>
-                    <input
-                      name="name"
-                      required
-                      class="w-full mt-2 p-3 rounded bg-transparent border border-white/10" />
-                  </div>
-                  <div>
-                    <label class="text-sm text-white/70">Telefone</label>
-                    <input
-                      name="phone"
-                      required
-                      class="w-full mt-2 p-3 rounded bg-transparent border border-white/10" />
-                  </div>
-                </div>
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-semibold">Endereço de Entrega</h3>
+                <button id="add-new-address-btn" class="text-sm text-roxa hover:text-roxa/80 flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                  </svg>
+                  Novo Endereço
+                </button>
+              </div>
 
-                <div>
-                  <label class="text-sm text-white/70">Endereço</label>
-                  <input
-                    name="address"
-                    required
-                    class="w-full mt-2 p-3 rounded bg-transparent border border-white/10" />
-                </div>
+              <!-- Lista de endereços salvos -->
+              <div id="saved-addresses" class="space-y-3">
+                <p class="text-white/60 text-center py-4">Carregando endereços...</p>
+              </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  <div>
-                    <label class="text-sm text-white/70">Cidade</label>
-                    <input
-                      name="city"
-                      required
-                      class="w-full mt-2 p-3 rounded bg-transparent border border-white/10" />
+              <!-- Formulário de novo endereço (oculto) -->
+              <div id="new-address-form-container" class="hidden mt-4 p-4 bg-white/5 rounded-lg">
+                <h4 class="text-sm font-semibold mb-3">Adicionar Novo Endereço</h4>
+                <form id="new-address-form" class="space-y-3">
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div class="md:col-span-2">
+                      <label class="text-sm text-white/70">Rua / Avenida *</label>
+                      <input name="rua" type="text" required class="w-full mt-1 p-2 rounded bg-transparent border border-white/10 text-white" />
+                    </div>
+                    <div>
+                      <label class="text-sm text-white/70">Número *</label>
+                      <input name="numero" type="number" required class="w-full mt-1 p-2 rounded bg-transparent border border-white/10 text-white" />
+                    </div>
                   </div>
-                  <div>
-                    <label class="text-sm text-white/70">CEP</label>
-                    <input
-                      name="zip"
-                      required
-                      class="w-full mt-2 p-3 rounded bg-transparent border border-white/10" />
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div>
+                      <label class="text-sm text-white/70">Bairro</label>
+                      <input name="bairro" type="text" class="w-full mt-1 p-2 rounded bg-transparent border border-white/10 text-white" />
+                    </div>
+                    <div>
+                      <label class="text-sm text-white/70">Cidade *</label>
+                      <input name="cidade" type="text" required class="w-full mt-1 p-2 rounded bg-transparent border border-white/10 text-white" />
+                    </div>
                   </div>
-                  <div>
-                    <label class="text-sm text-white/70">País</label>
-                    <input
-                      name="country"
-                      required
-                      class="w-full mt-2 p-3 rounded bg-transparent border border-white/10" />
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div>
+                      <label class="text-sm text-white/70">Estado (UF) *</label>
+                      <select name="estado" required class="w-full mt-1 p-2 rounded bg-zinc-900 border border-white/10 text-white">
+                        <option value="">Selecione</option>
+                        <option value="AC">Acre</option>
+                        <option value="AL">Alagoas</option>
+                        <option value="AP">Amapá</option>
+                        <option value="AM">Amazonas</option>
+                        <option value="BA">Bahia</option>
+                        <option value="CE">Ceará</option>
+                        <option value="DF">Distrito Federal</option>
+                        <option value="ES">Espírito Santo</option>
+                        <option value="GO">Goiás</option>
+                        <option value="MA">Maranhão</option>
+                        <option value="MT">Mato Grosso</option>
+                        <option value="MS">Mato Grosso do Sul</option>
+                        <option value="MG">Minas Gerais</option>
+                        <option value="PA">Pará</option>
+                        <option value="PB">Paraíba</option>
+                        <option value="PR">Paraná</option>
+                        <option value="PE">Pernambuco</option>
+                        <option value="PI">Piauí</option>
+                        <option value="RJ">Rio de Janeiro</option>
+                        <option value="RN">Rio Grande do Norte</option>
+                        <option value="RS">Rio Grande do Sul</option>
+                        <option value="RO">Rondônia</option>
+                        <option value="RR">Roraima</option>
+                        <option value="SC">Santa Catarina</option>
+                        <option value="SP">São Paulo</option>
+                        <option value="SE">Sergipe</option>
+                        <option value="TO">Tocantins</option>
+                      </select>
+                    </div>
                   </div>
-                </div>
+                  <div class="flex gap-2 justify-end">
+                    <button type="button" id="cancel-new-address" class="px-4 py-2 text-sm border border-white/10 rounded text-white/70 hover:text-white">Cancelar</button>
+                    <button type="submit" class="px-4 py-2 text-sm bg-roxa text-white rounded hover:bg-roxa/90">Salvar</button>
+                  </div>
+                </form>
+              </div>
+            </div>
 
-                <div>
-                  <div class="text-sm font-semibold mb-2">
-                    Método de pagamento
+            <!-- Método de Pagamento -->
+            <div class="p-6 rounded-xl card">
+              <h3 class="text-lg font-semibold mb-4">Método de Pagamento</h3>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <label class="flex items-center gap-3 p-4 rounded-lg border border-white/10 cursor-pointer hover:border-roxa/50 transition payment-option">
+                  <input type="radio" name="payment_method" value="credito" checked class="text-roxa" />
+                  <div>
+                    <div class="font-medium">Cartão de Crédito</div>
+                    <div class="text-xs text-white/60">Aprovação instantânea</div>
                   </div>
-                  <div class="flex gap-3">
-                    <label
-                      class="flex-1 p-3 rounded border border-white/10 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="pay"
-                        value="card"
-                        class="mr-2"
-                        checked />
-                      Cartão
-                    </label>
-                    <label
-                      class="flex-1 p-3 rounded border border-white/10 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="pay"
-                        value="pix"
-                        class="mr-2" />
-                      Pix
-                    </label>
-                    <label
-                      class="flex-1 p-3 rounded border border-white/10 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="pay"
-                        value="boleto"
-                        class="mr-2" />
-                      Boleto
-                    </label>
+                </label>
+                <label class="flex items-center gap-3 p-4 rounded-lg border border-white/10 cursor-pointer hover:border-roxa/50 transition payment-option">
+                  <input type="radio" name="payment_method" value="pix" class="text-roxa" />
+                  <div>
+                    <div class="font-medium">Pix</div>
+                    <div class="text-xs text-white/60">Pagamento rápido</div>
                   </div>
-                </div>
-              </form>
+                </label>
+                <label class="flex items-center gap-3 p-4 rounded-lg border border-white/10 cursor-pointer hover:border-roxa/50 transition payment-option">
+                  <input type="radio" name="payment_method" value="boleto" class="text-roxa" />
+                  <div>
+                    <div class="font-medium">Boleto</div>
+                    <div class="text-xs text-white/60">Vence em 3 dias</div>
+                  </div>
+                </label>
+              </div>
             </div>
           </div>
 
@@ -497,7 +521,7 @@ requireUser();
   </div>
 
   <script src="assets/scripts/main.js"></script>
-  <script src="assets/scripts/cart.js"></script>
+  <script src="assets/scripts/cart.js?v=2"></script>
 </body>
 
 </html>

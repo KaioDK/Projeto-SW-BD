@@ -5,7 +5,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 
 if (!isLoggedUser()) {
     http_response_code(401);
-    echo json_encode(['error'=>'Not authenticated']);
+    echo json_encode(['error'=>'Não autenticado']);
     exit;
 }
 
