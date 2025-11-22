@@ -4,7 +4,7 @@ require_once __DIR__ . '/../../backend/db.php';
 header('Content-Type: application/json; charset=utf-8');
 if (session_status() === PHP_SESSION_NONE) session_start();
 
-if (!isLoggedUser()) { http_response_code(401); echo json_encode(['error'=>'Not authenticated']); exit; }
+if (!isLoggedUser()) { http_response_code(401); echo json_encode(['error'=>'Não autenticado']); exit; }
 
 $userId = (int)($_SESSION['user']['id'] ?? $_SESSION['user']['id_cliente'] ?? 0);
 $pedidoId = intval($_POST['id_pedido'] ?? 0);

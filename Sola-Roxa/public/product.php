@@ -121,6 +121,22 @@
     .product-info .card {
       padding: 1.25rem;
     }
+
+    /* Select size dropdown styling */
+    .size-select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23ffffff'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+      background-size: 1.25rem;
+      padding-right: 2.5rem;
+    }
+
+    .size-select option {
+      background-color: #18181b;
+      color: white;
+    }
   </style>
 </head>
 <?php
@@ -388,70 +404,59 @@ if ($product_id > 0 && isset($_SESSION['vendedor']['id'])) {
             </div>
           </div>
           <div class="lg:col-span-5">
-            <div class="card rounded-xl p-6">
-              <h1 class="text-3xl font-bold">${product.nome}</h1>
-              <p class="mt-3 text-white/70">${product.estado || ''}</p>
-              <div class="mt-6 flex items-baseline gap-4">
-                <div class="text-2xl font-bold text-roxa">R$ ${product.valor ?? product.preco ?? product.price ?? ''}</div>
-                <div class="text-sm text-white/60">Envio gratuito para todo o Brasil</div>
+            <div class="card rounded-xl p-6 product-info">
+              <p class="text-sm text-roxa font-semibold">${product.estado || 'Novo'}</p>
+              <h1 class="text-3xl font-bold mt-2">${product.nome}</h1>
+              
+              <div class="mt-6">
+                <div class="text-3xl font-bold text-roxa">R$ ${product.valor ?? product.preco ?? product.price ?? ''}</div>
+                <p class="text-sm text-white/60 mt-1">Envio gratuito para todo o Brasil</p>
               </div>
-              <div class="mt-6 flex items-center justify-between gap-3">
-                <div class="w-full lg:w-auto">
-                  ${(function () {
-                    // Constroi o bloco de tamanhos somente quando o produto possui informação
-                    let sizes = [];
-                    if (product.tamanhos) {
-                      if (Array.isArray(product.tamanhos)) sizes = product.tamanhos;
-                      else sizes = String(product.tamanhos).split(',').map(s => s.trim()).filter(Boolean);
-                    } else if (product.tamanho) {
-                      sizes = [String(product.tamanho)];
-                    } else if (product.size) {
-                      sizes = Array.isArray(product.size) ? product.size : [String(product.size)];
-                    }
-                    if (sizes.length === 0) return '';
-                    return ` < div class = "product-sizes" > < div class = "text-sm text-white/70 mb-2" > Tamanho < /div><div class="flex flex-wrap gap-2">${sizes.map(t => `<button class="size-btn px-4 py-2 rounded-md border border-white/
-      10 ">${t}</button>`).join('')}</div></div>`;
-    })()
-    } <
-    /div> <
-    div class = "flex-shrink-0" >
-    <?php if ($isSellerOfProduct): ?>
-        <
-        button id = "add-cart"
-      class = "px-6 py-3 rounded-md btn-glow bg-gray-500 text-white font-semibold cursor-not-allowed"
-      disabled title = "Você não pode comprar seu próprio produto" > Adicionar ao Carrinho < /button>
-    <?php else: ?>
-        <
-        button id = "add-cart"
-      class = "px-6 py-3 rounded-md btn-glow bg-roxa text-black font-semibold" > Adicionar ao Carrinho < /button>
-    <?php endif; ?>
-      <
-      /div> <
-      /div> <
-      div class = "mt-3" >
-      <?php if ($isSellerOfProduct): ?> <
-        button id = "buy-now"
-    class = "w-full mt-3 px-6 py-3 rounded-md border border-gray-500 text-gray-500 bg-gray-800 cursor-not-allowed"
-    disabled title = "Você não pode comprar seu próprio produto" > Comprar Agora < /button>
-    <?php else: ?>
-        <
-        button id = "buy-now"
-      class = "w-full mt-3 px-6 py-3 rounded-md border border-cyan text-cyan hover:bg-cyan/10 transition" > Comprar Agora < /button>
-    <?php endif; ?>
-      <
-      /div> <
-      /div> <
-      div class = "mt-6 text-sm text-white/60" > Compartilhe• < button class = "text-white/80" > Reportar < /button></div >
-      <
-      /div>
-    `;
+
+              ${(function () {
+                // Constroi o bloco de tamanhos somente quando o produto possui informação
+                let sizes = [];
+                if (product.tamanhos) {
+                  if (Array.isArray(product.tamanhos)) sizes = product.tamanhos;
+                  else sizes = String(product.tamanhos).split(',').map(s => s.trim()).filter(Boolean);
+                } else if (product.tamanho) {
+                  sizes = [String(product.tamanho)];
+                } else if (product.size) {
+                  sizes = Array.isArray(product.size) ? product.size : [String(product.size)];
+                }
+                if (sizes.length === 0) return '';
+                return `
+                  <div class="mt-6">
+                    <div class="text-sm text-white/70 mb-3">Tamanho</div>
+                    <select class="w-full p-3 rounded-md bg-zinc-900 border border-white/10 text-white size-select">
+                      ${sizes.map(t => `<option value="${t}">${t}</option>`).join('')}
+                    </select>
+                  </div>
+                `;
+              })()}
+
+              <div class="mt-6 space-y-3">
+                <?php if ($isSellerOfProduct): ?>
+                  <button id="add-cart" class="w-full px-6 py-3 rounded-md bg-gray-600 text-white font-semibold cursor-not-allowed" disabled title="Você não pode comprar seu próprio produto">Adicionar ao Carrinho</button>
+                  <button id="buy-now" class="w-full px-6 py-3 rounded-md border border-gray-500 text-gray-400 cursor-not-allowed" disabled title="Você não pode comprar seu próprio produto">Comprar Agora</button>
+                <?php else: ?>
+                  <button id="add-cart" class="w-full px-6 py-3 rounded-md btn-glow bg-roxa text-white font-semibold hover:bg-roxa/90 transition">Adicionar ao Carrinho</button>
+                  <button id="buy-now" class="w-full px-6 py-3 rounded-md border-2 border-cyan text-cyan hover:bg-cyan/10 transition font-semibold">Comprar Agora</button>
+                <?php endif; ?>
+              </div>
+
+              <div class="mt-6 pt-6 border-t border-white/10 text-sm text-white/60">
+                <button class="hover:text-white transition">Compartilhe</button> • <button class="hover:text-white transition">Reportar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
       lucide.createIcons();
       // Atualiza conteúdo da aba Descrição também
       const tabDescEl = document.getElementById('tab-desc');
-      if (tabDescEl) tabDescEl.innerHTML = ` < p class = "text-white/70" > $ {
-      product.descricao || ''
-    } < /p>`;
-    // Adiciona listeners igual antes
+      if (tabDescEl) tabDescEl.innerHTML = `<p class="text-white/70">${product.descricao || ''}</p>`;
+      // Adiciona listeners igual antes
     document.querySelectorAll('.thumb').forEach(btn => {
       btn.addEventListener('click', () => {
         const src = btn.dataset.src;
@@ -473,17 +478,6 @@ if ($product_id > 0 && isset($_SESSION['vendedor']['id'])) {
     favBtn.addEventListener('click', () => {
       favBtn.classList.toggle('active');
     });
-    document.querySelectorAll('.size-btn').forEach(b => b.addEventListener('click', () => {
-      document.querySelectorAll('.size-btn').forEach(x => x.classList.remove('active'));
-      b.classList.add('active');
-    }));
-    // Pre-seleciona o primeiro tamanho disponível para evitar envio sem tamanho
-    (function ensureDefaultSize() {
-      const btns = document.querySelectorAll('.size-btn');
-      if (btns && btns.length > 0 && !document.querySelector('.size-btn.active')) {
-        btns[0].classList.add('active');
-      }
-    })();
     document.getElementById('add-cart').addEventListener('click', async () => {
       const btn = document.getElementById('add-cart');
       gsap.fromTo(btn, {
@@ -495,7 +489,8 @@ if ($product_id > 0 && isset($_SESSION['vendedor']['id'])) {
         repeat: 1
       });
       // determine selected size
-      const selectedSize = document.querySelector('.size-btn.active') ? document.querySelector('.size-btn.active').textContent.trim() : '';
+      const sizeSelect = document.querySelector('.size-select');
+      const selectedSize = sizeSelect ? sizeSelect.value : '';
       try {
         const fd = new FormData();
         fd.append('id_produto', product.id_produto || product.id);
@@ -530,7 +525,8 @@ if ($product_id > 0 && isset($_SESSION['vendedor']['id'])) {
         yoyo: true,
         repeat: 1
       });
-      const selectedSize = document.querySelector('.size-btn.active') ? document.querySelector('.size-btn.active').textContent.trim() : '';
+      const sizeSelect = document.querySelector('.size-select');
+      const selectedSize = sizeSelect ? sizeSelect.value : '';
       try {
         const fd = new FormData();
         fd.append('id_produto', product.id_produto || product.id);

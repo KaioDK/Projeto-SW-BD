@@ -5,38 +5,14 @@ const toLogin = document.getElementById("to-login");
 const title = document.getElementById("form-title");
 
 function showRegister() {
-  // Animação: esconde o formulário de login
-  gsap.to(loginForm, {
-    duration: 0.4,
-    opacity: 0,
-    y: -20,
-    pointerEvents: "none",
-  });
-  // Animação: exibe o formulário de registro
-  gsap.to(registerForm, {
-    duration: 0.5,
-    opacity: 1,
-    y: 0,
-    pointerEvents: "auto",
-    delay: 0.15,
-  });
+  loginForm.style.display = 'none';
+  registerForm.style.display = 'block';
   title.textContent = "Crie sua conta na Sola Roxa";
 }
 
 function showLogin() {
-  gsap.to(registerForm, {
-    duration: 0.35,
-    opacity: 0,
-    y: 20,
-    pointerEvents: "none",
-  });
-  gsap.to(loginForm, {
-    duration: 0.5,
-    opacity: 1,
-    y: 0,
-    pointerEvents: "auto",
-    delay: 0.12,
-  });
+  registerForm.style.display = 'none';
+  loginForm.style.display = 'block';
   title.textContent = "Bem-vindo de volta à Sola Roxa";
 }
 

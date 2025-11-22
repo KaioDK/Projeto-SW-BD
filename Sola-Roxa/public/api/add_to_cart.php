@@ -6,7 +6,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 // Apenas usuários logados podem usar o carrinho
 if (!isLoggedUser()) {
     http_response_code(401);
-    echo json_encode(['error' => 'Not authenticated']);
+    echo json_encode(['error' => 'Não autenticado']);
     exit;
 }
 

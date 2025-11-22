@@ -334,7 +334,6 @@ try {
             <option value="recent">Mais Recentes</option>
             <option value="price-asc">Menor Preço</option>
             <option value="price-desc">Maior Preço</option>
-            <option value="popular">Mais Vendidos</option>
           </select>
         </div>
       </div>

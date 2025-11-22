@@ -52,7 +52,7 @@ try {
     }
 
     http_response_code(401);
-    echo json_encode(['error' => 'Not authenticated']);
+    echo json_encode(['error' => 'Não autenticado']);
     exit;
 } catch (Throwable $e) {
     error_log('delete_account error: ' . $e->getMessage());

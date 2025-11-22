@@ -172,8 +172,8 @@ function firstName($full)
             <!-- Barra lateral (navegação da conta do usuário) -->
             <aside class="lg:col-span-3 bg-white/[0.02] rounded shadow-sm p-4 border border-white/6">
                 <nav class="flex flex-col gap-4">
-                    <a href="profile.php"
-                        class="flex items-center gap-3 p-3 rounded side-link bg-white/5 text-roxa border-l-4 border-roxa">
+                    <button type="button" class="flex items-center gap-3 p-3 rounded side-link active bg-roxa/20 text-roxa border-l-4 border-roxa"
+                        aria-label="Perfil">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -181,7 +181,7 @@ function firstName($full)
                         </svg>
 
                         <span class="font-semibold">Perfil</span>
-                    </a>
+                    </button>
                     <button type="button" class="flex items-center gap-3 p-3 rounded side-link bg-transparent text-white" aria-label="Pedidos">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6">
@@ -190,15 +190,6 @@ function firstName($full)
                         </svg>
 
                         <span>Pedidos</span>
-                    </button>
-                    <button type="button" class="flex items-center gap-3 p-3 rounded side-link bg-transparent text-white" aria-label="Devoluções">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.656 48.656 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3-3 3" />
-                        </svg>
-
-                        <span>Devoluções</span>
                     </button>
                     <button type="button" class="flex items-center gap-3 p-3 rounded side-link bg-transparent text-white" aria-label="Meus Endereços">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -213,7 +204,7 @@ function firstName($full)
             </aside>
 
             <!-- Conteúdo principal do perfil -->
-            <section class="lg:col-span-9 bg-white/[0.02] rounded shadow-sm p-6 border border-white/10">
+            <section id="profile-section" class="lg:col-span-9 bg-white/[0.02] rounded shadow-sm p-6 border border-white/10">
                 <h3 class="text-xl font-bold mb-4 text-white">PERFIL</h3>
 
                 <form id="profile-form" class="space-y-6">
@@ -240,28 +231,11 @@ function firstName($full)
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+                    <div class="grid grid-cols-1 md:grid-cols-1 gap-4 items-end">
                         <div>
                             <label class="text-sm text-white/70">Senha</label>
                             <div class="w-full mt-2 p-3 border rounded bg-transparent border-white/10 text-white placeholder-white/40">********</div>
                             <button id="change-password-btn" type="button" aria-label="Alterar senha" class="text-sm text-roxa mt-2 inline-block">Alterar senha</button>
-                        </div>
-                        <div class="mb-7">
-                            <label class="text-sm text-white/70">Código de área</label>
-                            <select name="ddd"
-                                class="w-full mt-2 p-3 border rounded bg-transparent border-white/10 text-white">
-                                <option>+55 (BR)</option>
-                                <option>+1 (US)</option>
-                                <option>+44 (UK)</option>
-                                <option>+33 (FR)</option>
-                                <option>+49 (DE)</option>
-                                <option>+34 (ES)</option>
-                            </select>
-                        </div>
-                        <div class="mb-7">
-                            <label class="text-sm text-white/70">Telefone</label>
-                            <input id="profile-telefone" name="telefone" type="tel" value=""
-                                class="w-full mt-2 p-3 border rounded bg-transparent border-white/10 text-white placeholder-white/40" />
                         </div>
                     </div>
 
@@ -292,6 +266,95 @@ function firstName($full)
                         Roxa e perderá todas as informações relacionadas a esta conta.</p>
                     <button id="delete-account"
                         class="mt-4 px-4 py-2 border border-white/10 rounded text-red-400">EXCLUIR CONTA</button>
+                </div>
+            </section>
+
+            <!-- Seção de Endereços (oculta por padrão) -->
+            <section id="addresses-section" class="lg:col-span-9 bg-white/[0.02] rounded shadow-sm p-6 border border-white/10 hidden">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-bold text-white">MEUS ENDEREÇOS</h3>
+                    <button id="add-address-btn" class="px-4 py-2 bg-roxa text-white rounded flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        </svg>
+                        Novo Endereço
+                    </button>
+                </div>
+
+                <!-- Formulário de novo endereço (oculto) -->
+                <div id="address-form-container" class="mb-6 hidden">
+                    <div class="bg-white/5 p-6 rounded border border-white/10">
+                        <h4 class="text-lg font-semibold text-white mb-4">Adicionar Endereço</h4>
+                        <form id="add-address-form" class="space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div class="md:col-span-2">
+                                    <label class="text-sm text-white/70">Rua / Avenida *</label>
+                                    <input name="rua" type="text" required class="w-full mt-2 p-3 border rounded bg-transparent border-white/10 text-white placeholder-white/40" placeholder="Ex: Av. Paulista" />
+                                </div>
+                                <div>
+                                    <label class="text-sm text-white/70">Número *</label>
+                                    <input name="numero" type="number" required class="w-full mt-2 p-3 border rounded bg-transparent border-white/10 text-white placeholder-white/40" placeholder="1000" />
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="text-sm text-white/70">Bairro</label>
+                                    <input name="bairro" type="text" class="w-full mt-2 p-3 border rounded bg-transparent border-white/10 text-white placeholder-white/40" placeholder="Ex: Bela Vista" />
+                                </div>
+                                <div>
+                                    <label class="text-sm text-white/70">Cidade *</label>
+                                    <input name="cidade" type="text" required class="w-full mt-2 p-3 border rounded bg-transparent border-white/10 text-white placeholder-white/40" placeholder="Ex: São Paulo" />
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="text-sm text-white/70">Estado (UF) *</label>
+                                    <select name="estado" required class="w-full mt-2 p-3 border rounded bg-zinc-900 border-white/10 text-white [&>option]:bg-zinc-900 [&>option]:text-white">
+                                        <option value="">Selecione</option>
+                                        <option value="AC">Acre</option>
+                                        <option value="AL">Alagoas</option>
+                                        <option value="AP">Amapá</option>
+                                        <option value="AM">Amazonas</option>
+                                        <option value="BA">Bahia</option>
+                                        <option value="CE">Ceará</option>
+                                        <option value="DF">Distrito Federal</option>
+                                        <option value="ES">Espírito Santo</option>
+                                        <option value="GO">Goiás</option>
+                                        <option value="MA">Maranhão</option>
+                                        <option value="MT">Mato Grosso</option>
+                                        <option value="MS">Mato Grosso do Sul</option>
+                                        <option value="MG">Minas Gerais</option>
+                                        <option value="PA">Pará</option>
+                                        <option value="PB">Paraíba</option>
+                                        <option value="PR">Paraná</option>
+                                        <option value="PE">Pernambuco</option>
+                                        <option value="PI">Piauí</option>
+                                        <option value="RJ">Rio de Janeiro</option>
+                                        <option value="RN">Rio Grande do Norte</option>
+                                        <option value="RS">Rio Grande do Sul</option>
+                                        <option value="RO">Rondônia</option>
+                                        <option value="RR">Roraima</option>
+                                        <option value="SC">Santa Catarina</option>
+                                        <option value="SP">São Paulo</option>
+                                        <option value="SE">Sergipe</option>
+                                        <option value="TO">Tocantins</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-3 justify-end">
+                                <button type="button" id="cancel-address-btn" class="px-6 py-2 border border-white/10 rounded text-white">Cancelar</button>
+                                <button type="submit" class="px-6 py-2 bg-roxa text-white rounded">Salvar Endereço</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Lista de endereços -->
+                <div id="addresses-list" class="space-y-4">
+                    <p class="text-white/60 text-center py-8">Carregando endereços...</p>
                 </div>
             </section>
         </div>
@@ -675,6 +738,171 @@ function firstName($full)
             sessionStorage.setItem('checkboxState1', checkbox1.checked);
             sessionStorage.setItem('checkboxState2', checkbox2.checked);
         });
+
+        // ============================================================
+        // GERENCIAMENTO DE ENDEREÇOS
+        // ============================================================
+
+        // Navegação entre seções (Perfil e Endereços)
+        const sidebarButtons = document.querySelectorAll('.side-link');
+        const profileSection = document.getElementById('profile-section');
+        const addressesSection = document.getElementById('addresses-section');
+
+        sidebarButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const btnText = this.textContent.trim().toLowerCase();
+                
+                // Remove active de todos os botões
+                sidebarButtons.forEach(b => {
+                    b.classList.remove('active', 'bg-roxa/20', 'text-roxa', 'border-l-4', 'border-roxa');
+                    b.classList.add('bg-transparent', 'text-white');
+                });
+                
+                // Adiciona active no botão clicado
+                this.classList.add('active', 'bg-roxa/20', 'text-roxa', 'border-l-4', 'border-roxa');
+                this.classList.remove('bg-transparent', 'text-white');
+
+                // Mostra seção correspondente
+                if (btnText.includes('endereço')) {
+                    profileSection.classList.add('hidden');
+                    addressesSection.classList.remove('hidden');
+                    loadAddresses(); // Carrega endereços ao exibir a seção
+                } else if (btnText.includes('perfil')) {
+                    profileSection.classList.remove('hidden');
+                    addressesSection.classList.add('hidden');
+                } else {
+                    // Para "Pedidos" ou outras seções futuras
+                    profileSection.classList.add('hidden');
+                    addressesSection.classList.add('hidden');
+                    window.srShowToast('Seção em desenvolvimento', 'info');
+                }
+            });
+        });
+
+        // Mostrar/ocultar formulário de adicionar endereço
+        const addAddressBtn = document.getElementById('add-address-btn');
+        const addressFormContainer = document.getElementById('address-form-container');
+        const cancelAddressBtn = document.getElementById('cancel-address-btn');
+        const addAddressForm = document.getElementById('add-address-form');
+
+        addAddressBtn.addEventListener('click', () => {
+            addressFormContainer.classList.remove('hidden');
+            addAddressForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+
+        cancelAddressBtn.addEventListener('click', () => {
+            addressFormContainer.classList.add('hidden');
+            addAddressForm.reset();
+        });
+
+        // Carregar endereços
+        async function loadAddresses() {
+            const listContainer = document.getElementById('addresses-list');
+            listContainer.innerHTML = '<p class="text-white/60 text-center py-8">Carregando endereços...</p>';
+
+            try {
+                const res = await fetch('api/get_address.php');
+                const json = await res.json();
+
+                if (res.ok && json.success) {
+                    const addresses = json.addresses || [];
+                    
+                    if (addresses.length === 0) {
+                        listContainer.innerHTML = '<p class="text-white/60 text-center py-8">Nenhum endereço cadastrado. Clique em "Novo Endereço" para adicionar.</p>';
+                        return;
+                    }
+
+                    // Filtra endereços vazios (sem rua E sem número E sem cidade)
+                    const validAddresses = addresses.filter(addr => 
+                        (addr.rua && addr.rua.trim()) || 
+                        (addr.numero) || 
+                        (addr.cidade && addr.cidade.trim())
+                    );
+
+                    if (validAddresses.length === 0) {
+                        listContainer.innerHTML = '<p class="text-white/60 text-center py-8">Nenhum endereço cadastrado. Clique em "Novo Endereço" para adicionar.</p>';
+                        return;
+                    }
+
+                    listContainer.innerHTML = validAddresses.map(addr => `
+                        <div class="bg-white/5 p-4 rounded border border-white/10 flex items-start justify-between">
+                            <div class="flex-1">
+                                <p class="text-white font-medium">${addr.rua || ''}, ${addr.numero || ''}</p>
+                                <p class="text-white/70 text-sm mt-1">
+                                    ${addr.bairro ? addr.bairro + ' - ' : ''}${addr.cidade || ''} - ${addr.estado || ''}
+                                </p>
+                            </div>
+                            <button onclick="deleteAddress(${addr.id_endereco})" class="text-red-400 hover:text-red-300 p-2 ml-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                </svg>
+                            </button>
+                        </div>
+                    `).join('');
+                } else {
+                    listContainer.innerHTML = '<p class="text-red-400 text-center py-8">Erro ao carregar endereços</p>';
+                    window.srShowToast(json.error || 'Erro ao carregar endereços', 'error');
+                }
+            } catch (e) {
+                listContainer.innerHTML = '<p class="text-red-400 text-center py-8">Erro de conexão ao carregar endereços</p>';
+                window.srShowToast('Erro de rede ao carregar endereços', 'error');
+            }
+        }
+
+        // Adicionar novo endereço
+        addAddressForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const submitBtn = this.querySelector('button[type="submit"]');
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Salvando...';
+
+            try {
+                const res = await fetch('api/add_address.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                const json = await res.json();
+
+                if (res.ok && json.success) {
+                    window.srShowToast('Endereço adicionado com sucesso', 'success');
+                    addAddressForm.reset();
+                    addressFormContainer.classList.add('hidden');
+                    loadAddresses(); // Recarrega lista
+                } else {
+                    window.srShowToast(json.error || 'Erro ao adicionar endereço', 'error');
+                }
+            } catch (e) {
+                window.srShowToast('Erro de rede ao adicionar endereço', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Salvar Endereço';
+            }
+        });
+
+        // Deletar endereço (função global para ser chamada do onclick)
+        window.deleteAddress = async function(id) {
+            if (!confirm('Deseja realmente excluir este endereço?')) return;
+
+            try {
+                const res = await fetch('api/delete_address.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id_endereco: id })
+                });
+                const json = await res.json();
+
+                if (res.ok && json.success) {
+                    window.srShowToast('Endereço excluído com sucesso', 'success');
+                    loadAddresses(); // Recarrega lista
+                } else {
+                    window.srShowToast(json.error || 'Erro ao excluir endereço', 'error');
+                }
+            } catch (e) {
+                window.srShowToast('Erro de rede ao excluir endereço', 'error');
+            }
+        };
     </script>
 </body>
 
