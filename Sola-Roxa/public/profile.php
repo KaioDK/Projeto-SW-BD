@@ -217,15 +217,10 @@ function firstName($full)
                 <h3 class="text-xl font-bold mb-4 text-white">PERFIL</h3>
 
                 <form id="profile-form" class="space-y-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
                         <div>
                             <label class="text-sm text-white/70">Nome *</label>
                             <input name="nome" type="text" value="<?php echo htmlspecialchars($user['nome'] ?? ''); ?>"
-                                class="w-full mt-2 p-3 border rounded bg-transparent border-white/10 text-white placeholder-white/40" />
-                        </div>
-                        <div>
-                            <label class="text-sm text-white/70">Sobrenome</label>
-                            <input name="sobrenome" type="text" value=""
                                 class="w-full mt-2 p-3 border rounded bg-transparent border-white/10 text-white placeholder-white/40" />
                         </div>
                     </div>
