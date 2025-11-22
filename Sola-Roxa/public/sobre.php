@@ -86,21 +86,21 @@
 
       <ul class="hidden md:flex gap-8 text-sm text-white-200 uppercase tracking-wider">
         <li>
-          <a class="hover:text-roxa transition" href="#lancamentos">Lançamentos</a>
+          <a class="hover:text-roxa transition" href="index.php#lancamentos">Lançamentos</a>
         </li>
         <li>
-          <a class="hover:text-roxa transition" href="#masculino">Masculino</a>
+          <a class="hover:text-roxa transition" href="index.php#masculino">Masculino</a>
         </li>
         <li>
-          <a class="hover:text-roxa transition" href="#feminino">Feminino</a>
+          <a class="hover:text-roxa transition" href="index.php#feminino">Feminino</a>
         </li>
         <li>
-          <a class="hover:text-roxa transition" href="#colecoes">Colecionáveis</a>
+          <a class="hover:text-roxa transition" href="index.php#colecoes">Colecionáveis</a>
         </li>
         <li>
           <a class="hover:text-roxa transition" href="catalog.php">Marketplace</a>
         </li>
-      </ul>
+      </ul>>
 
       <div class="flex items-center gap-4">
         <button aria-label="buscar" class="p-2 rounded-md hover:bg-white/5 transition cursor-pointer">
@@ -361,7 +361,11 @@
   <script>
     // init lucide icons
     if (window.lucide) {
-      window.lucide.replace({ width: 20, height: 20, stroke: 'currentColor' })
+      window.lucide.replace({
+        width: 20,
+        height: 20,
+        stroke: 'currentColor'
+      })
     }
 
     // set year
@@ -372,8 +376,14 @@
     const prev = document.getElementById('prev')
     const next = document.getElementById('next')
     if (prev && next && container) {
-      prev.addEventListener('click', () => container.scrollBy({ left: -300, behavior: 'smooth' }))
-      next.addEventListener('click', () => container.scrollBy({ left: 300, behavior: 'smooth' }))
+      prev.addEventListener('click', () => container.scrollBy({
+        left: -300,
+        behavior: 'smooth'
+      }))
+      next.addEventListener('click', () => container.scrollBy({
+        left: 300,
+        behavior: 'smooth'
+      }))
     }
 
     // subtle reveal on scroll
@@ -381,7 +391,9 @@
       entries.forEach((entry) => {
         if (entry.isIntersecting) entry.target.classList.add('opacity-100', 'translate-y-0')
       })
-    }, { threshold: 0.12 })
+    }, {
+      threshold: 0.12
+    })
 
     document.querySelectorAll('.glass-card, .hover-lift').forEach(el => {
       el.classList.add('opacity-0', 'translate-y-6', 'transition', 'duration-700')

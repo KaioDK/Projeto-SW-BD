@@ -18,7 +18,11 @@
     tailwind.config = {
       theme: {
         extend: {
-          colors: { roxa: '#8B5CF6', cyan: '#00F0FF', bg: '#0D0D0D' },
+          colors: {
+            roxa: '#8B5CF6',
+            cyan: '#00F0FF',
+            bg: '#0D0D0D'
+          },
         }
       }
     };
@@ -26,7 +30,7 @@
 
   <!-- GSAP: biblioteca de animações usada para efeitos e transições -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  
+
   <!-- Lucide icons: ícones SVG utilizados na interface (favoritar, fechar, etc) -->
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 
@@ -70,10 +74,12 @@
       transform: scale(1.15);
       filter: drop-shadow(0 6px 18px rgba(139, 92, 246, 0.18));
     }
+
     /* Layout improvements for product page */
     .product-info {
       position: static;
     }
+
     @media (min-width: 1024px) {
       .product-info {
         position: sticky;
@@ -81,6 +87,7 @@
         align-self: start;
       }
     }
+
     /* Make main image adapt better and keep aspect ratio */
     #main-image {
       width: 100%;
@@ -88,13 +95,32 @@
       object-fit: cover;
       border-radius: 0.5rem;
     }
+
     /* Thumbnails smaller and consistent */
-    .thumb { width: 96px; height: 64px; flex: 0 0 auto; }
-    .thumb img { width: 100%; height: 100%; object-fit: cover; border-radius: 6px; }
+    .thumb {
+      width: 96px;
+      height: 64px;
+      flex: 0 0 auto;
+    }
+
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
     /* Product gallery images consistent height */
-    #product-gallery-grid img { height: 180px; object-fit: cover; border-radius: 8px; }
+    #product-gallery-grid img {
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
     /* Make right column content spacing cleaner */
-    .product-info .card { padding: 1.25rem; }
+    .product-info .card {
+      padding: 1.25rem;
+    }
   </style>
 </head>
 <?php
@@ -125,16 +151,16 @@ if ($product_id > 0 && isset($_SESSION['vendedor']['id'])) {
 
       <ul class="hidden md:flex gap-8 text-sm text-white-200 uppercase tracking-wider">
         <li>
-          <a class="hover:text-roxa transition" href="#lancamentos">Lançamentos</a>
+          <a class="hover:text-roxa transition" href="index.php#lancamentos">Lançamentos</a>
         </li>
         <li>
-          <a class="hover:text-roxa transition" href="#masculino">Masculino</a>
+          <a class="hover:text-roxa transition" href="index.php#masculino">Masculino</a>
         </li>
         <li>
-          <a class="hover:text-roxa transition" href="#feminino">Feminino</a>
+          <a class="hover:text-roxa transition" href="index.php#feminino">Feminino</a>
         </li>
         <li>
-          <a class="hover:text-roxa transition" href="#colecoes">Colecionáveis</a>
+          <a class="hover:text-roxa transition" href="index.php#colecoes">Colecionáveis</a>
         </li>
         <li>
           <a class="hover:text-roxa transition" href="catalog.php">Marketplace</a>
@@ -383,124 +409,201 @@ if ($product_id > 0 && isset($_SESSION['vendedor']['id'])) {
                       sizes = Array.isArray(product.size) ? product.size : [String(product.size)];
                     }
                     if (sizes.length === 0) return '';
-                    return `<div class="product-sizes"><div class="text-sm text-white/70 mb-2">Tamanho</div><div class="flex flex-wrap gap-2">${sizes.map(t => `<button class="size-btn px-4 py-2 rounded-md border border-white/10">${t}</button>`).join('')}</div></div>`;
-                  })()}
-                </div>
-                <div class="flex-shrink-0">
-                  <?php if ($isSellerOfProduct): ?>
-                  <button id="add-cart" class="px-6 py-3 rounded-md btn-glow bg-gray-500 text-white font-semibold cursor-not-allowed" disabled title="Você não pode comprar seu próprio produto">Adicionar ao Carrinho</button>
-                  <?php else: ?>
-                  <button id="add-cart" class="px-6 py-3 rounded-md btn-glow bg-roxa text-black font-semibold">Adicionar ao Carrinho</button>
-                  <?php endif; ?>
-                </div>
-              </div>
-              <div class="mt-3">
-                <?php if ($isSellerOfProduct): ?>
-                <button id="buy-now" class="w-full mt-3 px-6 py-3 rounded-md border border-gray-500 text-gray-500 bg-gray-800 cursor-not-allowed" disabled title="Você não pode comprar seu próprio produto">Comprar Agora</button>
-                <?php else: ?>
-                <button id="buy-now" class="w-full mt-3 px-6 py-3 rounded-md border border-cyan text-cyan hover:bg-cyan/10 transition">Comprar Agora</button>
-                <?php endif; ?>
-              </div>
-            </div>
-            <div class="mt-6 text-sm text-white/60">Compartilhe • <button class="text-white/80">Reportar</button></div>
-          </div>
-        `;
+                    return ` < div class = "product-sizes" > < div class = "text-sm text-white/70 mb-2" > Tamanho < /div><div class="flex flex-wrap gap-2">${sizes.map(t => `<button class="size-btn px-4 py-2 rounded-md border border-white/
+      10 ">${t}</button>`).join('')}</div></div>`;
+    })()
+    } <
+    /div> <
+    div class = "flex-shrink-0" >
+    <?php if ($isSellerOfProduct): ?>
+        <
+        button id = "add-cart"
+      class = "px-6 py-3 rounded-md btn-glow bg-gray-500 text-white font-semibold cursor-not-allowed"
+      disabled title = "Você não pode comprar seu próprio produto" > Adicionar ao Carrinho < /button>
+    <?php else: ?>
+        <
+        button id = "add-cart"
+      class = "px-6 py-3 rounded-md btn-glow bg-roxa text-black font-semibold" > Adicionar ao Carrinho < /button>
+    <?php endif; ?>
+      <
+      /div> <
+      /div> <
+      div class = "mt-3" >
+      <?php if ($isSellerOfProduct): ?> <
+        button id = "buy-now"
+    class = "w-full mt-3 px-6 py-3 rounded-md border border-gray-500 text-gray-500 bg-gray-800 cursor-not-allowed"
+    disabled title = "Você não pode comprar seu próprio produto" > Comprar Agora < /button>
+    <?php else: ?>
+        <
+        button id = "buy-now"
+      class = "w-full mt-3 px-6 py-3 rounded-md border border-cyan text-cyan hover:bg-cyan/10 transition" > Comprar Agora < /button>
+    <?php endif; ?>
+      <
+      /div> <
+      /div> <
+      div class = "mt-6 text-sm text-white/60" > Compartilhe• < button class = "text-white/80" > Reportar < /button></div >
+      <
+      /div>
+    `;
       lucide.createIcons();
       // Atualiza conteúdo da aba Descrição também
       const tabDescEl = document.getElementById('tab-desc');
-      if (tabDescEl) tabDescEl.innerHTML = `<p class="text-white/70">${product.descricao || ''}</p>`;
-      // Adiciona listeners igual antes
-      document.querySelectorAll('.thumb').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const src = btn.dataset.src;
-          const main = document.getElementById('main-image');
-          gsap.to(main, { opacity: 0, duration: 0.25, onComplete: () => { main.src = src; gsap.to(main, { opacity: 1, duration: 0.3 }); } });
+      if (tabDescEl) tabDescEl.innerHTML = ` < p class = "text-white/70" > $ {
+      product.descricao || ''
+    } < /p>`;
+    // Adiciona listeners igual antes
+    document.querySelectorAll('.thumb').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const src = btn.dataset.src;
+        const main = document.getElementById('main-image');
+        gsap.to(main, {
+          opacity: 0,
+          duration: 0.25,
+          onComplete: () => {
+            main.src = src;
+            gsap.to(main, {
+              opacity: 1,
+              duration: 0.3
+            });
+          }
         });
       });
-      const favBtn = document.getElementById('fav-btn');
-      favBtn.addEventListener('click', () => { favBtn.classList.toggle('active'); });
-      document.querySelectorAll('.size-btn').forEach(b => b.addEventListener('click', () => {
-        document.querySelectorAll('.size-btn').forEach(x => x.classList.remove('active'));
-        b.classList.add('active');
-      }));
-      // Pre-seleciona o primeiro tamanho disponível para evitar envio sem tamanho
-      (function ensureDefaultSize() {
-        const btns = document.querySelectorAll('.size-btn');
-        if (btns && btns.length > 0 && !document.querySelector('.size-btn.active')) {
-          btns[0].classList.add('active');
-        }
-      })();
-      document.getElementById('add-cart').addEventListener('click', async () => {
-        const btn = document.getElementById('add-cart');
-        gsap.fromTo(btn, { scale: 1 }, { scale: 0.98, duration: 0.08, yoyo: true, repeat: 1 });
-        // determine selected size
-        const selectedSize = document.querySelector('.size-btn.active') ? document.querySelector('.size-btn.active').textContent.trim() : '';
-        try {
-          const fd = new FormData();
-          fd.append('id_produto', product.id_produto || product.id);
-          if (selectedSize) fd.append('tamanho', selectedSize);
-          fd.append('quantidade', 1);
-          const res = await fetch('api/add_to_cart.php', { method: 'POST', body: fd });
-          const data = await res.json();
-          if (data && data.success) {
-            const cc = document.getElementById('cart-count');
-            if (cc) cc.textContent = data.items_count;
-            if (window.srShowToast) window.srShowToast('Adicionado ao carrinho', 'success');
-          } else {
-            const msg = data && data.error ? data.error : 'Erro ao adicionar ao carrinho';
-            if (window.srShowToast) window.srShowToast(msg, 'error'); else alert(msg);
-          }
-        } catch (e) {
-          if (window.srShowToast) window.srShowToast('Erro de conexão', 'error'); else alert('Erro de conexão: ' + e.message);
-        }
-      });
-      document.getElementById('buy-now').addEventListener('click', async () => {
-        const btn = document.getElementById('buy-now');
-        gsap.fromTo(btn, { scale: 1 }, { scale: 0.98, duration: 0.08, yoyo: true, repeat: 1 });
-        const selectedSize = document.querySelector('.size-btn.active') ? document.querySelector('.size-btn.active').textContent.trim() : '';
-        try {
-          const fd = new FormData();
-          fd.append('id_produto', product.id_produto || product.id);
-          if (selectedSize) fd.append('tamanho', selectedSize);
-          fd.append('quantidade', 1);
-          const res = await fetch('api/add_to_cart.php', { method: 'POST', body: fd });
-          const data = await res.json();
-          if (data && data.success) {
-            // redirect straight to cart/checkout
-            window.location.href = 'cart.php';
-          } else {
-            const msg = data && data.error ? data.error : 'Erro ao adicionar ao carrinho';
-            if (window.srShowToast) window.srShowToast(msg, 'error'); else alert(msg);
-          }
-        } catch (e) {
-          if (window.srShowToast) window.srShowToast('Erro de conexão', 'error'); else alert('Erro de conexão: ' + e.message);
-        }
-      });
-      window.addEventListener('load', () => {
-        gsap.from('.card, #main-image, .card h1', { y: 8, opacity: 0, stagger: 0.05, duration: 0.6 });
-      });
-      // Zoom modal
-      const mainImgEl = document.getElementById('main-image');
-      if (mainImgEl) {
-        mainImgEl.addEventListener('click', () => {
-          const src = document.getElementById('main-image').src;
-          document.getElementById('zoom-img').src = src;
-          const modal = document.getElementById('zoom-modal'); modal.classList.remove('hidden'); modal.classList.add('flex');
-          gsap.fromTo('#zoom-img', { scale: 0.98, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35 });
-        });
+    });
+    const favBtn = document.getElementById('fav-btn');
+    favBtn.addEventListener('click', () => {
+      favBtn.classList.toggle('active');
+    });
+    document.querySelectorAll('.size-btn').forEach(b => b.addEventListener('click', () => {
+      document.querySelectorAll('.size-btn').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+    }));
+    // Pre-seleciona o primeiro tamanho disponível para evitar envio sem tamanho
+    (function ensureDefaultSize() {
+      const btns = document.querySelectorAll('.size-btn');
+      if (btns && btns.length > 0 && !document.querySelector('.size-btn.active')) {
+        btns[0].classList.add('active');
       }
-      const zoomClose = document.getElementById('zoom-close');
-      if (zoomClose) zoomClose.addEventListener('click', () => { const modal = document.getElementById('zoom-modal'); gsap.to('#zoom-img', { scale: 0.98, opacity: 0, duration: 0.15, onComplete: () => { modal.classList.add('hidden'); modal.classList.remove('flex'); } }); });
+    })();
+    document.getElementById('add-cart').addEventListener('click', async () => {
+      const btn = document.getElementById('add-cart');
+      gsap.fromTo(btn, {
+        scale: 1
+      }, {
+        scale: 0.98,
+        duration: 0.08,
+        yoyo: true,
+        repeat: 1
+      });
+      // determine selected size
+      const selectedSize = document.querySelector('.size-btn.active') ? document.querySelector('.size-btn.active').textContent.trim() : '';
+      try {
+        const fd = new FormData();
+        fd.append('id_produto', product.id_produto || product.id);
+        if (selectedSize) fd.append('tamanho', selectedSize);
+        fd.append('quantidade', 1);
+        const res = await fetch('api/add_to_cart.php', {
+          method: 'POST',
+          body: fd
+        });
+        const data = await res.json();
+        if (data && data.success) {
+          const cc = document.getElementById('cart-count');
+          if (cc) cc.textContent = data.items_count;
+          if (window.srShowToast) window.srShowToast('Adicionado ao carrinho', 'success');
+        } else {
+          const msg = data && data.error ? data.error : 'Erro ao adicionar ao carrinho';
+          if (window.srShowToast) window.srShowToast(msg, 'error');
+          else alert(msg);
+        }
+      } catch (e) {
+        if (window.srShowToast) window.srShowToast('Erro de conexão', 'error');
+        else alert('Erro de conexão: ' + e.message);
+      }
+    });
+    document.getElementById('buy-now').addEventListener('click', async () => {
+      const btn = document.getElementById('buy-now');
+      gsap.fromTo(btn, {
+        scale: 1
+      }, {
+        scale: 0.98,
+        duration: 0.08,
+        yoyo: true,
+        repeat: 1
+      });
+      const selectedSize = document.querySelector('.size-btn.active') ? document.querySelector('.size-btn.active').textContent.trim() : '';
+      try {
+        const fd = new FormData();
+        fd.append('id_produto', product.id_produto || product.id);
+        if (selectedSize) fd.append('tamanho', selectedSize);
+        fd.append('quantidade', 1);
+        const res = await fetch('api/add_to_cart.php', {
+          method: 'POST',
+          body: fd
+        });
+        const data = await res.json();
+        if (data && data.success) {
+          // redirect straight to cart/checkout
+          window.location.href = 'cart.php';
+        } else {
+          const msg = data && data.error ? data.error : 'Erro ao adicionar ao carrinho';
+          if (window.srShowToast) window.srShowToast(msg, 'error');
+          else alert(msg);
+        }
+      } catch (e) {
+        if (window.srShowToast) window.srShowToast('Erro de conexão', 'error');
+        else alert('Erro de conexão: ' + e.message);
+      }
+    });
+    window.addEventListener('load', () => {
+      gsap.from('.card, #main-image, .card h1', {
+        y: 8,
+        opacity: 0,
+        stagger: 0.05,
+        duration: 0.6
+      });
+    });
+    // Zoom modal
+    const mainImgEl = document.getElementById('main-image');
+    if (mainImgEl) {
+      mainImgEl.addEventListener('click', () => {
+        const src = document.getElementById('main-image').src;
+        document.getElementById('zoom-img').src = src;
+        const modal = document.getElementById('zoom-modal');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        gsap.fromTo('#zoom-img', {
+          scale: 0.98,
+          opacity: 0
+        }, {
+          scale: 1,
+          opacity: 1,
+          duration: 0.35
+        });
+      });
+    }
+    const zoomClose = document.getElementById('zoom-close');
+    if (zoomClose) zoomClose.addEventListener('click', () => {
+      const modal = document.getElementById('zoom-modal');
+      gsap.to('#zoom-img', {
+        scale: 0.98,
+        opacity: 0,
+        duration: 0.15,
+        onComplete: () => {
+          modal.classList.add('hidden');
+          modal.classList.remove('flex');
+        }
+      });
+    });
 
-      // Atualiza a galeria abaixo (se existir)
-      const galleryGrid = document.getElementById('product-gallery-grid');
-      if (galleryGrid) {
-        let gallery = [];
-        if (product.galeria && Array.isArray(product.galeria)) gallery = product.galeria;
-        else if (product.galeria && typeof product.galeria === 'string') gallery = product.galeria.split(',').map(x => x.trim()).filter(Boolean);
-        else if (product.imagem_url) gallery = [product.imagem_url];
-        galleryGrid.innerHTML = gallery.map(src => `<img class="w-full h-48 object-cover rounded-lg hover:scale-105 transition" loading="lazy" src="${src}">`).join('');
-      }
+    // Atualiza a galeria abaixo (se existir)
+    const galleryGrid = document.getElementById('product-gallery-grid');
+    if (galleryGrid) {
+      let gallery = [];
+      if (product.galeria && Array.isArray(product.galeria)) gallery = product.galeria;
+      else if (product.galeria && typeof product.galeria === 'string') gallery = product.galeria.split(',').map(x => x.trim()).filter(Boolean);
+      else if (product.imagem_url) gallery = [product.imagem_url];
+      galleryGrid.innerHTML = gallery.map(src => `<img class="w-full h-48 object-cover rounded-lg hover:scale-105 transition" loading="lazy" src="${src}">`).join('');
+    }
     }
 
     // Busca produto pelo ID
