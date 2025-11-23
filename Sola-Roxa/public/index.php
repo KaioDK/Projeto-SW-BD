@@ -372,7 +372,7 @@
     // Carregar últimos produtos cadastrados para a seção de lançamentos
     async function loadLatestProducts() {
       try {
-        const res = await fetch('api/get_products.php?limit=6&sort=recent');
+        const res = await fetch('api/products/get_products.php?limit=6&sort=recent');
         const data = await res.json();
         
         if (data.success && data.products && data.products.length > 0) {

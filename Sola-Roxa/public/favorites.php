@@ -140,7 +140,7 @@ if (!$isLoggedIn) {
 
     async function loadFavorites() {
       try {
-        const res = await fetch('api/get_favorites.php');
+        const res = await fetch('api/favorites/get_favorites.php');
         const data = await res.json();
         
         if (data.success && data.favoritos && data.favoritos.length > 0) {
@@ -208,7 +208,7 @@ if (!$isLoggedIn) {
       try {
         const fd = new FormData();
         fd.append('id_produto', productId);
-        const res = await fetch('api/toggle_favorite.php', {
+        const res = await fetch('api/favorites/toggle_favorite.php', {
           method: 'POST',
           body: fd
         });

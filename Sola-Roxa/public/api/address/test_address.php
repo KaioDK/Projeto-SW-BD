@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/../backend/db.php';
+require_once __DIR__ . '/../../../backend/db.php';
 
 echo "<h2>Teste de Endereços</h2>";
 

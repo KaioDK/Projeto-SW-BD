@@ -602,7 +602,7 @@ try {
     async function loadProducts() {
       try {
         const qs = buildQuery();
-        const url = 'api/get_products.php' + (qs ? ('?' + qs) : '');
+        const url = 'api/products/get_products.php' + (qs ? ('?' + qs) : '');
         const countEl = document.getElementById('results-count');
         const grid = document.getElementById('catalog-grid');
         if (countEl) countEl.textContent = 'Carregando...';

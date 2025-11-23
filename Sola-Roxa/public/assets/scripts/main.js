@@ -174,7 +174,7 @@ async function srUpdateCartCount() {
   const el = qs('#cart-count');
   if (!el) return;
   try {
-    const res = await fetch('api/get_cart.php');
+    const res = await fetch('api/cart/get_cart.php');
     const data = await res.json();
     const count = data.items_count || 0;
     el.textContent = count;

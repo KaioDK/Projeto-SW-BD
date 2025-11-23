@@ -6,9 +6,23 @@ async function loadSellerProducts(sellerId) {
   if (!container) return;
   container.innerHTML = '<div class="col-span-full text-center text-white/60 py-8">Carregando produtos...</div>';
   try {
-    const res = await fetch(`api/get_products.php?seller=${sellerId}`);
+    const res = await fetch(`/Projeto-SW-BD/Sola-Roxa/public/api/products/get_products.php?seller=${sellerId}`);
+    
+    if (!res.ok) {
+      console.error('Erro ao buscar produtos:', res.status, res.statusText);
+      container.innerHTML = '<div class="col-span-full text-center text-red-500 py-8">Erro ao carregar produtos. Por favor, tente novamente.</div>';
+      return;
+    }
+    
     const data = await res.json();
-    if (!data || !data.products) {
+    
+    if (!data || !data.success) {
+      console.error('Resposta da API sem success:', data);
+      container.innerHTML = '<div class="col-span-full text-center text-white/60 py-8">Erro ao buscar produtos.</div>';
+      return;
+    }
+    
+    if (!data.products) {
       container.innerHTML = '<div class="col-span-full text-center text-white/60 py-8">Nenhum produto encontrado.</div>';
       return;
     }
@@ -94,7 +108,7 @@ async function loadSellerProducts(sellerId) {
         btn.setAttribute('aria-busy', 'true');
         const fd = new FormData(editForm);
         try {
-          const r = await fetch('api/update_product.php', { method: 'POST', body: fd });
+          const r = await fetch('/Projeto-SW-BD/Sola-Roxa/public/api/products/update_product.php', { method: 'POST', body: fd });
           const text = await r.text();
           let j;
           try { j = JSON.parse(text); } catch (err) { console.error('Invalid JSON', text, err); if (window.srShowToast) window.srShowToast('Resposta inválida do servidor', 'error'); return; }
@@ -125,7 +139,7 @@ async function loadSellerProducts(sellerId) {
         confirmBtn.setAttribute('aria-busy', 'true');
         const fd = new FormData(); fd.append('id', id);
         try {
-          const r = await fetch('api/delete_product.php', { method: 'POST', body: fd });
+          const r = await fetch('/Projeto-SW-BD/Sola-Roxa/public/api/products/delete_product.php', { method: 'POST', body: fd });
           const text = await r.text();
           let j; try { j = JSON.parse(text); } catch (err) { console.error('Invalid JSON', text, err); if (window.srShowToast) window.srShowToast('Resposta inválida do servidor', 'error'); return; }
           if (j && j.success) {

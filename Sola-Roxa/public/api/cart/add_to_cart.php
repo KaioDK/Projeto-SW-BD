@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../backend/auth.php';
+require_once __DIR__ . '/../../../backend/auth.php';
 header('Content-Type: application/json; charset=utf-8');
 if (session_status() === PHP_SESSION_NONE) session_start();
 
@@ -17,7 +17,7 @@ if ($qty < 1) $qty = 1;
 if (!$id) { http_response_code(400); echo json_encode(['error'=>'Missing product id']); exit; }
 
 // Prevent sellers from adding their own products
-require_once __DIR__ . '/../../backend/db.php';
+require_once __DIR__ . '/../../../backend/db.php';
 try {
     $stmt = $pdo->prepare('SELECT id_vendedor FROM produto WHERE id_produto = ? LIMIT 1');
     $stmt->execute([$id]);

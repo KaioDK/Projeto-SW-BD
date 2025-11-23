@@ -91,7 +91,7 @@ function renderThumbs() {
 
 // preview step removed per UX change
 
-// Publicar: valida campos básicos, monta um FormData e chama `api/create_product.php`.
+// Publicar: valida campos básicos, monta um FormData e chama `api/products/create_product.php`.
 // - Envia: nome (title), descricao (description), valor (price), estoque (stock), estado, imagem_url (opcional), tamanho (opcional)
 // - Se o usuário preencher dados de seller-onboarding, esses campos são enviados
 //   para que o backend possa criar/reutilizar um registro de vendedor.
@@ -170,7 +170,7 @@ document.getElementById("publish-btn").addEventListener("click", () => {
   formData.append('seller_name', sellerName);
   formData.append('seller_doc', sellerDoc);
 
-  fetch('api/create_product.php', { method: 'POST', body: formData })
+  fetch('api/products/create_product.php', { method: 'POST', body: formData })
     .then(async (r) => {
       const text = await r.text();
       console.log('Response status:', r.status);

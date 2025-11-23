@@ -51,7 +51,7 @@ loginForm.addEventListener("submit", async (e) => {
     formData.append('email', email);
     formData.append('password', password);
     
-    const response = await fetch('api/login_usuario.php', {
+    const response = await fetch('api/auth/login_usuario.php', {
       method: 'POST',
       body: formData
     });
@@ -101,7 +101,7 @@ registerForm.addEventListener("submit", async (e) => {
     formData.append('password', password);
     if (cpf) formData.append('cpf', cpf);
     
-    const response = await fetch('api/register_usuario.php', {
+    const response = await fetch('api/auth/register_usuario.php', {
       method: 'POST',
       body: formData
     });
