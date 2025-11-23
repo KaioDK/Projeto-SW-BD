@@ -501,16 +501,16 @@ function firstName($full)
             <div>
                 <h5 class="font-semibold text-white mb-4">Ajuda</h5>
                 <ul class="space-y-3">
-                    <li><a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">FAQ</a></li>
-                    <li><a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Envios</a></li>
-                    <li><a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Devoluções</a></li>
+                    <li><a href="faq.php" class="text-white/60 hover:text-white transition-colors">FAQ</a></li>
+                    <li><a href="envios.php" class="text-white/60 hover:text-white transition-colors">Envios</a></li>
+                    <li><a href="devolucoes.php" class="text-white/60 hover:text-white transition-colors">Devoluções</a></li>
                 </ul>
             </div>
             <div>
                 <h5 class="font-semibold text-white mb-4">Sobre Nós</h5>
                 <ul class="space-y-3">
-                    <li><a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Nosso manifesto</a></li>
-                    <li><a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Trabalhe conosco</a></li>
+                    <li><a href="sobre.php" class="text-white/60 hover:text-white transition-colors">Nosso manifesto</a></li>
+                    <li><a href="trabalhe-conosco.php" class="text-white/60 hover:text-white transition-colors">Trabalhe conosco</a></li>
                 </ul>
             </div>
             <div>
@@ -523,9 +523,9 @@ function firstName($full)
             <div>
                 <h5 class="font-semibold text-white mb-4">Termos</h5>
                 <ul class="space-y-3">
-                    <li><a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Política de Privacidade</a>
+                    <li><a href="privacidade.php" class="text-white/60 hover:text-white transition-colors">Política de Privacidade</a>
                     </li>
-                    <li><a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Termos de Uso</a></li>
+                    <li><a href="termos.php" class="text-white/60 hover:text-white transition-colors">Termos de Uso</a></li>
                 </ul>
             </div>
         </div>

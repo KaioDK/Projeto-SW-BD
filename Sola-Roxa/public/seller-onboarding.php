@@ -246,7 +246,7 @@ if (!isLoggedUser() && !isLoggedSeller()) {
           <div class="flex items-center justify-between">
             <h3 class="text-xl font-semibold">Criar novo anúncio</h3>
             <div class="text-sm text-white/60">
-              Passo <span id="current-step">1</span> de 4
+              Passo <span id="current-step">1</span> de 3
             </div>
           </div>
 
@@ -256,12 +256,12 @@ if (!isLoggedUser() && !isLoggedSeller()) {
               <div>
                 <label class="text-sm font-medium">Nome do vendedor</label>
                 <input id="seller-name" type="text" placeholder="Seu nome ou loja"
-                  class="mt-2 w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-roxa" />
+                  class="mt-2 w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-roxa" required />
               </div>
               <div>
                 <label class="text-sm font-medium">Documento (CPF/CNPJ)</label>
                 <input id="seller-doc" type="text" placeholder="000.000.000-00"
-                  class="mt-2 w-full rounded-md border px-3 py-2" />
+                  class="mt-2 w-full rounded-md border px-3 py-2" required />
               </div>
             </div>
             <div class="mt-4">
@@ -277,11 +277,11 @@ if (!isLoggedUser() && !isLoggedSeller()) {
               <div>
                 <label class="text-sm font-medium">Título do produto</label>
                 <input id="title" type="text" placeholder="Nike Dunk Low Purple Pulse"
-                  class="mt-2 w-full rounded-md border px-3 py-2" />
+                  class="mt-2 w-full rounded-md border px-3 py-2" required />
               </div>
               <div>
                 <label class="text-sm font-medium">Categoria</label>
-                <select id="category" class="mt-2 w-full rounded-md border px-3 py-2">
+                <select id="category" class="mt-2 w-full rounded-md border px-3 py-2" required>
                   <option>Sneakers</option>
                   <option>Streetwear</option>
                   <option>Accessories</option>
@@ -294,7 +294,7 @@ if (!isLoggedUser() && !isLoggedSeller()) {
               <div>
                 <label class="text-sm font-medium">Marca</label>
                 <input id="brand" type="text" placeholder="Nike, Adidas..."
-                  class="mt-2 w-full rounded-md border px-3 py-2" />
+                  class="mt-2 w-full rounded-md border px-3 py-2" required />
               </div>
               <div>
                 <label class="text-sm font-medium">Tamanho</label>
@@ -303,7 +303,7 @@ if (!isLoggedUser() && !isLoggedSeller()) {
               </div>
               <div>
                 <label class="text-sm font-medium">Condição</label>
-                <select id="condition" class="mt-2 w-full rounded-md border px-3 py-2">
+                <select id="condition" class="mt-2 w-full rounded-md border px-3 py-2" required>
                   <option value="Novo">Novo</option>
                   <option value="Semi-Novo">Semi-Novo</option>
                   <option value="Usado">Usado</option>
@@ -314,7 +314,7 @@ if (!isLoggedUser() && !isLoggedSeller()) {
             <div class="mt-4">
               <label class="text-sm font-medium">Descrição</label>
               <textarea id="description" rows="5" maxlength="1000" class="mt-2 w-full rounded-md border px-3 py-2"
-                placeholder="Detalhes sobre material, defeitos, histórico..."></textarea>
+                placeholder="Detalhes sobre material, defeitos, histórico..." required></textarea>
               <div class="text-sm text-white/60 mt-1">
                 Caracteres: <span id="desc-count">0</span>/1000
               </div>
@@ -325,16 +325,11 @@ if (!isLoggedUser() && !isLoggedSeller()) {
 
           <!-- Preço e fotos (passo 3) -->
           <div data-panel="3" class="panel hidden">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
               <div>
                 <label class="text-sm font-medium">Preço (R$)</label>
                 <input id="price" type="number" min="0" step="1" placeholder="2499"
-                  class="mt-2 w-full rounded-md border px-3 py-2" />
-              </div>
-              <div>
-                <label class="text-sm font-medium">Frete (opcional)</label>
-                <input id="shipping" type="text" placeholder="Ex: R$ 30 ou Grátis"
-                  class="mt-2 w-full rounded-md border px-3 py-2" />
+                  class="mt-2 w-full rounded-md border px-3 py-2" required />
               </div>
             </div>
 
@@ -407,13 +402,13 @@ if (!isLoggedUser() && !isLoggedSeller()) {
         <h5 class="font-semibold text-white mb-4">Ajuda</h5>
         <ul class="space-y-3">
           <li>
-            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">FAQ</a>
+            <a href="faq.php" class="text-white/60 hover:text-white transition-colors">FAQ</a>
           </li>
           <li>
-            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Envios</a>
+            <a href="envios.php" class="text-white/60 hover:text-white transition-colors">Envios</a>
           </li>
           <li>
-            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Devoluções</a>
+            <a href="devolucoes.php" class="text-white/60 hover:text-white transition-colors">Devoluções</a>
           </li>
         </ul>
       </div>
@@ -422,10 +417,10 @@ if (!isLoggedUser() && !isLoggedSeller()) {
         <h5 class="font-semibold text-white mb-4">Sobre Nós</h5>
         <ul class="space-y-3">
           <li>
-            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Nosso manifesto</a>
+            <a href="sobre.php" class="text-white/60 hover:text-white transition-colors">Nosso manifesto</a>
           </li>
           <li>
-            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Trabalhe conosco</a>
+            <a href="trabalhe-conosco.php" class="text-white/60 hover:text-white transition-colors">Trabalhe conosco</a>
           </li>
         </ul>
       </div>
@@ -446,10 +441,10 @@ if (!isLoggedUser() && !isLoggedSeller()) {
         <h5 class="font-semibold text-white mb-4">Termos</h5>
         <ul class="space-y-3">
           <li>
-            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Política de Privacidade</a>
+            <a href="privacidade.php" class="text-white/60 hover:text-white transition-colors">Política de Privacidade</a>
           </li>
           <li>
-            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Termos de Uso</a>
+            <a href="termos.php" class="text-white/60 hover:text-white transition-colors">Termos de Uso</a>
           </li>
         </ul>
       </div>

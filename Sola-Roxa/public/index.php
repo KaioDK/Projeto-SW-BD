@@ -15,18 +15,18 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Great+Vibes&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
     rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&family=Satisfy&display=swap" rel="stylesheet">
   <style>
-    .caveat-brush-regular {
-      font-family: "Caveat Brush", cursive;
-      font-weight: 400;
+    .mountains-christmas {
+      font-family: "Mountains of Christmas", cursive;
+      font-weight: 700;
       font-style: normal;
     }
 
-    .great-vibes-regular {
-      font-family: "Great Vibes", cursive;
+    .satisfy-regular {
+      font-family: "Satisfy", cursive;
       font-weight: 400;
       font-style: normal;
     }
@@ -138,16 +138,16 @@
     <div class="relative z-10 max-w-6xl mx-auto px-6 sm:px-8 h-full flex flex-col justify-center">
       <div class="max-w-3xl">
         <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight opacity-0" id="hero-title">
-          <span class="text-red-800 caveat-brush-regular">AQUEÇA O</span>
-          <span class="great-vibes-regular">JOGO.</span>
-          <span class="text-green-800 caveat-brush-regular">É NATAL.</span>
+          <span class="text-red-600 satisfy-regular">AQUEÇA O</span>
+          <span class="mountains-christmas text-white">JOGO.</span>
+          <span class="text-green-600 satisfy-regular">É NATAL.</span>
         </h1>
         <p class="mt-6 text-gray-300 max-w-xl opacity-0" id="hero-sub">
           Edição limitada de alto desempenho, inspirada nos clássicos de inverno da quadra. O presente que você merece.
         </p>
 
         <div class="mt-1 flex flex-wrap gap-1 opacity-0" id="hero-ctas">
-          <a href="#historias"
+          <a href="https://www.lojanba.com/" target="_blank"
             class="inline-flex items-center px-1 py-3 text-sm text-white hover:text-roxa transition">Saiba Mais</a>
         </div>
       </div>
@@ -164,100 +164,19 @@
       </div>
     </div>
     <div class="relative">
-      <button id="feat-left"
-        class="absolute left-0 top-1/2 -translate-y-1/2 z-20 p-2 bg-black/60 hover:bg-black/20 rounded-r-md hidden md:block text-white/90">
+      <!-- Botões de navegação -->
+      <button type="button" id="feat-left" class="absolute left-0 top-1/2 -translate-y-1/2 z-50 p-3 bg-black/70 hover:bg-black/90 rounded-r-lg text-white text-2xl shadow-lg transition">
         ‹
       </button>
-      <button id="feat-right"
-        class="absolute right-0 top-1/2 -translate-y-1/2 z-20 p-2 bg-black/60 hover:bg-black/20 rounded-l-md hidden md:block text-white/90">
+      <button type="button" id="feat-right" class="absolute right-0 top-1/2 -translate-y-1/2 z-50 p-3 bg-black/70 hover:bg-black/90 rounded-l-lg text-white text-2xl shadow-lg transition">
         ›
       </button>
 
-      <div id="featured" class="flex gap-6 overflow-x-auto scrollbar-hide snap-x snap-mandatory scroll-smooth py-2">
-        <!-- Cartões de exemplo para o carrossel de lançamentos -->
-        <article
-          class="min-w-[260px] md:min-w-[320px] snap-start bg-gradient-to-b from-white/[0.02] to-transparent backdrop-blur-sm rounded-lg overflow-hidden border border-white/10 hover:border-white/20 hover:scale-[1.02] transition-all duration-300">
-          <img loading="lazy"
-            src="https://cdn.runrepeat.com/storage/gallery/product_primary/39891/nike-ja-1-21212250-720.jpg"
-            alt="Sneaker" class="w-full h-64 object-cover" />
-          <div class="p-4">
-            <h3 class="font-semibold text-white">Nike Ja 1</h3>
-            <p class="text-sm text-white/60 mt-1">R$ 1.599</p>
-            <div class="mt-4 flex items-center justify-between">
-              <a class="inline-flex items-center gap-2 text-white hover:text-purple-300 font-medium transition-colors"
-                href="product.php">
-                Ver Mais
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </a>
-              <span class="text-xs text-white/40">Em estoque</span>
-            </div>
-          </div>
-        </article>
-
-        <article
-          class="min-w-[260px] md:min-w-[320px] snap-start bg-gradient-to-b from-white/[0.02] to-transparent backdrop-blur-sm rounded-lg overflow-hidden border border-white/10 hover:border-white/20 hover:scale-[1.02] transition-all duration-300">
-          <img loading="lazy"
-            src="https://cdn.runrepeat.com/storage/gallery/product_primary/38821/new-balance-9060-21208162-720.jpg"
-            alt="Sneaker A" class="w-full h-64 object-cover" />
-          <div class="p-4">
-            <h3 class="font-semibold text-white">New Balance 9060</h3>
-            <p class="text-sm text-white/60 mt-1">R$ 1.299</p>
-            <div class="mt-4 flex items-center justify-between">
-              <a class="inline-flex items-center gap-2 text-white hover:text-purple-300 font-medium transition-colors"
-                href="javascript:void(0)">
-                Ver Mais
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </a>
-              <span class="text-xs text-white/40">Em estoque</span>
-            </div>
-          </div>
-        </article>
-
-        <article
-          class="min-w-[260px] md:min-w-[320px] snap-start bg-gradient-to-b from-white/[0.02] to-transparent backdrop-blur-sm rounded-lg overflow-hidden border border-white/10 hover:border-white/20 hover:scale-[1.02] transition-all duration-300">
-          <img loading="lazy"
-            src="https://cdn.runrepeat.com/storage/gallery/product_primary/32545/adidas-ozweego-21158485-720.jpg"
-            alt="Sneaker B" class="w-full h-64 object-cover" />
-          <div class="p-4">
-            <h3 class="font-semibold text-white">Adidas Ozweego</h3>
-            <p class="text-sm text-white/60 mt-1">R$ 699</p>
-            <div class="mt-4 flex items-center justify-between">
-              <a class="inline-flex items-center gap-2 text-white hover:text-purple-300 font-medium transition-colors"
-                href="javascript:void(0)">
-                Ver Mais
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </a>
-              <span class="text-xs text-white/40">Em estoque</span>
-            </div>
-          </div>
-        </article>
-
-        <article
-          class="min-w-[260px] md:min-w-[320px] snap-start bg-gradient-to-b from-white/[0.02] to-transparent backdrop-blur-sm rounded-lg overflow-hidden border border-white/10 hover:border-white/20 hover:scale-[1.02] transition-all duration-300">
-          <img loading="lazy"
-            src="https://cdn.runrepeat.com/storage/gallery/product_primary/39411/nike-zoom-vomero-5-lab-test-and-review-3-21506315-720.jpg"
-            alt="Sneaker C" class="w-full h-64 object-cover" />
-          <div class="p-4">
-            <h3 class="font-semibold text-white">Nike Zoom Vomero 5</h3>
-            <p class="text-sm text-white/60 mt-1">R$ 1.234</p>
-            <div class="mt-4 flex items-center justify-between">
-              <a class="inline-flex items-center gap-2 text-white hover:text-purple-300 font-medium transition-colors"
-                href="javascript:void(0)">
-                Ver Mais
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </a>
-              <span class="text-xs text-white/40">Em estoque</span>
-            </div>
-          </div>
-        </article>
+      <div id="featured" class="flex gap-6 overflow-x-auto scrollbar-hide snap-x snap-mandatory scroll-smooth py-2 min-h-[400px]">
+        <!-- Produtos dinâmicos carregados via JavaScript -->
+        <div class="min-w-full flex items-center justify-center py-12">
+          <div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-purple-500 border-t-transparent"></div>
+        </div>
       </div>
     </div>
   </section>
@@ -449,6 +368,87 @@
 
   <script>
     lucide.createIcons();
+
+    // Carregar últimos produtos cadastrados para a seção de lançamentos
+    async function loadLatestProducts() {
+      try {
+        const res = await fetch('api/get_products.php?limit=6&sort=recent');
+        const data = await res.json();
+        
+        if (data.success && data.products && data.products.length > 0) {
+          renderFeaturedProducts(data.products);
+          // Força exibição dos botões após carregar produtos
+          setTimeout(() => {
+            const leftBtn = document.getElementById('feat-left');
+            const rightBtn = document.getElementById('feat-right');
+            if (leftBtn) leftBtn.style.display = 'block';
+            if (rightBtn) rightBtn.style.display = 'block';
+          }, 100);
+        } else {
+          document.getElementById('featured').innerHTML = '<p class="text-white/60 text-center py-12">Nenhum produto cadastrado ainda.</p>';
+        }
+      } catch (e) {
+        console.error('Erro ao carregar produtos:', e);
+        document.getElementById('featured').innerHTML = '<p class="text-white/60 text-center py-12">Erro ao carregar produtos.</p>';
+      }
+    }
+
+    function renderFeaturedProducts(products) {
+      const container = document.getElementById('featured');
+      container.innerHTML = products.map(product => {
+        const price = parseFloat(product.valor || 0);
+        let imgSrc = product.imagem_url || 'assets/img/placeholder.jpg';
+        if (imgSrc.includes(',')) {
+          imgSrc = imgSrc.split(',')[0].trim();
+        }
+        const inStock = product.estoque > 0;
+        
+        return `
+          <article class="min-w-[260px] md:min-w-[320px] snap-start bg-gradient-to-b from-white/[0.02] to-transparent backdrop-blur-sm rounded-lg overflow-hidden border border-white/10 hover:border-white/20 hover:scale-[1.02] transition-all duration-300">
+            <img loading="lazy" src="${imgSrc}" alt="${product.nome}" class="w-full h-64 object-cover" />
+            <div class="p-4">
+              <h3 class="font-semibold text-white">${product.nome}</h3>
+              <p class="text-sm text-white/60 mt-1">R$ ${price.toFixed(2)}</p>
+              <div class="mt-4 flex items-center justify-between">
+                <a class="inline-flex items-center gap-2 text-white hover:text-purple-300 font-medium transition-colors" href="product.php?id=${product.id_produto}">
+                  Ver Mais
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </a>
+                <span class="text-xs text-white/40">${inStock ? 'Em estoque' : 'Esgotado'}</span>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    // Carregar produtos ao carregar a página
+    window.addEventListener('DOMContentLoaded', () => {
+      loadLatestProducts();
+      
+      // Funcionalidade de navegação do carrossel
+      const leftBtn = document.getElementById('feat-left');
+      const rightBtn = document.getElementById('feat-right');
+      const container = document.getElementById('featured');
+      
+      if (leftBtn) {
+        leftBtn.onclick = function() {
+          if (container) {
+            container.scrollBy({ left: -340, behavior: 'smooth' });
+          }
+        };
+      }
+      
+      if (rightBtn) {
+        rightBtn.onclick = function() {
+          if (container) {
+            container.scrollBy({ left: 340, behavior: 'smooth' });
+          }
+        };
+      }
+    });
   </script>
 
   <!-- Footer -->
@@ -458,13 +458,13 @@
         <h5 class="font-semibold text-white mb-4">Ajuda</h5>
         <ul class="space-y-3">
           <li>
-            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">FAQ</a>
+            <a href="faq.php" class="text-white/60 hover:text-white transition-colors">FAQ</a>
           </li>
           <li>
-            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Envios</a>
+            <a href="envios.php" class="text-white/60 hover:text-white transition-colors">Envios</a>
           </li>
           <li>
-            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Devoluções</a>
+            <a href="devolucoes.php" class="text-white/60 hover:text-white transition-colors">Devoluções</a>
           </li>
         </ul>
       </div>
@@ -478,7 +478,7 @@
             </a>
           </li>
           <li>
-            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Trabalhe conosco</a>
+            <a href="trabalhe-conosco.php" class="text-white/60 hover:text-white transition-colors">Trabalhe conosco</a>
           </li>
         </ul>
       </div>
@@ -499,11 +499,11 @@
         <h5 class="font-semibold text-white mb-4">Termos</h5>
         <ul class="space-y-3">
           <li>
-            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Política de
+            <a href="privacidade.php" class="text-white/60 hover:text-white transition-colors">Política de
               Privacidade</a>
           </li>
           <li>
-            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Termos de Uso</a>
+            <a href="termos.php" class="text-white/60 hover:text-white transition-colors">Termos de Uso</a>
           </li>
         </ul>
       </div>

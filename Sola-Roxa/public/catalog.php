@@ -368,13 +368,13 @@ try {
         <h5 class="font-semibold text-white mb-4">Ajuda</h5>
         <ul class="space-y-3">
           <li>
-            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">FAQ</a>
+            <a href="faq.php" class="text-white/60 hover:text-white transition-colors">FAQ</a>
           </li>
           <li>
-            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Envios</a>
+            <a href="envios.php" class="text-white/60 hover:text-white transition-colors">Envios</a>
           </li>
           <li>
-            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Devoluções</a>
+            <a href="devolucoes.php" class="text-white/60 hover:text-white transition-colors">Devoluções</a>
           </li>
         </ul>
       </div>
@@ -388,7 +388,7 @@ try {
             </a>
           </li>
           <li>
-            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Trabalhe conosco</a>
+            <a href="trabalhe-conosco.php" class="text-white/60 hover:text-white transition-colors">Trabalhe conosco</a>
           </li>
         </ul>
       </div>
@@ -409,10 +409,10 @@ try {
         <h5 class="font-semibold text-white mb-4">Termos</h5>
         <ul class="space-y-3">
           <li>
-            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Política de Privacidade</a>
+            <a href="privacidade.php" class="text-white/60 hover:text-white transition-colors">Política de Privacidade</a>
           </li>
           <li>
-            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Termos de Uso</a>
+            <a href="termos.php" class="text-white/60 hover:text-white transition-colors">Termos de Uso</a>
           </li>
         </ul>
       </div>

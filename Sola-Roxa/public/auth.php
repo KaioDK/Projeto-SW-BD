@@ -331,21 +331,21 @@
           <ul class="space-y-3">
             <li>
               <a
-                href="javascript:void(0)"
+                href="faq.php"
                 class="text-white/60 hover:text-white transition-colors"
                 >FAQ</a
               >
             </li>
             <li>
               <a
-                href="javascript:void(0)"
+                href="envios.php"
                 class="text-white/60 hover:text-white transition-colors"
                 >Envios</a
               >
             </li>
             <li>
               <a
-                href="javascript:void(0)"
+                href="devolucoes.php"
                 class="text-white/60 hover:text-white transition-colors"
                 >Devoluções</a
               >
@@ -358,14 +358,14 @@
           <ul class="space-y-3">
             <li>
               <a
-                href="javascript:void(0)"
+                href="sobre.php"
                 class="text-white/60 hover:text-white transition-colors"
                 >Nosso manifesto</a
               >
             </li>
             <li>
               <a
-                href="javascript:void(0)"
+                href="trabalhe-conosco.php"
                 class="text-white/60 hover:text-white transition-colors"
                 >Trabalhe conosco</a
               >
@@ -398,14 +398,14 @@
           <ul class="space-y-3">
             <li>
               <a
-                href="javascript:void(0)"
+                href="privacidade.php"
                 class="text-white/60 hover:text-white transition-colors"
                 >Política de Privacidade</a
               >
             </li>
             <li>
               <a
-                href="javascript:void(0)"
+                href="termos.php"
                 class="text-white/60 hover:text-white transition-colors"
                 >Termos de Uso</a
               >
