@@ -66,8 +66,8 @@
 
       <ul class="hidden md:flex gap-8 text-sm text-white-200 uppercase tracking-wider">
         <li><a class="hover:text-roxa transition" href="index.php#lancamentos">Lançamentos</a></li>
-        <li><a class="hover:text-roxa transition" href="index.php#masculino">Masculino</a></li>
-        <li><a class="hover:text-roxa transition" href="index.php#feminino">Feminino</a></li>
+        <li><a class="hover:text-roxa transition" href="catalog.php?estado=novo">Novos</a></li>
+        <li><a class="hover:text-roxa transition" href="catalog.php?estado=semi-novo,usado">Outlet</a></li>
         <li><a class="hover:text-roxa transition" href="index.php#colecoes">Colecionáveis</a></li>
         <li><a class="hover:text-roxa transition" href="catalog.php">Marketplace</a></li>
       </ul>

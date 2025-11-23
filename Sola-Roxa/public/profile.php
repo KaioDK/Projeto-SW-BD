@@ -74,6 +74,35 @@ function firstName($full)
             color: #8B5CF6
         }
 
+        /* Botão flutuante de anunciar */
+        .fab-button {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #8B5CF6, #6D28D9);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .fab-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(139, 92, 246, 0.6);
+        }
+
+        .fab-button svg {
+            width: 32px;
+            height: 32px;
+            color: white;
+        }
+
         /* Spinner mostrado em botões durante operações assíncronas */
         button[aria-busy="true"] {
             position: relative;
@@ -117,10 +146,10 @@ function firstName($full)
                     <a class="hover:text-roxa transition" href="index.php#lancamentos">Lançamentos</a>
                 </li>
                 <li>
-                    <a class="hover:text-roxa transition" href="index.php#masculino">Masculino</a>
+                    <a class="hover:text-roxa transition" href="catalog.php?estado=novo">Novos</a>
                 </li>
                 <li>
-                    <a class="hover:text-roxa transition" href="index.php#feminino">Feminino</a>
+                    <a class="hover:text-roxa transition" href="catalog.php?estado=semi-novo,usado">Outlet</a>
                 </li>
                 <li>
                     <a class="hover:text-roxa transition" href="index.php#colecoes">Colecionáveis</a>
@@ -131,13 +160,15 @@ function firstName($full)
             </ul>
 
             <div class="flex items-center gap-4">
-                <button aria-label="buscar" class="p-2 rounded-md hover:bg-white/5 transition cursor-pointer">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                    </svg>
-                </button>
+                <a href="favorites.php">
+                    <button aria-label="favoritos" class="p-2 rounded-md hover:bg-white/5 transition cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                        </svg>
+                    </button>
+                </a>
                 <!-- user -->
                 <a href="profile.php">
                     <button aria-label="conta" class="p-2 rounded-md hover:bg-white/5 transition cursor-pointer">
@@ -904,6 +935,13 @@ function firstName($full)
             }
         };
     </script>
+
+    <!-- Botão flutuante de anunciar -->
+    <a href="seller-onboarding.php" class="fab-button" aria-label="Anunciar produto">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>
+    </a>
 </body>
 
 </html>
