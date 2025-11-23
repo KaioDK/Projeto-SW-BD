@@ -297,13 +297,13 @@ if ($product_id > 0 && isset($_SESSION['vendedor']['id'])) {
         <h5 class="font-semibold text-white mb-4">Ajuda</h5>
         <ul class="space-y-3">
           <li>
-            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">FAQ</a>
+            <a href="faq.php" class="text-white/60 hover:text-white transition-colors">FAQ</a>
           </li>
           <li>
-            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Envios</a>
+            <a href="envios.php" class="text-white/60 hover:text-white transition-colors">Envios</a>
           </li>
           <li>
-            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Devoluções</a>
+            <a href="devolucoes.php" class="text-white/60 hover:text-white transition-colors">Devoluções</a>
           </li>
         </ul>
       </div>
@@ -312,10 +312,10 @@ if ($product_id > 0 && isset($_SESSION['vendedor']['id'])) {
         <h5 class="font-semibold text-white mb-4">Sobre Nós</h5>
         <ul class="space-y-3">
           <li>
-            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Nosso manifesto</a>
+            <a href="sobre.php" class="text-white/60 hover:text-white transition-colors">Nosso manifesto</a>
           </li>
           <li>
-            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Trabalhe conosco</a>
+            <a href="trabalhe-conosco.php" class="text-white/60 hover:text-white transition-colors">Trabalhe conosco</a>
           </li>
         </ul>
       </div>
@@ -336,10 +336,10 @@ if ($product_id > 0 && isset($_SESSION['vendedor']['id'])) {
         <h5 class="font-semibold text-white mb-4">Termos</h5>
         <ul class="space-y-3">
           <li>
-            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Política de Privacidade</a>
+            <a href="privacidade.php" class="text-white/60 hover:text-white transition-colors">Política de Privacidade</a>
           </li>
           <li>
-            <a href="javascript:void(0)" class="text-white/60 hover:text-white transition-colors">Termos de Uso</a>
+            <a href="termos.php" class="text-white/60 hover:text-white transition-colors">Termos de Uso</a>
           </li>
         </ul>
       </div>
@@ -358,8 +358,10 @@ if ($product_id > 0 && isset($_SESSION['vendedor']['id'])) {
 
   <!-- Image zoom modal -->
   <div id="zoom-modal" class="fixed inset-0 bg-black/70 hidden items-center justify-center z-50">
+    <button id="zoom-close" class="absolute top-6 right-6 p-3 bg-purple-600/60 hover:bg-purple-600/40 rounded-full transition z-10">
+      <i data-lucide="x" class="w-6 h-6"></i>
+    </button>
     <div class="relative max-w-4xl w-full p-6">
-      <button id="zoom-close" class="absolute top-4 right-4 p-2 bg-white/6 rounded"><i data-lucide="x"></i></button>
       <img id="zoom-img" src="" class="w-full h-[70vh] object-contain rounded-lg">
     </div>
   </div>

@@ -96,34 +96,55 @@ function renderThumbs() {
 // - Se o usuário preencher dados de seller-onboarding, esses campos são enviados
 //   para que o backend possa criar/reutilizar um registro de vendedor.
 document.getElementById("publish-btn").addEventListener("click", () => {
-  // Basic validation
+  // Validação completa de todos os campos obrigatórios
+  const sellerName = document.getElementById("seller-name").value.trim();
+  const sellerDoc = document.getElementById("seller-doc").value.trim();
   const title = document.getElementById("title").value.trim();
+  const brand = document.getElementById("brand").value.trim();
+  const size = document.getElementById("size").value.trim();
+  const description = document.getElementById("description").value.trim();
   const price = document.getElementById("price").value;
   
-  console.log('DEBUG: title =', title);
-  console.log('DEBUG: price =', price);
+  // Validar campos do passo 1 (Vendedor)
+  if (!sellerName || !sellerDoc) {
+    if (window.srShowToast) window.srShowToast('Por favor preencha nome e documento do vendedor.', 'error');
+    else alert('Por favor preencha nome e documento do vendedor.');
+    showStep(1);
+    return;
+  }
   
-  if (!title || !price) {
-    if (window.srShowToast) window.srShowToast('Por favor preencha título e preço antes de publicar.', 'error');
-    else alert('Por favor preencha título e preço antes de publicar.');
+  // Validar campos do passo 2 (Produto)
+  if (!title || !brand || !size || !description) {
+    if (window.srShowToast) window.srShowToast('Por favor preencha todos os campos do produto (título, marca, tamanho e descrição).', 'error');
+    else alert('Por favor preencha todos os campos do produto.');
     showStep(2);
+    return;
+  }
+  
+  // Validar campo do passo 3 (Preço)
+  if (!price) {
+    if (window.srShowToast) window.srShowToast('Por favor preencha o preço do produto.', 'error');
+    else alert('Por favor preencha o preço do produto.');
+    showStep(3);
+    return;
+  }
+  
+  // Validar se foi feito upload de pelo menos uma imagem
+  if (files.length === 0 && (!fileInput.files || fileInput.files.length === 0)) {
+    if (window.srShowToast) window.srShowToast('Por favor adicione pelo menos uma imagem do produto.', 'error');
+    else alert('Por favor adicione pelo menos uma imagem do produto.');
+    showStep(3);
     return;
   }
   
   // create product via API
   const formData = new FormData();
   formData.append('nome', title);
-  formData.append('descricao', document.getElementById('description').value.trim());
+  formData.append('descricao', description);
   formData.append('valor', price.trim());
   
-  // Log FormData
-  console.log('FormData entries:');
-  for (let [key, value] of formData.entries()) {
-    console.log(`  ${key}: ${value}`);
-  }
-  
   // include size/tamanho
-  const sizeVal = document.getElementById('size') ? document.getElementById('size').value.trim() : '';
+  const sizeVal = size;
   if (sizeVal) formData.append('tamanho', sizeVal);
   // default stock to 1 (seller can update later)
   formData.append('estoque', 1);
@@ -145,11 +166,9 @@ document.getElementById("publish-btn").addEventListener("click", () => {
     });
   }
   console.log('Uploading images count:', imagesCount);
-  // optionally include seller onboarding data
-  const sellerName = document.getElementById('seller-name').value.trim();
-  const sellerDoc = document.getElementById('seller-doc').value.trim();
-  if (sellerName) formData.append('seller_name', sellerName);
-  if (sellerDoc) formData.append('seller_doc', sellerDoc);
+  // include seller onboarding data
+  formData.append('seller_name', sellerName);
+  formData.append('seller_doc', sellerDoc);
 
   fetch('api/create_product.php', { method: 'POST', body: formData })
     .then(async (r) => {
