@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 22/11/2025 às 20:05
+-- Tempo de geração: 23/11/2025 às 22:50
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -46,7 +46,28 @@ CREATE TABLE `endereco` (
 INSERT INTO `endereco` (`id_endereco`, `id_cliente`, `rua`, `numero`, `bairro`, `cidade`, `estado`) VALUES
 (1, 10, 'Rua', 0, '', 'Ribeirão Pires', 'BR'),
 (2, 1, '', 0, '', '', ''),
-(3, 10, 'Rua', 0, '', 'Ribeirão Pires', 'BR');
+(3, 10, 'Rua', 0, '', 'Ribeirão Pires', 'BR'),
+(5, 1, 'Av Paulista', 144, 'Bela Vista', 'São Paulo', 'SP');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `favoritos`
+--
+
+CREATE TABLE `favoritos` (
+  `id_favorito` int(11) NOT NULL,
+  `id_cliente` int(11) NOT NULL,
+  `id_produto` int(11) NOT NULL,
+  `data_adicionado` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `favoritos`
+--
+
+INSERT INTO `favoritos` (`id_favorito`, `id_cliente`, `id_produto`, `data_adicionado`) VALUES
+(6, 1, 16, '2025-11-23 15:46:51');
 
 -- --------------------------------------------------------
 
@@ -69,7 +90,11 @@ CREATE TABLE `item_pedido` (
 INSERT INTO `item_pedido` (`id_pedido`, `id_produto`, `quantidade`, `preco_unitario`, `subtotal`) VALUES
 (1, 19, 1, 489.00, 489.00),
 (2, 16, 1, 999.90, 999.90),
-(3, 16, 1, 999.90, 999.90);
+(3, 16, 1, 999.90, 999.90),
+(4, 16, 1, 999.90, 999.90),
+(5, 16, 1, 999.90, 999.90),
+(6, 16, 1, 999.90, 999.90),
+(7, 16, 1, 999.90, 999.90);
 
 -- --------------------------------------------------------
 
@@ -91,7 +116,11 @@ CREATE TABLE `pagamento` (
 --
 
 INSERT INTO `pagamento` (`id_pagamento`, `id_pedido`, `metodo`, `status`, `valor_pago`, `data_pagamento`) VALUES
-(1, 3, '', 'aprovado', 1048.90, '2025-11-21 15:22:43');
+(1, 3, '', 'aprovado', 1048.90, '2025-11-21 15:22:43'),
+(2, 4, 'pix', 'aprovado', 1048.90, '2025-11-22 18:06:17'),
+(3, 5, 'pix', 'aprovado', 1048.90, '2025-11-22 18:06:49'),
+(4, 6, '', 'aprovado', 1048.90, '2025-11-22 21:49:10'),
+(5, 7, '', 'aprovado', 1048.90, '2025-11-23 18:10:04');
 
 -- --------------------------------------------------------
 
@@ -115,7 +144,11 @@ CREATE TABLE `pedido` (
 INSERT INTO `pedido` (`id_pedido`, `id_cliente`, `id_endereco`, `data_pedido`, `status`, `valor_total`) VALUES
 (1, 10, 1, '2025-11-21 12:57:13', 'pendente', 538.00),
 (2, 1, 2, '2025-11-21 15:03:08', 'pendente', 1048.90),
-(3, 10, 3, '2025-11-21 15:22:43', 'pago', 1048.90);
+(3, 10, 3, '2025-11-21 15:22:43', 'pago', 1048.90),
+(4, 1, 5, '2025-11-22 18:06:17', 'pago', 1048.90),
+(5, 1, 5, '2025-11-22 18:06:48', 'pago', 1048.90),
+(6, 1, 5, '2025-11-22 21:49:10', 'pago', 1048.90),
+(7, 1, 5, '2025-11-23 18:10:04', 'pago', 1048.90);
 
 -- --------------------------------------------------------
 
@@ -145,7 +178,8 @@ INSERT INTO `produto` (`id_produto`, `id_vendedor`, `nome`, `descricao`, `imagem
 (16, 1, 'Nike Dunk Low', 'Tênis clássico de colecionador', 'https://cdn.runrepeat.com/storage/gallery/product_content/25696/nike-dunk-low-review-21438139-720.jpg', 999.90, 5, '2025-10-20 21:12:41', 'Novo', '40'),
 (18, 5, 'Nike Vomero 18', 'O Nike Vomero 18 chega como a evolução perfeita para quem busca máximo conforto, amortecimento premium e uma corrida suave todos os dias. Reconhecido como um dos modelos mais confortáveis da Nike, o Vomero 18 mantém essa tradição com uma espuma ainda mais macia e responsiva, oferecendo transições suaves e absorção de impacto ideal para treinos longos.\r\n\r\nO cabedal em mesh respirável foi refinado para proporcionar melhor ajuste, ventilação constante e sensação de leveza. A palmilha macia se adapta ao formato do pé, garantindo suporte desde o primeiro passo. Na sola, borracha durável com zonas estratégicas de tração assegura estabilidade e firmeza em diferentes superfícies.\r\n\r\nIdeal para corredores que buscam conforto duradouro, amortecimento premium e um tênis confiável para qualquer ritmo, o Vomero 18 combina tecnologia avançada e sensação luxuosa em cada passada.', 'assets/uploads/prod_69206f5187b7b6.11420720.webp', 789.00, 1, '2025-11-21 10:55:29', 'Semi-Novo', '40'),
 (19, 5, 'Hoka Bondi 9', 'O Hoka Bondi 9 é um dos tênis mais icônicos da marca — e não é por acaso. Projetado para quem busca máximo amortecimento, ele entrega uma corrida extremamente macia e suave do início ao fim. Sua entressola atualizada com espuma ainda mais leve e responsiva proporciona uma sensação de flutuar a cada passada, reduzindo o impacto e aumentando o conforto em treinos longos.\r\n\r\nO cabedal em mesh respirável garante ventilação eficiente, mantendo seus pés frescos mesmo em quilometragens elevadas. A geometria Meta-Rocker aprimorada impulsiona o movimento natural da passada, tornando sua corrida mais fluida e eficiente. Além disso, a sola reforçada oferece excelente durabilidade e aderência.\r\n\r\nPerfeito para corredores que priorizam conforto absoluto, estabilidade e proteção, o Bondi 9 eleva o padrão de tênis de amortecimento máximo.', 'assets/uploads/prod_692073a425e656.33077412.webp', 489.00, 1, '2025-11-21 11:13:56', 'Usado', '38'),
-(21, 5, 'New Balance Fresh Foam X', 'O New Balance Fresh Foam X representa o ápice do conforto e da maciez dentro da linha de corrida da marca. Projetado para oferecer uma sensação ultraconfortável sob os pés, ele utiliza a tecnologia Fresh Foam X, a versão mais avançada da famosa espuma da New Balance, garantindo amortecimento superior, suavidade extrema e um impacto reduzido a cada passada.\r\n\r\nO cabedal em mesh técnico envolve o pé com leveza e respirabilidade, proporcionando ajuste seguro sem sacrificar a flexibilidade. A geometria da entressola foi cuidadosamente esculpida para otimizar a transição da passada, tornando a corrida mais fluida e natural. Já a sola externa, com borracha estrategicamente posicionada, aumenta a durabilidade e oferece tração consistente.\r\n\r\nPerfeito para corredores que buscam amortecimento máximo, conforto contínuo e uma experiência de corrida estável e macia, o Fresh Foam X eleva o padrão de performance do dia a dia.', 'assets/uploads/prod_69207ebfb86665.47685336.webp,assets/uploads/prod_69207ebfb89e83.79034942.webp', 499.00, 1, '2025-11-21 12:01:19', 'Semi-Novo', '41');
+(21, 5, 'New Balance Fresh Foam X', 'O New Balance Fresh Foam X representa o ápice do conforto e da maciez dentro da linha de corrida da marca. Projetado para oferecer uma sensação ultraconfortável sob os pés, ele utiliza a tecnologia Fresh Foam X, a versão mais avançada da famosa espuma da New Balance, garantindo amortecimento superior, suavidade extrema e um impacto reduzido a cada passada.\r\n\r\nO cabedal em mesh técnico envolve o pé com leveza e respirabilidade, proporcionando ajuste seguro sem sacrificar a flexibilidade. A geometria da entressola foi cuidadosamente esculpida para otimizar a transição da passada, tornando a corrida mais fluida e natural. Já a sola externa, com borracha estrategicamente posicionada, aumenta a durabilidade e oferece tração consistente.\r\n\r\nPerfeito para corredores que buscam amortecimento máximo, conforto contínuo e uma experiência de corrida estável e macia, o Fresh Foam X eleva o padrão de performance do dia a dia.', 'assets/uploads/prod_69207ebfb86665.47685336.webp,assets/uploads/prod_69207ebfb89e83.79034942.webp', 499.00, 1, '2025-11-21 12:01:19', 'Semi-Novo', '41'),
+(22, 5, 'Adidas Samba', 'Adidas Samba', 'assets/uploads/prod_692259ca0ecc02.64488298.webp,assets/uploads/prod_692259ca0efaf4.81151981.jpg', 345.00, 1, '2025-11-22 21:48:10', 'Usado', '42');
 
 -- --------------------------------------------------------
 
@@ -193,7 +227,7 @@ CREATE TABLE `vendedor` (
 INSERT INTO `vendedor` (`id_vendedor`, `nome`, `email`, `senha`, `CPF`) VALUES
 (1, 'Vitor Sneaker', 'vitor@example.com', 'senha123', '12345678901'),
 (4, 'Loja Vitor 2', 'loja.vitor2@test.com', '$2y$10$qI.b7gYJEJkQceWPY9mXP.rGvUjqWLhkctbtVjDrDIpc1rBdkNKV.', '98765432109'),
-(5, 'Asdawd', 'teste@gmail.com', '$2y$10$gqB6lKpMWseMv7sYMOExBOFFl5SSk1e.RK62LQYBnPJ6eTjcqH4EC', '12345678921');
+(5, 'teste', 'teste@example.com', '$2y$10$gqB6lKpMWseMv7sYMOExBOFFl5SSk1e.RK62LQYBnPJ6eTjcqH4EC', '12345678921');
 
 --
 -- Índices para tabelas despejadas
@@ -205,6 +239,15 @@ INSERT INTO `vendedor` (`id_vendedor`, `nome`, `email`, `senha`, `CPF`) VALUES
 ALTER TABLE `endereco`
   ADD PRIMARY KEY (`id_endereco`),
   ADD KEY `id_cliente` (`id_cliente`);
+
+--
+-- Índices de tabela `favoritos`
+--
+ALTER TABLE `favoritos`
+  ADD PRIMARY KEY (`id_favorito`),
+  ADD UNIQUE KEY `unique_favorito` (`id_cliente`,`id_produto`),
+  ADD KEY `id_cliente` (`id_cliente`),
+  ADD KEY `id_produto` (`id_produto`);
 
 --
 -- Índices de tabela `item_pedido`
@@ -259,25 +302,31 @@ ALTER TABLE `vendedor`
 -- AUTO_INCREMENT de tabela `endereco`
 --
 ALTER TABLE `endereco`
-  MODIFY `id_endereco` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_endereco` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de tabela `favoritos`
+--
+ALTER TABLE `favoritos`
+  MODIFY `id_favorito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de tabela `pagamento`
 --
 ALTER TABLE `pagamento`
-  MODIFY `id_pagamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_pagamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `pedido`
 --
 ALTER TABLE `pedido`
-  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `produto`
 --
 ALTER TABLE `produto`
-  MODIFY `id_produto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id_produto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT de tabela `usuario`
@@ -300,6 +349,13 @@ ALTER TABLE `vendedor`
 --
 ALTER TABLE `endereco`
   ADD CONSTRAINT `endereco_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `usuario` (`id_cliente`) ON DELETE CASCADE;
+
+--
+-- Restrições para tabelas `favoritos`
+--
+ALTER TABLE `favoritos`
+  ADD CONSTRAINT `fk_favoritos_cliente` FOREIGN KEY (`id_cliente`) REFERENCES `usuario` (`id_cliente`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_favoritos_produto` FOREIGN KEY (`id_produto`) REFERENCES `produto` (`id_produto`) ON DELETE CASCADE;
 
 --
 -- Restrições para tabelas `item_pedido`
