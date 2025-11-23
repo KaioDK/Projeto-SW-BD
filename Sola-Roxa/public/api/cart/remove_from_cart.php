@@ -1,4 +1,22 @@
 <?php
+/**
+ * API de Remoção do Carrinho
+ * 
+ * Endpoint: POST /api/cart/remove_from_cart.php
+ * Descrição: Remove item específico do carrinho
+ * 
+ * Parâmetros POST:
+ * - id_produto: ID do produto a remover
+ * - tamanho/size: Tamanho do produto
+ * 
+ * Comportamento:
+ * - Usa chave composta (id::tamanho) para identificar item
+ * - Remove usando unset() do array de sessão
+ * - Se item não existe, não gera erro (idempotente)
+ * 
+ * Retorna:
+ * - { success: true, items_count, cart }
+ */
 require_once __DIR__ . '/../../../backend/auth.php';
 header('Content-Type: application/json; charset=utf-8');
 if (session_status() === PHP_SESSION_NONE) session_start();

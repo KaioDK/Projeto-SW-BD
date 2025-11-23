@@ -1,4 +1,34 @@
 <?php
+/**
+ * API de Finalização de Compra (Checkout)
+ * 
+ * Endpoint: POST /api/cart/checkout.php
+ * Descrição: Processa carrinho e cria pedido completo
+ * 
+ * Parâmetros POST:
+ * Endereço (uma das opções):
+ * - address_id/id_endereco: ID de endereço existente
+ * - OU usa $_SESSION['chosen_address_id']
+ * - OU cria novo com: address/rua, city/cidade, zip/cep, country/pais, numero, bairro
+ * 
+ * Pagamento:
+ * - payment_method/pay/metodo: Forma de pagamento (padrão: credito)
+ * 
+ * Fluxo:
+ * 1. Valida autenticação e carrinho
+ * 2. Determina/cria endereço de entrega
+ * 3. Calcula totais com preços atuais
+ * 4. Verifica proteção anti-autocompra
+ * 5. Cria pedido na tabela pedido
+ * 6. Cria itens na tabela item_pedido
+ * 7. Registra pagamento (simula aprovação)
+ * 8. Limpa carrinho
+ * 
+ * Transação: Usa beginTransaction/commit/rollBack para garantir consistência
+ * 
+ * Retorna:
+ * - { success: true, id_pedido, valor_total, payment_status }
+ */
 require_once __DIR__ . '/../../../backend/auth.php';
 require_once __DIR__ . '/../../../backend/db.php';
 header('Content-Type: application/json; charset=utf-8');

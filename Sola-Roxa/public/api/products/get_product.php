@@ -1,9 +1,26 @@
 <?php
+/**
+ * API de Detalhes de Produto
+ * 
+ * Endpoint: GET /api/products/get_product.php?id=123
+ * Descrição: Retorna detalhes completos de um único produto
+ * 
+ * Parâmetros GET:
+ * - id: ID do produto (obrigatório)
+ * 
+ * Retorna JSON:
+ * - Sucesso: { success: true, product: {...} }
+ * - Erro 400: { error: "Missing id" } (ID não fornecido)
+ * - Erro 404: { error: "Not found" } (produto não existe)
+ * 
+ * Produto retornado contém:
+ * - Todos os campos da tabela produto
+ * - vendedor_nome: Nome do vendedor (JOIN)
+ * - galeria: Array de URLs de imagens
+ * - imagem_url: Primeira imagem (para exibição principal)
+ */
 require_once __DIR__ . '/../../../backend/db.php';
 header('Content-Type: application/json; charset=utf-8');
-
-// Retorna os dados de um produto por `id` via GET
-// Saída JSON: { success: true, product: { ... } } ou erro (400/404/500)
 
 $id = intval($_GET['id'] ?? 0);
 if (!$id) {
@@ -20,7 +37,15 @@ try {
         echo json_encode(['error'=>'Not found']);
         exit;
     }
-    // Expor `galeria` como array quando `imagem_url` armazenar múltiplos
+    /**
+     * Conversão de Galeria CSV para Array
+     * 
+     * Se imagem_url contém múltiplas URLs separadas por vírgula,
+     * converte para array 'galeria' e define primeira como principal.
+     * 
+     * Isso evita que a tag <img> receba uma string CSV completa,
+     * o que causaria imagem quebrada.
+     */
     if (!empty($p['imagem_url'])) {
         // Separe por vírgula e remova espaços em branco
         $parts = array_filter(array_map('trim', explode(',', $p['imagem_url'])));

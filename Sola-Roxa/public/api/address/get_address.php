@@ -1,4 +1,21 @@
 <?php
+/**
+ * API de Listagem de Endereços
+ * 
+ * Endpoint: GET /api/address/get_address.php
+ * Descrição: Retorna todos os endereços do usuário logado
+ * 
+ * Ordenação: DESC por id (mais recentes primeiro)
+ * 
+ * Uso:
+ * - Seleção de endereço no checkout
+ * - Gerenciamento de endereços no perfil
+ * 
+ * Logs: Contém logs de debug para facilitar troubleshooting
+ * 
+ * Retorna:
+ * - { success: true, addresses: [...] }
+ */
 require_once __DIR__ . '/../../../backend/auth.php';
 require_once __DIR__ . '/../../../backend/db.php';
 header('Content-Type: application/json; charset=utf-8');

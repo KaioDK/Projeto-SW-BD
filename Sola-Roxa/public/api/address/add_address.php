@@ -1,4 +1,24 @@
 <?php
+/**
+ * API de Adição de Endereço
+ * 
+ * Endpoint: POST /api/address/add_address.php
+ * Descrição: Cria novo endereço de entrega para o usuário
+ * 
+ * Parâmetros POST (aceita inglês/português):
+ * - rua/address: Logradouro (obrigatório)
+ * - numero/numero_casa: Número da residência
+ * - bairro: Bairro/distrito
+ * - cidade/city: Cidade (obrigatório)
+ * - estado/state: UF (obrigatório)
+ * 
+ * Logs de debug:
+ * - Este endpoint tem logs extensivos (error_log)
+ * - Facilita depuração de problemas com endereços
+ * 
+ * Retorna:
+ * - { success: true, id_endereco: n }
+ */
 require_once __DIR__ . '/../../../backend/auth.php';
 require_once __DIR__ . '/../../../backend/db.php';
 header('Content-Type: application/json; charset=utf-8');

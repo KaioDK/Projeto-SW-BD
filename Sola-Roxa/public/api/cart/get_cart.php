@@ -1,4 +1,26 @@
 <?php
+/**
+ * API de Consulta do Carrinho
+ * 
+ * Endpoint: GET /api/cart/get_cart.php
+ * Descrição: Retorna conteúdo do carrinho com dados enriquecidos
+ * 
+ * Autenticação:
+ * - Usuário não logado: retorna carrinho vazio (sem erro)
+ * - Usuário logado: retorna itens com dados completos
+ * 
+ * Enriquecimento de dados:
+ * - Busca informações atuais do produto (nome, preço, imagem)
+ * - Calcula subtotal por item (preço × quantidade)
+ * - Calcula totais gerais (subtotal + frete)
+ * 
+ * Cálculo de frete:
+ * - GRATUITO se subtotal > R$ 3000
+ * - R$ 49,00 se subtotal <= R$ 3000
+ * 
+ * Retorna JSON:
+ * - { success: true, cart: [...], items_count, subtotal, shipping, total }
+ */
 require_once __DIR__ . '/../../../backend/auth.php';
 require_once __DIR__ . '/../../../backend/db.php';
 header('Content-Type: application/json; charset=utf-8');
@@ -13,6 +35,17 @@ if (!isLoggedUser()) {
 $cart = $_SESSION['cart'] ?? [];
 $out = [];
 $items_count = 0;
+/**
+ * Loop de Enriquecimento de Dados
+ * 
+ * Para cada item no carrinho:
+ * 1. Busca dados atualizados do produto no banco
+ * 2. Normaliza imagem (primeira se for CSV)
+ * 3. Calcula subtotal do item
+ * 4. Monta objeto com dados completos
+ * 
+ * Produtos que não existem mais são ignorados (continue)
+ */
 if (!empty($cart)) {
     // cart stored as keyed array; convert to sequential
     foreach ($cart as $k => $it) {
@@ -29,7 +62,8 @@ if (!empty($cart)) {
         $price = (float)$p['valor'];
         $subtotal = $price * $qty;
         $items_count += $qty;
-        // normalize image (use first when stored as CSV)
+        // Normaliza imagem: usa primeira se armazenada como CSV
+        // Exemplo: "img1.jpg,img2.jpg" -> "img1.jpg"
         $img = $p['imagem_url'] ?? '';
         if (strpos($img, ',') !== false) {
             $parts = array_filter(array_map('trim', explode(',', $img)));
@@ -48,7 +82,13 @@ if (!empty($cart)) {
     }
 }
 
-// compute totals
+/**
+ * Cálculo de Totais
+ * 
+ * Subtotal: Soma de todos os subtotais dos itens
+ * Frete: R$ 49 se subtotal <= R$ 3000, senão GRÁTIS
+ * Total: Subtotal + Frete
+ */
 $subtotal = 0.0;
 foreach ($out as $i) $subtotal += $i['subtotal'];
 $shipping = $subtotal > 3000 ? 0 : 49;

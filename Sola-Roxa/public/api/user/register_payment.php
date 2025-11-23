@@ -1,4 +1,27 @@
 <?php
+/**
+ * API de Registro de Pagamento
+ * 
+ * Endpoint: POST /api/user/register_payment.php
+ * Descrição: Registra pagamento para pedido existente
+ * 
+ * Parâmetros POST:
+ * - id_pedido: ID do pedido
+ * - metodo/pay: Método de pagamento (pix, credito, boleto, etc)
+ * - valor: Valor pago
+ * 
+ * Comportamento:
+ * - Valida que pedido pertence ao usuário
+ * - Simula aprovação automática (status = 'aprovado')
+ * - Insere em tabela pagamento
+ * - Atualiza status do pedido para 'pago'
+ * 
+ * NOTA: Em produção, integrar com gateway real
+ * (Mercado Pago, PagSeguro, Stripe, etc)
+ * 
+ * Retorna:
+ * - { success: true, status: "aprovado" }
+ */
 require_once __DIR__ . '/../../../backend/auth.php';
 require_once __DIR__ . '/../../../backend/db.php';
 header('Content-Type: application/json; charset=utf-8');

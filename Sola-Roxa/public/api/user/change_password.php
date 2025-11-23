@@ -1,4 +1,27 @@
 <?php
+/**
+ * API de Mudança de Senha
+ * 
+ * Endpoint: POST /api/user/change_password.php
+ * Descrição: Permite usuário alterar sua própria senha
+ * 
+ * Parâmetros POST:
+ * - current_password: Senha atual (obrigatório)
+ * - new_password: Nova senha (obrigatório)
+ * - new_password_confirm: Confirmação (obrigatório)
+ * 
+ * Validações:
+ * - Senha atual correta (password_verify)
+ * - Nova senha == confirmação
+ * - Nova senha >= 6 caracteres
+ * 
+ * Segurança:
+ * - Nova senha hasheada com password_hash
+ * - Não permite mudança sem verificar senha atual
+ * 
+ * Retorna:
+ * - { success: true }
+ */
 require_once __DIR__ . '/../../../backend/db.php';
 require_once __DIR__ . '/../../../backend/auth.php';
 header('Content-Type: application/json; charset=utf-8');

@@ -1,4 +1,21 @@
 <?php
+/**
+ * API de Atualização do Carrinho
+ * 
+ * Endpoint: POST /api/cart/update_cart.php
+ * Descrição: Atualiza item no carrinho (mantendo quantidade = 1)
+ * 
+ * Parâmetros POST:
+ * - id_produto: ID do produto
+ * - tamanho/size: Tamanho do produto
+ * 
+ * Comportamento:
+ * - Garante que quantidade permanece 1 (sem incremento)
+ * - Cria item se não existir
+ * - Vendedores NÃO podem adicionar próprios produtos
+ * 
+ * Nota: Similar a add_to_cart, mas usado para atualizações explícitas
+ */
 require_once __DIR__ . '/../../../backend/auth.php';
 header('Content-Type: application/json; charset=utf-8');
 if (session_status() === PHP_SESSION_NONE) session_start();

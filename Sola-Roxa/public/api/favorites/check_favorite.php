@@ -1,4 +1,20 @@
 <?php
+/**
+ * API de Verificação de Favorito
+ * 
+ * Endpoint: GET /api/favorites/check_favorite.php?id_produto=123
+ * Descrição: Verifica se produto está nos favoritos do usuário
+ * 
+ * Parâmetros GET:
+ * - id_produto: ID do produto
+ * 
+ * Uso:
+ * - Determinar estado inicial do botão de favorito
+ * - UI exibe coração preenchido/vazio conforme resultado
+ * 
+ * Retorna:
+ * - { success: true, favorited: true/false }
+ */
 require_once __DIR__ . '/../../../backend/auth.php';
 require_once __DIR__ . '/../../../backend/db.php';
 header('Content-Type: application/json; charset=utf-8');
