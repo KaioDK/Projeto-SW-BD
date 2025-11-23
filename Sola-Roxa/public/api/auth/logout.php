@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../backend/auth.php';
+require_once __DIR__ . '/../../../backend/auth.php';
 header('Content-Type: application/json; charset=utf-8');
 
 session_destroy();

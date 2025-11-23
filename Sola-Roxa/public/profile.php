@@ -554,7 +554,7 @@ function firstName($full)
             btn.setAttribute('aria-busy', 'true');
             btn.setAttribute('aria-disabled', 'true');
             try {
-                const res = await fetch('api/logout.php', {
+                const res = await fetch('api/auth/logout.php', {
                     method: 'POST'
                 });
                 // logout.php retorna JSON mesmo com session_destroy
@@ -577,7 +577,7 @@ function firstName($full)
             btn.setAttribute('aria-busy', 'true');
             btn.setAttribute('aria-disabled', 'true');
             try {
-                const res = await fetch('api/update_profile.php', {
+                const res = await fetch('api/user/update_profile.php', {
                     method: 'POST',
                     body: data
                 });
@@ -642,7 +642,7 @@ function firstName($full)
             btn.setAttribute('aria-busy', 'true');
             btn.setAttribute('aria-disabled', 'true');
             try {
-                const res = await fetch('api/delete_account.php', {
+                const res = await fetch('api/user/delete_account.php', {
                     method: 'POST'
                 });
                 const json = await res.json();
@@ -698,7 +698,7 @@ function firstName($full)
                         btn.disabled = true;
                         btn.setAttribute('aria-busy', 'true');
                         try {
-                            const res = await fetch('api/change_password.php', {
+                            const res = await fetch('api/user/change_password.php', {
                                 method: 'POST',
                                 body: fd
                             });
@@ -832,7 +832,7 @@ function firstName($full)
             listContainer.innerHTML = '<p class="text-white/60 text-center py-8">Carregando endereços...</p>';
 
             try {
-                const res = await fetch('api/get_address.php');
+                const res = await fetch('api/address/get_address.php');
                 const json = await res.json();
 
                 if (res.ok && json.success) {
@@ -890,7 +890,7 @@ function firstName($full)
             submitBtn.textContent = 'Salvando...';
 
             try {
-                const res = await fetch('api/add_address.php', {
+                const res = await fetch('api/address/add_address.php', {
                     method: 'POST',
                     body: formData
                 });
@@ -917,7 +917,7 @@ function firstName($full)
             if (!confirm('Deseja realmente excluir este endereço?')) return;
 
             try {
-                const res = await fetch('api/delete_address.php', {
+                const res = await fetch('api/address/delete_address.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ id_endereco: id })

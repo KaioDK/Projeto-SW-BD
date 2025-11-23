@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/../../backend/auth.php';
-require_once __DIR__ . '/../../backend/db.php';
+require_once __DIR__ . '/../../../backend/auth.php';
+require_once __DIR__ . '/../../../backend/db.php';
 header('Content-Type: application/json; charset=utf-8');
 if (session_status() === PHP_SESSION_NONE) session_start();
 

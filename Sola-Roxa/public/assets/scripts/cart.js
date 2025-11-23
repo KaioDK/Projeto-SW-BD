@@ -12,7 +12,7 @@ let selectedAddressId = null;
 // Load cart from server and render
 async function loadCart() {
   try {
-    const res = await fetch('api/get_cart.php');
+    const res = await fetch('api/cart/get_cart.php');
     const data = await res.json();
     if (!data || !data.cart) return;
     const container = document.getElementById('cart-items');
@@ -87,7 +87,7 @@ function attachCartHandlers() {
 async function removeFromCart(id, size) {
   const fd = new FormData(); fd.append('id_produto', id); fd.append('tamanho', size || '');
   try {
-    const res = await fetch('api/remove_from_cart.php', { method: 'POST', body: fd });
+    const res = await fetch('api/cart/remove_from_cart.php', { method: 'POST', body: fd });
     if (!res.ok) return false;
     const data = await res.json();
     return data && data.success;
@@ -105,8 +105,8 @@ async function loadAddresses() {
   container.innerHTML = '<p class="text-white/60 text-center py-4">Carregando endereços...</p>';
   
   try {
-    console.log('loadAddresses: fazendo fetch para api/get_address.php');
-    const res = await fetch('api/get_address.php');
+    console.log('loadAddresses: fazendo fetch para api/address/get_address.php');
+    const res = await fetch('api/address/get_address.php');
     console.log('loadAddresses: response status:', res.status, res.ok);
     const data = await res.json();
     console.log('loadAddresses: dados recebidos:', data);
@@ -222,7 +222,7 @@ function initAddressHandlers() {
     submitBtn.textContent = 'Salvando...';
 
     try {
-      const res = await fetch('api/add_address.php', { method: 'POST', body: formData });
+      const res = await fetch('api/address/add_address.php', { method: 'POST', body: formData });
       const data = await res.json();
       console.log('Resposta add_address:', data);
 
@@ -249,7 +249,7 @@ async function chooseAddress(addressId) {
   try {
     const fd = new FormData();
     fd.append('address_id', addressId);
-    await fetch('api/choose_address.php', { method: 'POST', body: fd });
+    await fetch('api/address/choose_address.php', { method: 'POST', body: fd });
   } catch (e) {
     console.error('Error choosing address:', e);
   }
@@ -257,7 +257,7 @@ async function chooseAddress(addressId) {
 
 // Proceed to checkout: show checkout section and populate mini-list
 document.getElementById('to-checkout').addEventListener('click', async () => {
-  const res = await fetch('api/get_cart.php');
+  const res = await fetch('api/cart/get_cart.php');
   const data = await res.json();
   const mini = document.getElementById('mini-list');
   mini.innerHTML = '';
@@ -310,7 +310,7 @@ document.getElementById('confirm-order').addEventListener('click', async () => {
     fd.append('address_id', selectedAddress.value);
     fd.append('payment_method', selectedPayment.value);
 
-    const res = await fetch('api/checkout.php', { method: 'POST', body: fd });
+    const res = await fetch('api/cart/checkout.php', { method: 'POST', body: fd });
     const data = await res.json();
     
     console.log('Checkout response:', data); // Debug log

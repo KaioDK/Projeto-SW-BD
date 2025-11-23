@@ -500,7 +500,7 @@ if ($product_id > 0 && isset($_SESSION['vendedor']['id'])) {
         fd.append('id_produto', product.id_produto || product.id);
         if (selectedSize) fd.append('tamanho', selectedSize);
         fd.append('quantidade', 1);
-        const res = await fetch('api/add_to_cart.php', {
+        const res = await fetch('/Projeto-SW-BD/Sola-Roxa/public/api/cart/add_to_cart.php', {
           method: 'POST',
           body: fd
         });
@@ -536,7 +536,7 @@ if ($product_id > 0 && isset($_SESSION['vendedor']['id'])) {
         fd.append('id_produto', product.id_produto || product.id);
         if (selectedSize) fd.append('tamanho', selectedSize);
         fd.append('quantidade', 1);
-        const res = await fetch('api/add_to_cart.php', {
+        const res = await fetch('api/cart/add_to_cart.php', {
           method: 'POST',
           body: fd
         });
@@ -609,7 +609,7 @@ if ($product_id > 0 && isset($_SESSION['vendedor']['id'])) {
     // Busca produto pelo ID
     async function fetchProduct(id) {
       try {
-        const res = await fetch(`api/get_product.php?id=${id}`);
+        const res = await fetch(`api/products/get_product.php?id=${id}`);
         const data = await res.json();
         if (data.success && data.product) {
           // Ajusta galeria se vier como string separada
@@ -628,7 +628,7 @@ if ($product_id > 0 && isset($_SESSION['vendedor']['id'])) {
 
     async function checkFavoriteStatus(productId) {
       try {
-        const res = await fetch(`api/check_favorite.php?id_produto=${productId}`);
+        const res = await fetch(`api/favorites/check_favorite.php?id_produto=${productId}`);
         const data = await res.json();
         if (data.success) {
           const favBtn = document.getElementById('fav-btn');
@@ -653,7 +653,7 @@ if ($product_id > 0 && isset($_SESSION['vendedor']['id'])) {
       try {
         const fd = new FormData();
         fd.append('id_produto', productId);
-        const res = await fetch('api/toggle_favorite.php', {
+        const res = await fetch('api/favorites/toggle_favorite.php', {
           method: 'POST',
           body: fd
         });

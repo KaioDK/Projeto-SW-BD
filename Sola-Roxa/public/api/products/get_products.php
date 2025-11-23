@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../backend/db.php';
+require_once __DIR__ . '/../../../backend/db.php';
 header('Content-Type: application/json; charset=utf-8');
 
 // Retorna lista de produtos (opcionalmente filtrada por vendedor)

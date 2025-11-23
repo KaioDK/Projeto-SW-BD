@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/../../backend/db.php';
-require_once __DIR__ . '/../../backend/auth.php';
+require_once __DIR__ . '/../../../backend/db.php';
+require_once __DIR__ . '/../../../backend/auth.php';
 header('Content-Type: application/json; charset=utf-8');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -64,7 +64,7 @@ try {
         $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
         $filename = uniqid('prod_', true) . '.' . $ext;
         if (!defined('UPLOAD_DIR')) {
-            require_once __DIR__ . '/../../backend/config.php';
+            require_once __DIR__ . '/../../../backend/config.php';
         }
         if (!is_dir(UPLOAD_DIR)) {
             mkdir(UPLOAD_DIR, 0755, true);
