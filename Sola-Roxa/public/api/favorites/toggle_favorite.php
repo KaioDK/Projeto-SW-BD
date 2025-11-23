@@ -1,4 +1,21 @@
 <?php
+/**
+ * API de Toggle de Favoritos
+ * 
+ * Endpoint: POST /api/favorites/toggle_favorite.php
+ * Descrição: Adiciona ou remove produto dos favoritos (toggle)
+ * 
+ * Parâmetros POST:
+ * - id_produto: ID do produto
+ * 
+ * Comportamento:
+ * - Se produto JÁ está nos favoritos: REMOVE
+ * - Se produto NÃO está nos favoritos: ADICIONA
+ * 
+ * Retorna JSON:
+ * - Adicionou: { success: true, action: "added", favorited: true }
+ * - Removeu: { success: true, action: "removed", favorited: false }
+ */
 require_once __DIR__ . '/../../../backend/auth.php';
 require_once __DIR__ . '/../../../backend/db.php';
 header('Content-Type: application/json; charset=utf-8');

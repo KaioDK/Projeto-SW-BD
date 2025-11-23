@@ -1,4 +1,23 @@
 <?php
+/**
+ * API de Listagem de Favoritos
+ * 
+ * Endpoint: GET /api/favorites/get_favorites.php
+ * Descrição: Retorna todos os produtos favoritados pelo usuário
+ * 
+ * Dados retornados:
+ * - Dados completos do produto (nome, preço, imagem, etc)
+ * - nome_loja: Nome do vendedor (JOIN)
+ * - is_favorited: Sempre 1 (confirmação)
+ * - Ordenado por data_adicionado DESC (mais recentes primeiro)
+ * 
+ * Uso:
+ * - Página de favoritos do usuário
+ * - Grid de produtos com botão de remover
+ * 
+ * Retorna:
+ * - { success: true, favoritos: [...] }
+ */
 require_once __DIR__ . '/../../../backend/auth.php';
 require_once __DIR__ . '/../../../backend/db.php';
 header('Content-Type: application/json; charset=utf-8');

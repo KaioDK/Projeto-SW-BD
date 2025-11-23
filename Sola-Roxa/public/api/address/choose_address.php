@@ -1,4 +1,23 @@
 <?php
+/**
+ * API de Escolha de Endereço
+ * 
+ * Endpoint: POST /api/address/choose_address.php
+ * Descrição: Define endereço para ser usado no próximo checkout
+ * 
+ * Parâmetros POST:
+ * - id_endereco/address_id: ID do endereço
+ * 
+ * Comportamento:
+ * - Valida que endereço pertence ao usuário
+ * - Armazena em $_SESSION['chosen_address_id']
+ * - Checkout usa esse endereço se não receber outro explícito
+ * 
+ * Logs: Contém error_log para debugging
+ * 
+ * Retorna:
+ * - { success: true, chosen: id }
+ */
 require_once __DIR__ . '/../../../backend/auth.php';
 require_once __DIR__ . '/../../../backend/db.php';
 header('Content-Type: application/json; charset=utf-8');

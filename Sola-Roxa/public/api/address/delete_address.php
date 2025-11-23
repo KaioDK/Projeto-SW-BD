@@ -1,4 +1,23 @@
 <?php
+/**
+ * API de Exclusão de Endereço
+ * 
+ * Endpoint: POST/DELETE /api/address/delete_address.php
+ * Descrição: Remove endereço do usuário
+ * 
+ * Parâmetros (via JSON body):
+ * - id_endereco: ID do endereço a excluir
+ * 
+ * Validações:
+ * - Verifica que endereço existe
+ * - Verifica que pertence ao usuário logado (segurança)
+ * 
+ * Efeito colateral:
+ * - Se endereço excluído estava escolhido na sessão, limpa escolha
+ * 
+ * Retorna:
+ * - { success: true }
+ */
 require_once __DIR__ . '/../../../backend/auth.php';
 require_once __DIR__ . '/../../../backend/db.php';
 header('Content-Type: application/json; charset=UTF-8');

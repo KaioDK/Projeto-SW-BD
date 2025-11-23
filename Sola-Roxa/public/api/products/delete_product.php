@@ -1,4 +1,26 @@
 <?php
+/**
+ * API de Exclusão de Produto
+ * 
+ * Endpoint: POST /api/products/delete_product.php
+ * Descrição: Permite que vendedores excluam seus próprios produtos
+ * 
+ * Parâmetros POST:
+ * - id: ID do produto a excluir (obrigatório)
+ * 
+ * Autorização:
+ * - Apenas vendedores autenticados
+ * - Vendedor deve ser o dono do produto
+ * 
+ * Efeitos:
+ * - Remove registro da tabela produto
+ * - Deleta arquivo de imagem associado (evita órfãos)
+ * - Remove de favoritos e carrinhos (CASCADE no banco)
+ * 
+ * Retorna JSON:
+ * - { success: true }
+ * - Erro 403: { error: "Not owner" }
+ */
 require_once __DIR__ . '/../../../backend/db.php';
 require_once __DIR__ . '/../../../backend/auth.php';
 header('Content-Type: application/json; charset=utf-8');
@@ -32,7 +54,15 @@ try {
         echo json_encode(['error' => 'Not owner']);
         exit;
     }
-    // Remoção do arquivo da imagem associada (se existir) para evitar arquivos órfãos
+    /**
+     * Limpeza de Arquivo Órfão
+     * 
+     * Quando um produto é excluído, remove também sua imagem do disco
+     * para evitar acumular arquivos não utilizados.
+     * 
+     * Importante: Apenas primeira imagem é removida (limitação atual)
+     * TODO: Remover todas as imagens da galeria
+     */
     if ($p['imagem_url']) {
         $path = __DIR__ . '/../' . $p['imagem_url'];
         if (file_exists($path)) unlink($path);

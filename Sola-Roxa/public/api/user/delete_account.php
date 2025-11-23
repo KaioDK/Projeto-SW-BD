@@ -1,4 +1,28 @@
 <?php
+/**
+ * API de Exclusão de Conta
+ * 
+ * Endpoint: POST /api/user/delete_account.php
+ * Descrição: Permite exclusão de conta de usuário ou vendedor
+ * 
+ * Comportamento 1 - Vendedor logado:
+ * - Verifica se vendedor tem produtos ativos
+ * - Se SIM: Erro (deve remover produtos primeiro)
+ * - Se NÃO: Exclui conta de vendedor
+ * - Remove apenas $_SESSION['vendedor']
+ * 
+ * Comportamento 2 - Usuário logado:
+ * - Exclui conta de usuário
+ * - FKs com CASCADE removem dados relacionados
+ * - Destrói sessão completamente
+ * 
+ * IMPORTANTE:
+ * - Ação irreversível
+ * - Frontend deve pedir confirmação dupla
+ * 
+ * Retorna:
+ * - { success: true, deleted: "vendedor"/"usuario" }
+ */
 require_once __DIR__ . '/../../../backend/db.php';
 require_once __DIR__ . '/../../../backend/auth.php';
 header('Content-Type: application/json; charset=utf-8');

@@ -1,4 +1,28 @@
 <?php
+/**
+ * API de Atualização de Perfil
+ * 
+ * Endpoint: POST /api/user/update_profile.php
+ * Descrição: Atualiza dados do usuário e vendedor (se aplicável)
+ * 
+ * Parâmetros POST:
+ * - nome: Novo nome (obrigatório)
+ * - email: Novo email (obrigatório)
+ * - senha: Nova senha (opcional)
+ * 
+ * Comportamento especial:
+ * - Se usuário também é vendedor, atualiza AMBAS as tabelas
+ * - Usa transação para garantir consistência
+ * - Valida unicidade de email em ambas tabelas
+ * - Atualiza sessões ($_SESSION['user'] e $_SESSION['vendedor'])
+ * 
+ * Segurança:
+ * - Senha hasheada com password_hash se fornecida
+ * - Validação de duplicata de email
+ * 
+ * Retorna:
+ * - { success: true, user: {...}, vendedor: {...} }
+ */
 require_once __DIR__ . '/../../../backend/db.php';
 require_once __DIR__ . '/../../../backend/auth.php';
 header('Content-Type: application/json; charset=utf-8');

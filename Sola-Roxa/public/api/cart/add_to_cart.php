@@ -1,9 +1,30 @@
 <?php
+/**
+ * API de Adição ao Carrinho
+ * 
+ * Endpoint: POST /api/cart/add_to_cart.php
+ * Descrição: Adiciona produto ao carrinho de compras (armazenado em sessão)
+ * 
+ * Parâmetros POST:
+ * - id_produto: ID do produto (obrigatório)
+ * - tamanho/size: Tamanho do produto (opcional)
+ * 
+ * Regras de negócio:
+ * - Apenas usuários autenticados podem adicionar ao carrinho
+ * - Vendedores NÃO podem adicionar seus próprios produtos
+ * - Cada anúncio = 1 unidade (quantidade fixa)
+ * - Combina produto + tamanho como chave única
+ * 
+ * Armazenamento:
+ * - Carrinho salvo em $_SESSION['cart']
+ * - Formato: array associativo com chave "id::tamanho"
+ * 
+ * Retorna JSON:
+ * - { success: true, items_count: n, cart: [...] }
+ */
 require_once __DIR__ . '/../../../backend/auth.php';
 header('Content-Type: application/json; charset=utf-8');
 if (session_status() === PHP_SESSION_NONE) session_start();
-
-// Apenas usuários logados podem usar o carrinho
 if (!isLoggedUser()) {
     http_response_code(401);
     echo json_encode(['error' => 'Não autenticado']);
@@ -16,7 +37,17 @@ $size = trim($_POST['tamanho'] ?? $_POST['size'] ?? '');
 if ($qty < 1) $qty = 1;
 if (!$id) { http_response_code(400); echo json_encode(['error'=>'Missing product id']); exit; }
 
-// Prevent sellers from adding their own products
+/**
+ * Proteção: Vendedor Não Pode Comprar Próprio Produto
+ * 
+ * Verifica se o produto pertence ao vendedor logado.
+ * Se sim, retorna erro 403 Forbidden.
+ * 
+ * Isso evita:
+ * - Vendedor "inflar" próprias vendas
+ * - Problemas de lógica de negócio
+ * - Confusão em relatórios
+ */
 require_once __DIR__ . '/../../../backend/db.php';
 try {
     $stmt = $pdo->prepare('SELECT id_vendedor FROM produto WHERE id_produto = ? LIMIT 1');
@@ -32,9 +63,20 @@ try {
     error_log('add_to_cart seller check error: ' . $e->getMessage());
 }
 
+/**
+ * Sistema de Chaves Compostas
+ * 
+ * Usa combinação produto::tamanho como chave única.
+ * Isso permite que mesmo produto em tamanhos diferentes
+ * sejam itens separados no carrinho.
+ * 
+ * Exemplos de chaves:
+ * - "123::42" (produto 123, tamanho 42)
+ * - "456::" (produto 456, sem tamanho)
+ */
 if (!isset($_SESSION['cart']) || !is_array($_SESSION['cart'])) $_SESSION['cart'] = [];
 
-// combine key by product+size
+// Combina chave por produto + tamanho
 $key = $id . '::' . $size;
 if (isset($_SESSION['cart'][$key])) {
     // keep single unit semantics

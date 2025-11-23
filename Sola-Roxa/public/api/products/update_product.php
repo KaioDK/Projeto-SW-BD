@@ -1,4 +1,28 @@
 <?php
+/**
+ * API de Atualização de Produto
+ * 
+ * Endpoint: POST /api/products/update_product.php
+ * Descrição: Permite que vendedores atualizem seus próprios produtos
+ * 
+ * Parâmetros POST:
+ * - id: ID do produto (obrigatório)
+ * - title/nome: Novo nome (opcional)
+ * - descricao: Nova descrição (opcional)
+ * - size/tamanho: Novo tamanho (opcional)
+ * - price/valor: Novo preço (opcional, aceita formato R$ 123,45)
+ * - stock: Novo estoque (opcional)
+ * - estado: Novo estado (opcional)
+ * - image: Nova imagem (opcional, upload de arquivo)
+ * 
+ * Autorização:
+ * - Apenas vendedores autenticados (isLoggedSeller)
+ * - Vendedor deve ser o dono do produto (id_vendedor)
+ * 
+ * Retorna JSON:
+ * - { success: true, updated: true/false }
+ * - Erro 403: { error: "Not owner" } (produto não pertence ao vendedor)
+ */
 require_once __DIR__ . '/../../../backend/db.php';
 require_once __DIR__ . '/../../../backend/auth.php';
 header('Content-Type: application/json; charset=utf-8');
@@ -27,7 +51,15 @@ if (!isLoggedSeller()) {
 $id_vendedor = $_SESSION['vendedor']['id'];
 
 try {
-    // Verifica propriedade do produto (pertence ao vendedor logado?)
+    /**
+     * Verificação de Propriedade
+     * 
+     * Antes de permitir atualização, verifica se:
+     * 1. O produto existe
+     * 2. O produto pertence ao vendedor logado
+     * 
+     * Isso impede que vendedores editem produtos de outros.
+     */
     $check = $pdo->prepare('SELECT id_vendedor FROM produto WHERE id_produto = ? LIMIT 1');
     $check->execute([$id]);
     $p = $check->fetch();
@@ -44,12 +76,15 @@ try {
     if (isset($_POST['nome'])) { $fields[] = 'nome = ?'; $params[] = $_POST['nome']; }
     if (isset($_POST['descricao'])) { $fields[] = 'descricao = ?'; $params[] = $_POST['descricao']; }
     if (isset($_POST['size']) || isset($_POST['tamanho'])) { $fields[] = 'tamanho = ?'; $params[] = $_POST['size'] ?? $_POST['tamanho']; }
-    // Preço: aceitar `price` (inglês) ou `valor` (pt-br). Sanitiza formatação com vírgula.
+    // Preço: aceitar 'price' (inglês) ou 'valor' (pt-br)
+    // Sanitiza formato monetário brasileiro (R$ 1.234,56 -> 1234.56)
     if (isset($_POST['price']) || isset($_POST['valor'])) {
         $raw = isset($_POST['price']) ? $_POST['price'] : $_POST['valor'];
-        // remove símbolos e espaços, substitui ',' por '.' para decimal
-        $san = str_replace(['R$', ' ', '\u00A0'], '', $raw);
+        // Remove símbolos monetários e espaços
+        $san = str_replace(['R$', ' ', '\u00A0'], '', $raw);  // \u00A0 = espaço não quebrável
+        // Substitui vírgula decimal por ponto (padrão SQL)
         $san = str_replace(',', '.', $san);
+        // Remove qualquer caractere que não seja número, ponto ou sinal negativo
         $san = preg_replace('/[^0-9.\-]/', '', $san);
         $fields[] = 'valor = ?';
         $params[] = $san;
